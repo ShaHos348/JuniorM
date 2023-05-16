@@ -1,0 +1,20 @@
+body {
+    text-align: center;
+    background: gray;
+}
+
+.content {
+    background: white;
+    margin-top: 15vh;
+    margin-right: 35vw;
+    margin-left: 35vw;
+    padding: 20px;
+    width: 30vw;
+    border-radius: 15px;
+    box-shadow: 1px 1px 4px 1px #c8d8eb;;
+}
+
+li {
+    list-style-type: none;
+    margin: 10px;
+}
