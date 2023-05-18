@@ -15,6 +15,11 @@ body {
   box-shadow: 1px 1px 4px 1px #c8d8eb;
 }
 
+input {
+  width: 100%;
+  margin-bottom: 10px
+}
+
 li {
   list-style-type: none;
   margin: 10px;
@@ -24,4 +29,9 @@ li {
   position: absolute;
   right: 10px;
   top: 0;
+}
+
+#registerTab {
+  display: none;
+  
 }
