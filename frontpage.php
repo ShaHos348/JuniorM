@@ -1,3 +1,14 @@
+<?php
+// Initialize the session
+session_start();
+ 
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: home.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -7,7 +18,8 @@
 
 <body>
   <div class="content">
-    <h2>KEITH BRIDGE FOOD MART</h2>
+    <h2>Hello, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b></h2>
+    <a href="logout.php">Log Out</a>
     <marquee behavior="alternate">WELL COME TO STORE MANAGEMENT SYSTEM</marquee>
     <table>
       <tr>

@@ -1,18 +1,11 @@
 body {
   text-align: center;
-  background: gray;
+  background: lightgray;
 }
 
-.content {
+.main-content {
   background: white;
   position: relative;
-  top: 15vh;
-  right: 35vw;
-  left: 35vw;
-  padding: 20px;
-  width: 30vw;
-  border-radius: 15px;
-  box-shadow: 1px 1px 4px 1px #c8d8eb;
 }
 
 input {
@@ -23,15 +16,4 @@ input {
 li {
   list-style-type: none;
   margin: 10px;
-}
-
-#register {
-  position: absolute;
-  right: 10px;
-  top: 0;
-}
-
-#registerTab {
-  display: none;
-  
 }

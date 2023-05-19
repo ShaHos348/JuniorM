@@ -499,7 +499,7 @@ background text
 
 
             <button class="btn_login" type="submit" name='submit' onclick="cambiar_login()">Clock In</button>
-            <a href="../signUp&ForgotSection/employeeForgotPassword.php">Forgot Your Password?</a>
+            <a href="../forgotInfoSection/employeeFP.php">Forgot Your Password?</a>
 
           </div>
           <?php
@@ -617,7 +617,7 @@ background text
 
             <button class="btn_sign_up" name='submit2' onclick="cambiar_sign_up()">Clock Out</button>
 
-            <a href="../signUp&ForgotSection/employeeForgotPassword.php">Forgot Your Password?</a>
+            <a href="../forgotInfoSection/employeeFP.php">Forgot Your Password?</a>
 
 
           </div>
