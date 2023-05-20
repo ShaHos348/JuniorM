@@ -1,12 +1,20 @@
 <?php
 // Initialize the session
 session_start();
- 
+
 // Check if the user is already logged in, if yes then redirect him to welcome page
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: frontpage.php");
-    exit;
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+  header("location: frontpage.php");
+  exit;
 }
+
+$dbhost = 'localhost';
+$dbuser = 'root';
+$dbpass = '';
+$dbname = 'jmllcdata';
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+if (!$conn)
+  die('Could not connect: ' . mysqli_error($mysql));
 ?>
 
 <!DOCTYPE html>
@@ -65,15 +73,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     testemail = document.getElementById('email').value;
     testusername = document.getElementById('username').value;
 
-    define('DB_NAME', 'jmllcdata');
-    define('DB_USER', 'root');
-    define('DB_PASSWORD', '');
-    define('DB_HOST', 'localhost');
-
-    $link = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
     $query = "SELECT*  from businesslogin where name='testcname' OR username='testusername' OR email='testemail'";
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
       alert("Could not register business as its name/username/email is already registered.");
       return false;
@@ -96,47 +97,12 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     $password = $_POST['password'];
     $comcode = $_POST['comcode'];
 
-    define('DB_NAME', 'jmllcdata');
-    define('DB_USER', 'root');
-    define('DB_PASSWORD', '');
-    define('DB_HOST', 'localhost');
-
-    // stored in a variable to TEST if it's working
-    $link = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
     $sql = "INSERT INTO businesslogin (idnum,name,address,city,state,zipcode,country,phone,mobile,email,username,password,companycode) VALUES ('$idnum','$cname','$street','$city','$state','$zip','$country','$phone','$mobile','$email','$username','$password','$comcode')";
-    if (!mysqli_query($link, $sql)) {
-      die('Error: ' . mysqli_error($link));
+    if (!mysqli_query($conn, $sql)) {
+      die('Error: ' . mysqli_error($conn));
     }
   }
-
-  if (isset($_POST['login_submit'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $dbhost = 'localhost';
-    $dbuser = 'root';
-    $dbpass = '';
-    $dbname = 'jmllcdata';
-    $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
-    if (!$conn)
-      die('Could not connect: ' . mysqli_error($mysql));
-    $query = "SELECT*  from businesslogin where username='$username' and password='$password'";
-    $result = mysqli_query($conn, $query);
-    if (mysqli_num_rows($result) > 0) {
-      session_start();
-                            
-      // Store data in session variables
-      $_SESSION["loggedin"] = true;
-      $_SESSION["cname"] = $cname;
-      $_SESSION["username"] = $username;    
-
-      header("Location: frontpage.php");
-      exit();
-    } else {
-      echo '<script>alert("Username or Password is incorrect!")</script>';
-    }
-  }
+  
   ?>
 </script>
 
@@ -164,7 +130,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
       <input id="ComCode" name="comcode" type="text" class="input" placeholder="Enter Company Code" required>
       <button class="btn_sign_up" name='register_submit'>REGISTER</button>
     </form>
-    <form id="login" action="" method="POST">
+    
+    <form id="login" action="" method="POST1">
       <li>
         <input id="username" name="username" type="text" class="input" placeholder="Enter Your Username" required>
       </li>
@@ -175,8 +142,36 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
         <button class="btn_login" type="click" name='login_submit'>LOGIN</button>
       </li>
       <li>
+        <Label id="message"> </Label>
+      </li>
+      <li>
         <a href="components\forgotInfoSection\businessFP.php">Forgot Username/Password</a>
       </li>
+      <?php 
+          if (isset($_POST1['login_submit'])) {
+            $username = $_POST1['username'];
+            $password = $_POST1['password'];
+        
+$dbhost = 'localhost';
+$dbuser = 'root';
+$dbpass = '';
+$dbname = 'jmllcdata';
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+if (!$conn)
+  die('Could not connect: ' . mysqli_error($mysql));
+  
+            $query = "SELECT*  from businesslogin where username='$username' AND password='$password'";
+            $result = mysqli_query($conn, $query);
+            if (mysqli_num_rows($result) > 0) {
+              session_start();
+        
+              header("Location: frontpage.php");
+              exit();
+            } else {
+              echo 'Incorrect';
+            }
+          }
+        ?>
     </form>
   </div>
 </body>
