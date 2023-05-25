@@ -40,15 +40,15 @@
       <a (click)="businessSignupAction()">Register</a>
     </div>
     
-    <form id="login" action="" method="POST1">
+    <form id="login" action="" method="POST">
       <li>
-        <input id="username" name="username" type="text" class="input" placeholder="Enter Your Username" required>
+        <input id="username" #username name="username" type="text" class="input" placeholder="Enter Your Username" required>
       </li>
       <li>
-        <input id="password" name="password" type="password" class="input" data-type="password" placeholder="Enter Your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+        <input id="password" #password name="password" type="password" class="input" data-type="password" placeholder="Enter Your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
       </li>
       <li>
-        <button class="btn_login" type="click" name='login_submit'>LOGIN</button>
+        <button class="btn_login" type="click" name='login_submit' (click) = 'handleSubmit({username: username.value, password:password.value})'>LOGIN</button>
       </li>
       <li>
         <Label id="message"> </Label>

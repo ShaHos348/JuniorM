@@ -37,20 +37,8 @@ export class BusinessSignupComponent implements OnInit {
         [Validators.required, Validators.pattern(GlobalConstants.zipcodeRegex)],
       ],
       country: [null, [Validators.required]],
-      phone: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern(GlobalConstants.contectNumberRegex),
-        ],
-      ],
-      mobile: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern(GlobalConstants.contectNumberRegex),
-        ],
-      ],
+      phone: [null,[ Validators.required,Validators.pattern(GlobalConstants.contectNumberRegex),],],
+      mobile: [ null,[Validators.required,Validators.pattern(GlobalConstants.contectNumberRegex),],],
       email: [
         null,
         [Validators.required, Validators.pattern(GlobalConstants.emailRegex)],
