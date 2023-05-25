@@ -16,4 +16,11 @@ export class UserService {
         headers: new HttpHeaders().set('Content-Type',"application/json")
       });
   }
+
+  login(data:any) {
+    return this.httpClient.post(this.url+
+      "/businessUser/businessLogin",data,{
+        headers: new HttpHeaders().set('Content-Type',"application/json")
+      });
+  }
 }

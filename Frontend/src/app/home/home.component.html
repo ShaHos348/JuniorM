@@ -1,16 +1,68 @@
-<div class="bg-image"></div>
-<app-business-login></app-business-login>
+<!DOCTYPE html>
+<html>
 
-<div class="wrapper sticky">
-  <nav class="navbar-fixed-top">
-    <a href="#" class="logo">
-      <mat-icon>storefront</mat-icon> Junior Market LLC
-    </a>
-    <ul>
-      <li><a (click)="businessSignupAction()">Signup</a></li>
-    </ul>
-  </nav>
-</div>
-<div class="footer" id="signup">
-  <h2>All right reserved @BTech Days</h2>
-</div>
+<head>
+
+</head>
+
+<body>
+  <div class="content">
+    <h2>Hello,</h2>
+    <a href="logout.php">Log Out</a>
+    <marquee behavior="alternate">WELL COME TO STORE MANAGEMENT SYSTEM</marquee>
+    <table>
+      <tr>
+        <td>
+          <h2>Employee</h2>
+          <li>clock In/Out</li>
+          <a href="components/employeeSection/clockin-out.php"><img class="mySlides" src="images/employee1.jpg" style="width:80%" height="80"></a>
+          <li>Message</li>
+          <a href="components/employeeSection/emessage.php"><img class="mySlides" src="images/employee2.jpg" style="width:80%" height="80"></a>
+        </td>
+        <td>
+          <h2>Shift</h2>
+          <a href="components/shiftSection/shiftcount.php">Shift count</a>
+          <a href="components/shiftSection/shiftreport.php">shift report</a>
+        <td>
+          <h2>Lotto</h2>
+          <li><a href="components/lottoSection/lottoactive.php">Lotto ACt.</a></li>
+          <li><a href="components/lottoSection/lottosale.php">Lotto Sale</a></li>
+        </td>
+        <td>
+          <h2>Report</h2>
+          <li><a href="components/reportSection/workreport.php">Work Sheet Report.</a></li>
+          <li><a href="components/reportSection/preport.php">Pay Chack</a></li>
+        </td>
+      </tr>
+      <p></p>
+      <tr>
+        <td>
+          <h2>Order</h2>
+          <li><a href="components/orderSection/inventory.php">Order List of Inventory.</a></li>
+        </td>
+        <td>
+          <h2>Vender</h2>
+          <li><a href="components/venderSection/company.php">Vender</a></li>
+        </td>
+        <td>
+          <form action="" method="POST">
+            <div class="cont_form_login">
+              <h2>Maneger</h2>
+              <input id="username" name="username" type="email" class="input" placeholder="Enter Your Username" required>
+              <input id="password" name="password" type="password" class="input" data-type="password" placeholder="Enter Your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+              <button class="btn_login" type="submit" name='submit' onclick="cambiar_login()">LOGIN</button>
+            </div>
+          </form>
+        </td>
+        <td>
+          <h2>Contact Us</h2>
+          <p>Some text..</p>
+        </td>
+      </tr>
+    </table>
+    <marquee bgcolor="pink">copy right sawda system inc</marquee>
+  </div>
+
+</body>
+
+</html>

@@ -1,12 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { FullComponent } from './layouts/full/full.component';
+//import { FullComponent } from './layouts/full/full.component';
 import { BusinessLoginComponent } from './business-login/business-login.component';
 
 const routes: Routes = [
-  { path: '', component: BusinessLoginComponent },
+  { 
+    path: '', 
+    component: BusinessLoginComponent
+  },
   {
+    path: 'home',
+    component: HomeComponent
+  },
+  { path: '**', component: BusinessLoginComponent },
+  /*{
     path: 'cafe',
     component: FullComponent,
     children: [
@@ -25,8 +33,7 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
       }
     ]
-  },
-  { path: '**', component: BusinessLoginComponent }
+  }*/
 ];
 
 @NgModule({
