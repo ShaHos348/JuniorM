@@ -20,9 +20,7 @@ router.post("/businessSignup", (req, res) => {
           query = "SELECT MAX(idnum) AS lastIdNum FROM businesslogin";
           connection.query(query, (err, rows) => {
             if (!err) {
-              console.log(rows);
               lastIdNum = rows[0].lastIdNum + 1;
-              console.log(lastIdNum);
               query =
                 "INSERT INTO businesslogin (idnum,name,address,city,state,zipcode,country,phone,mobile,email,username,password) VALUES (" +
                 lastIdNum +
