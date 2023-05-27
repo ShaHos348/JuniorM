@@ -23,4 +23,11 @@ export class UserService {
         headers: new HttpHeaders().set('Content-Type',"application/json")
       });
   }
+
+  forgot(data:any) {
+    return this.httpClient.post(this.url+
+      "/businessUser/businessForgotPassword",data,{
+        headers: new HttpHeaders().set('Content-Type',"application/json")
+      });
+  }
 }

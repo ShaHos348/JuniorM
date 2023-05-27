@@ -9,7 +9,7 @@ export class GlobalConstants {
 
   public static contectNumberRegex: string = '^[e0-9]{10,10}$';
 
-  public static passwordRegex: string = '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}';
+  public static passwordRegex: string = '(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{3,}';
 
   public static zipcodeRegex: string = '^[e0-9]{5,5}$';
 

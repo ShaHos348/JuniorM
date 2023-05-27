@@ -1,0 +1,34 @@
+<div class="content">
+	<div class="row">
+		<div class="column" style="background-color: #aaa">
+			<form name="frmForgot" id="frmForgot">
+
+				<div class="field-group">
+					<div><label for="username">Username</label></div>
+					<div>
+						<input type="text" #username id="username" class="input-field" />
+						Or
+					</div>
+				</div>
+
+				<div class="field-group">
+					<div><label for="email">Email</label></div>
+					<div>
+						<input type="text" #email id="email" class="input-field" />
+					</div>
+				</div>
+
+				<div class="field-group">
+					<button type="submit" name="forgot-password" id="forgot-password" (click) = "validate_forgot({username: username.value, email:email.value})" class="form-submit-button">
+						Submit
+					</button>
+					<a href="">Back to Login Page</a>
+				</div>
+
+				<div class="field-group" id="message" style="white-space:pre-wrap;">
+					{{responseMessage}}
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

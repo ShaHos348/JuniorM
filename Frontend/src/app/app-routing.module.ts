@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 //import { FullComponent } from './layouts/full/full.component';
-import { BusinessLoginComponent } from './business-login/business-login.component';
+import { BusinessLoginComponent } from './components/business-components/business-login/business-login.component';
+import { BusinessFPComponent } from './components/forgotInfoSection/business-fp/business-fp.component';
 
 const routes: Routes = [
   { 
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'forgotBusinessLogin',
+    component: BusinessFPComponent
   },
   { path: '**', component: BusinessLoginComponent },
   /*{
