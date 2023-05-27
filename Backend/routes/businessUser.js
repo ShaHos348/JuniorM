@@ -74,7 +74,7 @@ router.post("/businessLogin", (req, res) => {
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN, {
           expiresIn: "1h",
         });
-        return res.status(200).json({ token: accessToken });
+        return res.status(200).json({ message: "Login successful" });
       } else {
         return res
           .status(400)
@@ -88,11 +88,12 @@ router.post("/businessLogin", (req, res) => {
 
 router.post("/businessForgotPassword", (req, res) => {
   let user = req.body;
-  query = "SELECT username,password,email FROM businesslogin WHERE email=?";
-  connection.query(query, [user.email], (err, result) => {
+  query = "SELECT username,password,email FROM businesslogin WHERE username=? OR email=?";
+  connection.query(query, [user.username, user.email], (err, result) => {
     if (!err) {
       if (result.length == 1) {
-        return res.status(200).json({ message: result[0] });
+        var response = "Email: " + result[0].email + "\n Username: " + result[0].username + "\n Password: " + result[0].password;
+        return res.status(200).json( response );
         /*var mailOptions = {
           from: process.env.EMAIL,
           to: result[0].email,
@@ -112,7 +113,7 @@ router.post("/businessForgotPassword", (req, res) => {
         return res
           .status(400)
           .json({
-            message: "This email is not associated with any business user!",
+            message: "This email/username is not associated with any business user!",
           });
       }
     } else {

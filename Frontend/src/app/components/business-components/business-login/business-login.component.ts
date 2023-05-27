@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BusinessSignupComponent } from '../business-signup/business-signup.component';
 import { Router } from '@angular/router';
-import { SnackbarService } from '../services/snackbar.service';
-import { UserService } from '../services/user.service';
-import { GlobalConstants } from '../shared/global-constants';
+import { SnackbarService } from '../../../services/snackbar.service';
+import { UserService } from '../../../services/user.service';
+import { GlobalConstants } from '../../../shared/global-constants';
 
 @Component({
   selector: 'app-business-login',
@@ -53,6 +53,10 @@ export class BusinessLoginComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = "550px";
     this.dialog.open(BusinessSignupComponent),dialogConfig;
+  }
+
+  businessFP() {
+    this.router.navigate(['forgotBusinessLogin']);
   }
 
 }

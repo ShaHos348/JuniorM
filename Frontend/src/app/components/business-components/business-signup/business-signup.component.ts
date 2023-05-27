@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { SnackbarService } from '../services/snackbar.service';
+import { UserService } from '../../../services/user.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { GlobalConstants } from '../shared/global-constants';
+import { GlobalConstants } from '../../../shared/global-constants';
 
 @Component({
   selector: 'app-business-signup',

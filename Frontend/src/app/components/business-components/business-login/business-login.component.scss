@@ -1,0 +1,47 @@
+body {
+    text-align: center;
+    background: lightgray;
+  }
+  
+  .main-content {
+    background: white;
+    position: relative;
+  }
+  
+  input {
+    width: 100%;
+    margin-bottom: 10px
+  }
+  
+  li {
+    list-style-type: none;
+    margin: 10px;
+  }
+
+  #content {
+    top: 15vh;
+    right: 35vw;
+    left: 35vw;
+    padding: 20px;
+    width: 30vw;
+    border-radius: 15px;
+    box-shadow: 1px 1px 4px 1px #c8d8eb;
+  }
+
+  #register {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    width: 15%;
+    background: transparent;
+  }
+
+  #register-btn {
+    border: 0;
+    background: transparent;
+    color: red;
+  }
+
+  #registerTab {
+    display: none;
+  }
