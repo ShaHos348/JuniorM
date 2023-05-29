@@ -5,6 +5,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 //const nodemailer = require("nodemailer");  not working currently
 require("dotenv").config();
+var auth = require("../services/authentication");
 
 router.post("/businessSignup", (req, res) => {
   let user = req.body;
@@ -71,9 +72,10 @@ router.post("/businessLogin", (req, res) => {
     if (!err) {
       if (results.length == 1) {
         const user = { business: results[0] };
-        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN, {
+        /*const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN, {
           expiresIn: "1h",
-        });
+        });*/
+        req.session.user = user;
         return res.status(200).json({ message: "Login successful" });
       } else {
         return res
@@ -121,6 +123,15 @@ router.post("/businessForgotPassword", (req, res) => {
     }
   });
 });
+
+router.get("/checkLogin", auth.authenticateToken, (req, res) => {
+  return res.status(200).json( {message: "Logged In!"});
+})
+
+router.get("/logout", auth.authenticateToken, (req, res) => {
+  req.session.user = null;
+  return res.status(200).json( {message: "Logged Out!"});
+})
 
 /*var transporter = nodemailer.createTransport({ 
   service: 'gmail',
