@@ -19,7 +19,7 @@ export class UserService {
 
   login(data:any) {
     return this.httpClient.post(this.url+
-      "/businessUser/businessLogin",data,{
+      "/businessUser/businessLogin",data,{ withCredentials: true,
         headers: new HttpHeaders().set('Content-Type',"application/json")
       });
   }
@@ -29,5 +29,16 @@ export class UserService {
       "/businessUser/businessForgotPassword",data,{
         headers: new HttpHeaders().set('Content-Type',"application/json")
       });
+  }
+
+  checkLogin() {
+    return this.httpClient.get(this.url+
+      "/businessUser/checkLogin", {withCredentials: true } 
+      );
+  }
+
+  logout() {
+    return this.httpClient.get(this.url+
+      "/businessUser/logout", {withCredentials: true });
   }
 }

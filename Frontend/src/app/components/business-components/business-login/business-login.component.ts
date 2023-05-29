@@ -22,6 +22,14 @@ export class BusinessLoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userService.checkLogin().subscribe(
+      (response: any) => {
+        this.router.navigate(['home']);
+      },
+      (error) => {
+        this.router.navigate(['']);
+      }
+    );
   }
 
   handleSubmit(formData: any) {
