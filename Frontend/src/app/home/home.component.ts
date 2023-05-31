@@ -9,6 +9,7 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  user: string = "";
 
   constructor(private dialog:MatDialog,
     private router: Router,
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
     this.userService.checkLogin().subscribe(
       (response: any) => {
         this.router.navigate(['home']);
+        this.user = response.message;
       },
       (error) => {
         this.router.navigate(['']);
@@ -30,6 +32,10 @@ export class HomeComponent implements OnInit {
       (Response) => {
         this.router.navigate(['']);
       });
+  }
+
+  navigater(route: string) {
+    this.router.navigate([route]);
   }
 
 }

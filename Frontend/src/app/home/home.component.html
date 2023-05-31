@@ -6,61 +6,58 @@
 </head>
 
 <body>
-  <div class="content">
-    <h2>Hello,</h2>
-    <a (click) = 'logout()'>Log Out</a>
-    <marquee behavior="alternate">WELL COME TO STORE MANAGEMENT SYSTEM</marquee>
-    <table>
+  <div class="main-content" id="content">
+    <h2 id="greeting">Hello {{user}},</h2>
+    <h3>Welcome to the Store Management System!</h3>
+    <button id="logout-btn" (click)='logout()'>Log Out</button>
+    <table id="main-box">
       <tr>
-        <td>
-          <h2>Employee</h2>
-          <li>clock In/Out</li>
-          <a href="components/employeeSection/clockin-out.php"><img class="mySlides" src="" style="width:80%" height="80"></a>
-          <li>Message</li>
-          <a href="components/employeeSection/emessage.php"><img class="mySlides" src="" style="width:80%" height="80"></a>
+        <td class="box">
+          <h2 class="box-head">Employee</h2>
+          <li><a (click) = "navigater('employee/clocking')"><img class="mySlides">Clock In/Out</a></li>
+          <li><a (click) = "navigater('employee/messaging')"><img class="mySlides" src="">Message</a></li>
         </td>
-        <td>
-          <h2>Shift</h2>
-          <li><a href="components/shiftSection/shiftcount.php">Shift count</a></li>
-          <li><a href="components/shiftSection/shiftreport.php">shift report</a></li>
-        <td>
-          <h2>Lotto</h2>
+        <td class="box">
+          <h2 class="box-head">Shift</h2>
+          <li><a href="components/shiftSection/shiftcount.php">Shift Count</a></li>
+          <li><a href="components/shiftSection/shiftreport.php">Shift Report</a></li>
+        <td class="box">
+          <h2 class="box-head">Lotto</h2>
           <li><a href="components/lottoSection/lottoactive.php">Lotto ACt.</a></li>
           <li><a href="components/lottoSection/lottosale.php">Lotto Sale</a></li>
         </td>
-        <td>
-          <h2>Report</h2>
+      </tr>
+      <tr>
+        <td class="box">
+          <h2 class="box-head">Report</h2>
           <li><a href="components/reportSection/workreport.php">Work Sheet Report.</a></li>
           <li><a href="components/reportSection/preport.php">Pay Chack</a></li>
         </td>
-      </tr>
-      <p></p>
-      <tr>
-        <td>
-          <h2>Order</h2>
+        <td class="box">
+          <h2 class="box-head">Order</h2>
           <li><a href="components/orderSection/inventory.php">Order List of Inventory.</a></li>
         </td>
-        <td>
-          <h2>Vender</h2>
+        <td class="box">
+          <h2 class="box-head">Vender</h2>
           <li><a href="components/venderSection/company.php">Vender</a></li>
-        </td>
-        <td>
-          <form action="" method="POST">
-            <div class="cont_form_login">
-              <h2>Maneger</h2>
-              <input id="username" name="username" type="email" class="input" placeholder="Enter Your Username" required>
-              <input id="password" name="password" type="password" class="input" data-type="password" placeholder="Enter Your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
-              <button class="btn_login" type="submit" name='submit' onclick="cambiar_login()">LOGIN</button>
-            </div>
-          </form>
-        </td>
-        <td>
-          <h2>Contact Us</h2>
-          <p>Some text..</p>
         </td>
       </tr>
     </table>
-    <marquee bgcolor="pink">copy right sawda system inc</marquee>
+    <form action="" method="POST">
+      <div class="cont_form_login">
+        <h2 class="box-head">Manager</h2>
+        <input id="username" name="username" type="email" class="input" placeholder="Enter Your Username" required>
+        <input id="password" name="password" type="password" class="input" data-type="password"
+          placeholder="Enter Your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}"
+          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+          required>
+        <button class="btn_login" type="submit" name='submit'>LOGIN</button>
+      </div>
+    </form>
+    <div>
+      <h2 class="box-head">Contact Us</h2>
+      <p>Some text..</p>
+    </div>
   </div>
 
 </body>
