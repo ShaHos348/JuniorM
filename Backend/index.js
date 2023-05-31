@@ -3,7 +3,21 @@ var cors = require("cors");
 const connection = require("./connection");
 const businessUserRoute = require("./routes/businessUser");
 const app = express();
-const sess = require("express-session");
+const session = require("express-session");
+const mysqlStore = require('express-mysql-session')(session);
+
+const IN_PROD = process.env.NODE_ENV === 'production'
+const MAX_AGE = 1000 * 60 * 60 * 24 * 365;
+const options ={
+    password: process.env.DB_PASSWORD,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    createDatabaseTable: true
+}
+ 
+const  sessionStore = new mysqlStore(options);
 
 app.use(cors({
     origin:'http://localhost:4200',
@@ -11,15 +25,21 @@ app.use(cors({
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(sess({
+app.use(session({
+    name: 'Login-Sessions',
+    store: sessionStore,
 	secret: 'secret',
-	resave: true,
-	saveUninitialized: true,
+	resave: false,
+	saveUninitialized: false,
     cookie: {
-        secure: false,
-        maxAge: 1000 * 60 * 60,
+        secure: IN_PROD,
+        maxAge: MAX_AGE,
+        sameSite: true
     }
 }));
+
+
+
 
 app.use("/businessUser", businessUserRoute);
 

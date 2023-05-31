@@ -1,47 +1,34 @@
-body {
-    text-align: center;
-    background: lightgray;
-  }
-  
-  .main-content {
-    background: white;
-    position: relative;
-  }
-  
-  input {
-    width: 100%;
-    margin-bottom: 10px
-  }
-  
-  li {
-    list-style-type: none;
-    margin: 10px;
-  }
+#content {
+  top: 15vh;
+  padding: 20px;
+  width: 30vw;
+  border-radius: 15px;
+  box-shadow: 1px 1px 4px 1px #cc0cd3;
+}
 
-  #content {
-    top: 15vh;
-    right: 35vw;
-    left: 35vw;
-    padding: 20px;
-    width: 30vw;
-    border-radius: 15px;
-    box-shadow: 1px 1px 4px 1px #c8d8eb;
-  }
+#header {
+  color: black;
+}
 
-  #register {
-    position: absolute;
-    right: 10px;
-    top: 0;
-    width: 15%;
-    background: transparent;
-  }
+#register {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15%;
+  color: red;
+  font-style: italic;
+  background-color: aqua;
+  border-top-right-radius: 15px;
+  border: 2px solid #cc0cd3;
+}
 
-  #register-btn {
-    border: 0;
-    background: transparent;
-    color: red;
-  }
+#btn_login {
+  background-color: rgb(204, 204, 204);
+  color: red;
+  border-radius: 5px;
+}
 
-  #registerTab {
-    display: none;
-  }
+.input {
+  width: 100%;
+  margin-bottom: 10px
+}

@@ -13,13 +13,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { BusinessSignupComponent } from './components/business-components/business-signup/business-signup.component';
 import { BusinessLoginComponent } from './components/business-components/business-login/business-login.component';
 import { BusinessFPComponent } from './components/forgotInfoSection/business-fp/business-fp.component';
+import { ClockinOutComponent } from './components/employeeSection/clockin-out/clockin-out.component';
+import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
 @NgModule({
   declarations: [	
     AppComponent,
     HomeComponent,
     BusinessSignupComponent,
     BusinessLoginComponent,
-    BusinessFPComponent
+    BusinessFPComponent,
+    ClockinOutComponent,
+    EmployeeMessageComponent
    ],
   imports: [
     BrowserModule,

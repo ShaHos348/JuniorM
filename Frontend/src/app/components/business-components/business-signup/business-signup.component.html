@@ -16,7 +16,7 @@
       </mat-form-field>
       
       <mat-form-field appearance="fill" fxFlex>
-        <mat-label>address</mat-label>
+        <mat-label>Address</mat-label>
         <input matInput formControlName="address" required />
         <mat-error *ngIf="signupForm.controls.address.touched && signupForm.controls.address.invalid">
           <span *ngIf="signupForm.controls.address.errors.required">This field is mandatory.</span>
