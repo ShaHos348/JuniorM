@@ -1,1 +1,22 @@
-<p>employee-message works!</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <div class="main-content" id="content">
+        <h2 id="header"><strong>Employee Messaging</strong></h2>
+        <li><label id="instructions">Send Message to Employee</label></li>
+        <li>To: <input #phone id="phone" name="phone" placeholder="Employee Phone Number"></li>
+        <li>From: <input #sender id="sender" name="sender" placeholder="Enter Sender"></li>
+        <li><textarea #message name="message" id="messageInput" cols="30" rows="5"></textarea></li>
+        <li><button id="send" (click) = "sendMessage({phone:phone.value, sender: sender.value, message:message.value})">Send Message</button></li>
+        <li><p id="response">{{response}}</p></li>
+        <li>
+            <a id="return" (click) = "navigater('home')">Return Home</a>
+        </li>
+    </div>
+</body>
+
+</html>

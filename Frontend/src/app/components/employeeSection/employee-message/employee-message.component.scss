@@ -1,0 +1,42 @@
+#content {
+    position: relative;
+    width: 50vw;
+    height: initial;
+    border: 5px solid red;
+    top: 10%;
+}
+
+#header {
+    color: black;
+    text-decoration: underline;
+}
+
+#instructions {
+    color: purple;
+}
+
+#phone {
+    text-align: center;
+}
+
+#sender {
+    text-align: center;
+}
+
+#messageInput {
+    resize: none;
+    width: 100%;
+}
+
+#send {
+    background-color: blanchedalmond;
+    padding: 1%;
+}
+
+#response {
+    color: blue;
+}
+
+#return {
+    color: rgb(242, 0, 255);
+}

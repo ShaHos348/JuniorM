@@ -2,6 +2,7 @@ const express = require("express");
 var cors = require("cors");
 const connection = require("./connection");
 const businessUserRoute = require("./routes/businessUser");
+const employeeUserRoute = require("./routes/employeeUser");
 const app = express();
 const session = require("express-session");
 const mysqlStore = require('express-mysql-session')(session);
@@ -42,5 +43,6 @@ app.use(session({
 
 
 app.use("/businessUser", businessUserRoute);
+app.use("/employeeUser", employeeUserRoute);
 
 module.exports = app;
