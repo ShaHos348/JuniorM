@@ -190,7 +190,7 @@ router.post("/employeeGetMessages", (req, res) => {
     if (!err) {
       query = "UPDATE emessage SET seen = 1 where seen = 0 AND idnum = " + idnum;
       connection.query(query, (err, resp) => {
-        if(!err){
+        if (!err) {
           return res.status(200).json(results);
         } else {
           return res.status(500).json(err);

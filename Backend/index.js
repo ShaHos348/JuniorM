@@ -9,7 +9,7 @@ const mysqlStore = require('express-mysql-session')(session);
 
 const IN_PROD = process.env.NODE_ENV === 'production'
 const MAX_AGE = 1000 * 60 * 60 * 24 * 365;
-const options ={
+const options = {
     password: process.env.DB_PASSWORD,
     user: process.env.DB_USER,
     database: process.env.DB_NAME,
@@ -17,21 +17,21 @@ const options ={
     port: process.env.DB_PORT,
     createDatabaseTable: true
 }
- 
-const  sessionStore = new mysqlStore(options);
+
+const sessionStore = new mysqlStore(options);
 
 app.use(cors({
-    origin:'http://localhost:4200',
-    credentials:true,
+    origin: 'http://localhost:4200',
+    credentials: true,
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
     name: 'Login-Sessions',
     store: sessionStore,
-	secret: 'secret',
-	resave: false,
-	saveUninitialized: false,
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
     cookie: {
         secure: IN_PROD,
         maxAge: MAX_AGE,

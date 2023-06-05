@@ -19,7 +19,8 @@
 				</div>
 
 				<div class="field-group">
-					<button type="submit" name="forgot-password" id="forgot-password" (click) = "validate_forgot({username: username.value, email:email.value})" class="form-submit-button">
+					<button type="submit" name="forgot-password" id="forgot-password"
+						(click)="validate_forgot({username: username.value, email:email.value})" class="form-submit-button">
 						Submit
 					</button>
 					<a href="">Back to Login Page</a>

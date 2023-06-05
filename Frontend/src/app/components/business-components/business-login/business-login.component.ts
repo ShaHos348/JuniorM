@@ -7,64 +7,63 @@ import { UserService } from '../../../services/user.service';
 import { GlobalConstants } from '../../../shared/global-constants';
 
 @Component({
-  selector: 'app-business-login',
-  templateUrl: './business-login.component.html',
-  styleUrls: ['./business-login.component.scss']
+	selector: 'app-business-login',
+	templateUrl: './business-login.component.html',
+	styleUrls: ['./business-login.component.scss'],
 })
 export class BusinessLoginComponent implements OnInit {
-  responseMessage: any;
+	responseMessage: any;
 
-  constructor(
-    private dialog:MatDialog,
-    private router: Router,
-    private userService: UserService,
-    private snackbarService: SnackbarService,
-  ) {}
+	constructor(
+		private dialog: MatDialog,
+		private router: Router,
+		private userService: UserService,
+		private snackbarService: SnackbarService
+	) {}
 
-  ngOnInit(): void {
-    this.userService.checkLogin().subscribe(
-      (response: any) => {
-        this.router.navigate(['home']);
-      },
-      (error) => {
-        this.router.navigate(['']);
-      }
-    );
-  }
+	ngOnInit(): void {
+		this.userService.checkLogin().subscribe(
+			(response: any) => {
+				this.router.navigate(['home']);
+			},
+			(error) => {
+				this.router.navigate(['']);
+			}
+		);
+	}
 
-  handleSubmit(formData: any) {
-    var data = {
-      username: formData.username,
-      password: formData.password,
-    };
-    this.userService.login(data).subscribe(
-      (response: any) => {
-        this.responseMessage = response?.message;
-        this.snackbarService.openSnackbar(this.responseMessage, '');
-        this.router.navigate(['home']);
-      },
-      (error) => {
-        if (error.error?.message) {
-          this.responseMessage = error.error?.message;
-        } else {
-          this.responseMessage = GlobalConstants.genericError;
-        }
-        this.snackbarService.openSnackbar(
-          this.responseMessage,
-          GlobalConstants.error
-        );
-      }
-    );
-  }
+	handleSubmit(formData: any) {
+		var data = {
+			username: formData.username,
+			password: formData.password,
+		};
+		this.userService.login(data).subscribe(
+			(response: any) => {
+				this.responseMessage = response?.message;
+				this.snackbarService.openSnackbar(this.responseMessage, '');
+				this.router.navigate(['home']);
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+	}
 
-  businessSignupAction(){
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = "550px";
-    this.dialog.open(BusinessSignupComponent),dialogConfig;
-  }
+	businessSignupAction() {
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.width = '550px';
+		this.dialog.open(BusinessSignupComponent), dialogConfig;
+	}
 
-  businessFP() {
-    this.router.navigate(['forgotBusinessLogin']);
-  }
-
+	businessFP() {
+		this.router.navigate(['forgotBusinessLogin']);
+	}
 }
