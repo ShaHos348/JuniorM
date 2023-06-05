@@ -5,32 +5,32 @@
 </head>
 
 <body>
-    <div class="main-content">
-        <div id="clocking-content">
-            <h2 id="header"><strong>Employee Clocking</strong></h2>
-            <li><input id="lookup" #look type="number" placeholder="Seach Employee" name="lookup"></li>
-            <li><button id="lookup-btn" (click)='lookup({idnum: look.value})'>Search Employee</button></li>
-            <li>
-                <p id="response">{{response}}</p>
-            </li>
-            <li><button id="clocker" (click)='look.value = ""; clocker()'>{{clock}}</button></li>
-            <li>
-                <a (click)="navigater('home');" id="return">Return Home</a>
-            </li>
-        </div>
-        <table id="messageTable">
-            <thead id="messageTableHead">
-                    <th class="messageTableDates">Date</th>
-                    <th class="messageTableSenders">Sender</th>
-                    <th class="messageTableMessages">Message</th>
-            </thead>
-            <tr class="messageTableRows" *ngFor="let mess of messages">
-                <td style="font-size: xx-small;">{{ mess.date }}</td>
-                <td>{{ mess.sender }}</td>
-                <td>{{ mess.message }}</td>
-            </tr> 
-        </table>
-    </div>
+	<div class="main-content">
+		<div id="clocking-content">
+			<h2 id="header"><strong>Employee Clocking</strong></h2>
+			<li><input id="lookup" #look type="number" placeholder="Seach Employee" name="lookup"></li>
+			<li><button id="lookup-btn" (click)='lookup({idnum: look.value})'>Search Employee</button></li>
+			<li>
+				<p id="response">{{response}}</p>
+			</li>
+			<li><button id="clocker" (click)='look.value = ""; clocker()'>{{clock}}</button></li>
+			<li>
+				<a (click)="navigater('home');" id="return">Return Home</a>
+			</li>
+		</div>
+		<table id="messageTable">
+			<thead id="messageTableHead">
+				<th class="messageTableDates">Date</th>
+				<th class="messageTableSenders">Sender</th>
+				<th class="messageTableMessages">Message</th>
+			</thead>
+			<tr class="messageTableRows" *ngFor="let mess of messages">
+				<td style="font-size: xx-small;">{{ mess.date }}</td>
+				<td>{{ mess.sender }}</td>
+				<td>{{ mess.message }}</td>
+			</tr>
+		</table>
+	</div>
 
 </body>
 

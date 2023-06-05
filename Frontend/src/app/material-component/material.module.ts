@@ -12,19 +12,17 @@ import { MaterialModule } from '../shared/material-module';
 import { ViewBillProductsComponent } from './dialog/view-bill-products/view-bill-products.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(MaterialRoutes),
-    MaterialModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FlexLayoutModule,
-    CdkTableModule
-  ],
-  providers: [],
-  declarations: [
-    ViewBillProductsComponent    
-  ]
+	imports: [
+		CommonModule,
+		RouterModule.forChild(MaterialRoutes),
+		MaterialModule,
+		HttpClientModule,
+		FormsModule,
+		ReactiveFormsModule,
+		FlexLayoutModule,
+		CdkTableModule,
+	],
+	providers: [],
+	declarations: [ViewBillProductsComponent],
 })
 export class MaterialComponentsModule {}
