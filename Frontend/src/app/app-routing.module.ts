@@ -5,10 +5,12 @@ import { BusinessLoginComponent } from './components/business-components/busines
 import { BusinessFPComponent } from './components/forgotInfoSection/business-fp/business-fp.component';
 import { ClockinOutComponent } from './components/employeeSection/clockin-out/clockin-out.component';
 import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
+import { ShiftReportComponent } from './components/shiftSection/shift-report/shift-report.component';
+import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
+  {
+    path: '',
     component: BusinessLoginComponent
   },
   {
@@ -27,8 +29,16 @@ const routes: Routes = [
     path: 'employee/messaging',
     component: EmployeeMessageComponent
   },
+	{
+    path: 'shift/report',
+    component: ShiftReportComponent
+  },
+	{
+    path: 'manager/home',
+    component: ManagerHomeComponent
+  },
   { path: '**', component: BusinessLoginComponent },
-  
+
   /*{
     path: 'cafe',
     component: FullComponent,
