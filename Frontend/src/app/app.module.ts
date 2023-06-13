@@ -18,7 +18,7 @@ import { EmployeeMessageComponent } from './components/employeeSection/employee-
 import { EmployeeSignupComponent } from './components/employeeSection/employee-signup/employee-signup.component';
 import { ModifyClockingComponent } from './components/employeeSection/modify-clocking/modify-clocking.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
-import { ShiftReportComponent } from './components/shiftSection/shift-report/shift-report.component';
+import { DailyReportComponent } from './components/shiftSection/daily-report/daily-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +31,7 @@ import { ShiftReportComponent } from './components/shiftSection/shift-report/shi
     EmployeeSignupComponent,
     ModifyClockingComponent,
     ManagerHomeComponent,
-    ShiftReportComponent,
+    DailyReportComponent,
    ],
   imports: [
     BrowserModule,

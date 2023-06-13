@@ -5,8 +5,8 @@ import { BusinessLoginComponent } from './components/business-components/busines
 import { BusinessFPComponent } from './components/forgotInfoSection/business-fp/business-fp.component';
 import { ClockinOutComponent } from './components/employeeSection/clockin-out/clockin-out.component';
 import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
-import { ShiftReportComponent } from './components/shiftSection/shift-report/shift-report.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
+import { DailyReportComponent } from './components/shiftSection/daily-report/daily-report.component';
 
 const routes: Routes = [
   {
@@ -30,8 +30,8 @@ const routes: Routes = [
     component: EmployeeMessageComponent
   },
 	{
-    path: 'shift/report',
-    component: ShiftReportComponent
+    path: 'report/daily',
+    component: DailyReportComponent
   },
 	{
     path: 'manager/home',
