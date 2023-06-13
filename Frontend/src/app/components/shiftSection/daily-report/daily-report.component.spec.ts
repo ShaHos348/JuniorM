@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ShiftReportComponent } from './shift-report.component';
+import { DailyReportComponent } from './daily-report.component';
 
-describe('ShiftReportComponent', () => {
-  let component: ShiftReportComponent;
-  let fixture: ComponentFixture<ShiftReportComponent>;
+describe('DailyReportComponent', () => {
+  let component: DailyReportComponent;
+  let fixture: ComponentFixture<DailyReportComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShiftReportComponent ]
+      declarations: [ DailyReportComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShiftReportComponent);
+    fixture = TestBed.createComponent(DailyReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
