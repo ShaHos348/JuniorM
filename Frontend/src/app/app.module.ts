@@ -19,6 +19,8 @@ import { EmployeeSignupComponent } from './components/employeeSection/employee-s
 import { ModifyClockingComponent } from './components/employeeSection/modify-clocking/modify-clocking.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
 import { DailyReportComponent } from './components/shiftSection/daily-report/daily-report.component';
+import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
+import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +34,8 @@ import { DailyReportComponent } from './components/shiftSection/daily-report/dai
     ModifyClockingComponent,
     ManagerHomeComponent,
     DailyReportComponent,
+    OrderEntryComponent,
+    OrderPrintComponent,
    ],
   imports: [
     BrowserModule,
