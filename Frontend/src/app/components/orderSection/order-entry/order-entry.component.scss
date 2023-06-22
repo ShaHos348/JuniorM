@@ -1,0 +1,81 @@
+#content {
+	position: relative;
+	height: initial;
+	top: 5%;
+}
+
+#entry-content {
+	position: relative;
+	width: 50vw;
+	border: 2.5px solid black;
+	padding-bottom: 10px;
+	margin: auto;
+}
+
+h1 {
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#new-btn {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	color: red;
+	background-color: black;
+}
+
+#name-input, #quantity-input {
+	margin-right: 5px;
+}
+
+#add-btn, #print-btn {
+	color: blue;
+	background-color: lime;
+}
+
+#print-btn {
+	background-color: orange;
+}
+
+#orderTable {
+	position: relative;
+	width: 50vw;
+	border: 3px solid rgb(143, 50, 50);
+	margin: auto;
+	margin-top: 10px;
+	border-collapse: collapse;
+	display: none;
+}
+
+th {
+	position: relative;
+	top: 0;
+	color: red;
+	border-bottom: 3px solid red;
+}
+
+td {
+	position: relative;
+	vertical-align: 0;
+	color: green;
+}
+
+.orderTableRows {
+	border-top: 1px solid gray;
+}
+
+.orderTableSl {
+	width: 10%;
+	border-right: 1px solid black;
+}
+
+.orderTableNames {
+	width: 70%;
+	border-right: 1px solid black;
+}
+
+#return {
+	color: red;
+}

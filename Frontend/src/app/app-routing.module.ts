@@ -7,6 +7,8 @@ import { ClockinOutComponent } from './components/employeeSection/clockin-out/cl
 import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
 import { DailyReportComponent } from './components/shiftSection/daily-report/daily-report.component';
+import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
+import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 
 const routes: Routes = [
   {
@@ -36,6 +38,14 @@ const routes: Routes = [
 	{
     path: 'manager/home',
     component: ManagerHomeComponent
+  },
+	{
+    path: 'order/entry',
+    component: OrderEntryComponent
+  },
+	{
+    path: 'order/print',
+    component: OrderPrintComponent
   },
   { path: '**', component: BusinessLoginComponent },
 
