@@ -12,7 +12,7 @@ export class ReportService {
 
 	logReport(data: any) {
 		return this.httpClient.post(
-			this.url + '/report/daily',
+			this.url + '/report/log',
 			data,
 			{
 				withCredentials: true,
