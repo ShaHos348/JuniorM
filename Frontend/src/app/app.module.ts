@@ -21,6 +21,7 @@ import { ManagerHomeComponent } from './components/managerSection/manager-home/m
 import { DailyReportComponent } from './components/shiftSection/daily-report/daily-report.component';
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
+import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { OrderPrintComponent } from './components/orderSection/order-print/order
     DailyReportComponent,
     OrderEntryComponent,
     OrderPrintComponent,
+    LottoActiveComponent,
    ],
   imports: [
     BrowserModule,

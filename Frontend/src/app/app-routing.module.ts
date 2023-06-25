@@ -9,6 +9,7 @@ import { ManagerHomeComponent } from './components/managerSection/manager-home/m
 import { DailyReportComponent } from './components/shiftSection/daily-report/daily-report.component';
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
+import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
 	{
     path: 'order/print',
     component: OrderPrintComponent
+  },
+	{
+    path: 'lotto/active',
+    component: LottoActiveComponent
   },
   { path: '**', component: BusinessLoginComponent },
 
