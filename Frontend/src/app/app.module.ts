@@ -18,10 +18,10 @@ import { EmployeeMessageComponent } from './components/employeeSection/employee-
 import { EmployeeSignupComponent } from './components/employeeSection/employee-signup/employee-signup.component';
 import { ModifyClockingComponent } from './components/employeeSection/modify-clocking/modify-clocking.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
-import { DailyReportComponent } from './components/shiftSection/daily-report/daily-report.component';
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
+import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,10 +34,10 @@ import { LottoActiveComponent } from './components/lottoSection/lotto-active/lot
     EmployeeSignupComponent,
     ModifyClockingComponent,
     ManagerHomeComponent,
-    DailyReportComponent,
     OrderEntryComponent,
     OrderPrintComponent,
     LottoActiveComponent,
+    LogReportComponent,
    ],
   imports: [
     BrowserModule,

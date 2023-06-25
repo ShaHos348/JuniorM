@@ -6,7 +6,7 @@ import { BusinessFPComponent } from './components/forgotInfoSection/business-fp/
 import { ClockinOutComponent } from './components/employeeSection/clockin-out/clockin-out.component';
 import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
-import { DailyReportComponent } from './components/shiftSection/daily-report/daily-report.component';
+import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
@@ -33,8 +33,8 @@ const routes: Routes = [
     component: EmployeeMessageComponent
   },
 	{
-    path: 'report/daily',
-    component: DailyReportComponent
+    path: 'report/log',
+    component: LogReportComponent
   },
 	{
     path: 'manager/home',

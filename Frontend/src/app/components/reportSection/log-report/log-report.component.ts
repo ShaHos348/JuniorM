@@ -7,11 +7,11 @@ import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-	selector: 'app-daily-report',
-	templateUrl: './daily-report.component.html',
-	styleUrls: ['./daily-report.component.scss'],
+  selector: 'app-log-report',
+  templateUrl: './log-report.component.html',
+  styleUrls: ['./log-report.component.scss']
 })
-export class DailyReportComponent implements OnInit {
+export class LogReportComponent implements OnInit {
 	responseMessage: any;
 	shiftDate: any;
 	shift: any;
@@ -62,7 +62,7 @@ export class DailyReportComponent implements OnInit {
 	ngOnInit(): void {
 		this.userService.checkLogin().subscribe(
 			(response: any) => {
-				this.router.navigate(['report/daily']);
+				this.router.navigate(['report/log']);
 			},
 			(error) => {
 				this.router.navigate(['']);

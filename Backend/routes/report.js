@@ -4,7 +4,7 @@ const router = express.Router();
 require("dotenv").config();
 var auth = require("../services/authentication");
 
-router.post("/daily", (req, res) => {
+router.post("/log", (req, res) => {
     let data = req.body;
     businessidnum = req.session.user.business.idnum;
     part1 = businessidnum + ",'" + data.date + "','" + data.shift + "'";
