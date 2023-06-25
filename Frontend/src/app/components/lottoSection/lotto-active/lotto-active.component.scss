@@ -1,0 +1,91 @@
+#content {
+	position: relative;
+	height: initial;
+	top: 5%;
+}
+
+#entry-content {
+	position: relative;
+	width: 50vw;
+	border: 2.5px solid black;
+	padding-bottom: 10px;
+	margin: auto;
+}
+
+h1 {
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.inputs {
+	width: 300px;
+	margin: auto;
+	margin-top: 10px;
+	text-align: right;
+}
+
+label {
+	color: orangered;
+}
+
+#box-input, #lottoid-input, #name-input, #quantity-input, #shift {
+	position: relative;
+	width: 200px;
+	right: 0;
+	margin-left: 5px;
+}
+
+#add-btn, #table-btn {
+	text-align-last: center;
+	color: blue;
+	background-color: lime;
+}
+
+#table-btn {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	background-color: orange;
+}
+
+#lottoAcTable {
+	position: relative;
+	width: 50vw;
+	border: 3px solid rgb(143, 50, 50);
+	margin: auto;
+	margin-top: 10px;
+	border-collapse: collapse;
+	display: none;
+}
+
+th {
+	position: relative;
+	top: 0;
+	color: red;
+	border-bottom: 3px solid red;
+}
+
+td {
+	position: relative;
+	vertical-align: 0;
+	color: green;
+}
+
+.lottoAcTableRows {
+	border-top: 1px solid gray;
+}
+
+.lottoAcTableNames {
+	width: 50%;
+	border-right: 1px solid black;
+}
+
+.lottoAcTableQuantities {
+	width: 50%;
+	border-right: 1px solid black;
+}
+
+#return {
+	color: red;
+}

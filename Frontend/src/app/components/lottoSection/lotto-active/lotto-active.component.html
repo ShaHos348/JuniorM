@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+	<div class="main-content" id="content">
+		<div id="entry-content">
+			<h1 id="header"><strong>Lotto Active Entry</strong></h1>
+			<li class="inputs">
+				<label for="shift">Shift Time:</label>
+				<select name="shift" id="shift" [(ngModel)]="shift">
+					<option value="Day">Day Shift</option>
+					<option value="Night">Night Shift</option>
+				</select>
+			</li>
+			<li class="inputs">
+				<label for="box-input">Box:</label>
+				<input id="box-input" #box type="number" placeholder="Enter Box" name="box">
+				</li>
+				<li class="inputs">
+					<label for="lottoid-input">Lotto Id:</label>
+					<input id="lottoid-input" #lottoid type="number" placeholder="Enter Lotto Id" name="lottoid">
+				</li>
+				<li class="inputs">
+					<label for="name-input">Name:</label>
+					<input id="name-input" #name type="text" placeholder="Enter Name" name="name">
+				</li>
+				<li class="inputs">
+					<label for="quantity-input">Quantity:</label>
+					<input id="quantity-input" #quantity type="number" placeholder="Enter Quantity" name="quantity">
+				</li>
+
+				<li>
+					<button id="add-btn"
+						(click)='insert({box: box.value, lottoid: lottoid.value, name: name.value, quantity: quantity.value})'>Add</button>
+				</li>
+				<li>
+					<a (click)="navigater('home');" id="return">Return Home</a>
+				</li>
+				<li>
+					<button id="table-btn" (click)='getLottoActives()'>Show Active Lotto Table</button>
+				</li>
+		</div>
+		<table id="lottoAcTable" style="display: none;">
+			<thead id="lottoAcTableHead">
+				<th class="lottoAcTableNames">Name</th>
+				<th class="lottoAcTableQuantities">Box</th>
+			</thead>
+			<tr class="lottoAcTableRows" *ngFor="let lotto of lottoActives">
+				<td class="lottoAcTableNames">{{ lotto.name }}</td>
+				<td class="lottoAcTableQuantities">{{ lotto.box }}</td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+
+</html>
