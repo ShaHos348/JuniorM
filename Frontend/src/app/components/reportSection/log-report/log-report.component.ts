@@ -124,8 +124,6 @@ export class LogReportComponent implements OnInit {
 			overshoot: this.overshoot,
 		};
 
-		console.log(data);
-
 		this.reportService.logReport(data).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;

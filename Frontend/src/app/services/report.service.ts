@@ -20,4 +20,26 @@ export class ReportService {
 			}
 		);
 	}
+
+	dailyReport(data: any) {
+		return this.httpClient.post(
+			this.url + '/report/daily',
+			data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	monthlyReport(data: any) {
+		return this.httpClient.post(
+			this.url + '/report/monthly',
+			data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
 }
