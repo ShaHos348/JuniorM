@@ -22,6 +22,8 @@ import { OrderEntryComponent } from './components/orderSection/order-entry/order
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
 import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
+import { DailyReportComponent } from './components/reportSection/daily-report/daily-report.component';
+import { MonthlyReportComponent } from './components/reportSection/monthly-report/monthly-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +40,8 @@ import { LogReportComponent } from './components/reportSection/log-report/log-re
     OrderPrintComponent,
     LottoActiveComponent,
     LogReportComponent,
+    DailyReportComponent,
+    MonthlyReportComponent,
    ],
   imports: [
     BrowserModule,

@@ -7,6 +7,8 @@ import { ClockinOutComponent } from './components/employeeSection/clockin-out/cl
 import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
 import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
+import { DailyReportComponent } from './components/reportSection/daily-report/daily-report.component';
+import { MonthlyReportComponent } from './components/reportSection/monthly-report/monthly-report.component';
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
@@ -35,6 +37,14 @@ const routes: Routes = [
 	{
     path: 'report/log',
     component: LogReportComponent
+  },
+	{
+    path: 'report/daily',
+    component: DailyReportComponent
+  },
+	{
+    path: 'report/monthly',
+    component: MonthlyReportComponent
   },
 	{
     path: 'manager/home',

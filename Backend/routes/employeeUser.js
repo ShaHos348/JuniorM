@@ -24,7 +24,6 @@ router.post("/employeeSignup", (req, res) => {
             [user.name, user.email, user.ssn],
             (err, results) => {
               if (!err) {
-                console.log(results);
                 if (results.length <= 0) {
                   idNum =
                     String(date.getFullYear()) +

@@ -140,7 +140,6 @@ router.get("/new", (req, res) => {
 
 router.post('/print', (req, res) => {
     let orderid = req.body.orderid;
-    console.log(orderid);
     businessidnum = req.session.user.business.idnum;
 
     query = "SELECT * FROM business WHERE idnum = ?";
