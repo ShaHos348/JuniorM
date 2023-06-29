@@ -31,11 +31,11 @@ router.post("/employeeSignup", (req, res) => {
                     String(date.getDate()).padStart(2, "0");
                   let business = req.session.user.business.name;
                   query =
-                    "INSERT INTO employee (idnum,business,name,address,phone,email,birth,ssn,password,citizenship, salary) VALUES (" +
+                    "INSERT INTO employee (idnum,business,name,address,phone,email,birth,ssn,password,citizenship, salary) VALUES ('" +
                     idNum +
-                    "," +
+                    "','" +
                     business +
-                    ",?,?,?,?,?,?,?,?,?)";
+                    "',?,?,?,?,?,?,?,?,?)";
                   connection.query(
                     query,
                     [
@@ -53,7 +53,7 @@ router.post("/employeeSignup", (req, res) => {
                       if (!err) {
                         return res
                           .status(200)
-                          .json({ message: "Succesfully Registered!" });
+                          .json({ message: "Succesfully Registered!", idnum: results.insertId });
                       } else {
                         return res.status(500).json(err);
                       }

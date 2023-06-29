@@ -1,0 +1,27 @@
+#content {
+	position: relative;
+	width: 50vw;
+	height: initial;
+	border: 5px solid red;
+	top: 10%;
+	padding-top: 25px;
+}
+
+#signupForm {
+	border: 1px dotted blue;
+	width: fit-content;
+	margin: auto;
+}
+
+input {
+	width: 15vw;
+}
+
+select, label {
+	width: 8vw;
+	color: black;
+}
+
+#signup-btn {
+	background-color: lime;
+}

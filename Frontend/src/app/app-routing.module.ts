@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { BusinessLoginComponent } from './components/business-components/business-login/business-login.component';
 import { BusinessFPComponent } from './components/forgotInfoSection/business-fp/business-fp.component';
+import { EmployeeSignupComponent } from './components/employeeSection/employee-signup/employee-signup.component';
+import { ModifyClockingComponent } from './components/employeeSection/modify-clocking/modify-clocking.component';
 import { ClockinOutComponent } from './components/employeeSection/clockin-out/clockin-out.component';
 import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
@@ -25,6 +27,14 @@ const routes: Routes = [
   {
     path: 'forgotBusinessLogin',
     component: BusinessFPComponent
+  },
+  {
+    path: 'employee/signup',
+    component: EmployeeSignupComponent,
+  },
+  {
+    path: 'employee/modifyClocking',
+    component: ModifyClockingComponent,
   },
   {
     path: 'employee/clocking',
