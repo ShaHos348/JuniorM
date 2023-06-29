@@ -144,11 +144,11 @@ router.post("/businessForgotPassword", (req, res) => {
   });
 });
 
-router.get("/checkLogin", auth.authenticateToken, (req, res) => {
+router.get("/checkLogin", auth.authenticateBusiness, (req, res) => {
   return res.status(200).json({ message: req.session.user.business.username });
 });
 
-router.get("/logout", auth.authenticateToken, (req, res) => {
+router.get("/logout", auth.authenticateBusiness, (req, res) => {
   req.session.destroy();
   return res.status(200).json({ message: "Logged Out!" });
 });

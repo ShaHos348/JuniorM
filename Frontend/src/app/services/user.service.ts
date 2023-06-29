@@ -52,4 +52,27 @@ export class UserService {
 			withCredentials: true,
 		});
 	}
+
+	managerLogin(data: any) {
+		return this.httpClient.post(
+			this.url + '/managerUser/managerLogin',
+			data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	managerCheckLogin() {
+		return this.httpClient.get(this.url + '/managerUser/checkLogin', {
+			withCredentials: true,
+		});
+	}
+
+	managerLogout() {
+		return this.httpClient.get(this.url + '/managerUser/logout', {
+			withCredentials: true,
+		});
+	}
 }

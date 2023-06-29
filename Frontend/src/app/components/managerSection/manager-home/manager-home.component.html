@@ -9,54 +9,36 @@
 	<div class="main-content" id="content">
 		<h2 id="greeting">Hello {{user}},</h2>
 		<h3>Welcome to the Store Management System!</h3>
-		<button id="logout-btn" (click)='logout()'>Log Out</button>
+		<button id="logout-btn" (click)='logout()'>Log Out Manager</button>
 		<table id="main-box">
 			<tr>
 				<td class="box">
 					<h2 class="box-head">Employee</h2>
-					<li><a (click)="navigater('')"><img class="mySlides">Clock In/Out</a></li>
-					<li><a (click)="navigater('')"><img class="mySlides" src="">Message</a></li>
+					<li><a (click)="navigater('')">Register Employee</a></li>
+					<li><a (click)="navigater('')">Employee</a></li>
+					<li><a (click)="navigater('')">Update Clock In</a></li>
+					<li><a (click)="navigater('')">View Employee Messages</a></li>
 				</td>
 				<td class="box">
 					<h2 class="box-head">Shift</h2>
-					<li><a href="components/shiftSection/shiftcount.php">Shift Count</a></li>
-					<li><a (click)="navigater('shift/report')">Shift Report</a></li>
+					<li><a (click)="navigater('')">Edit Daily Report</a></li>
 				<td class="box">
 					<h2 class="box-head">Lotto</h2>
-					<li><a href="components/lottoSection/lottoactive.php">Lotto ACt.</a></li>
-					<li><a href="components/lottoSection/lottosale.php">Lotto Sale</a></li>
 				</td>
 			</tr>
 			<tr>
 				<td class="box">
 					<h2 class="box-head">Report</h2>
-					<li><a href="components/reportSection/workreport.php">Work Sheet Report.</a></li>
-					<li><a href="components/reportSection/preport.php">Pay Chack</a></li>
+					<li><a (click)="navigater('')">Pay Check</a></li>
 				</td>
 				<td class="box">
 					<h2 class="box-head">Order</h2>
-					<li><a href="components/orderSection/inventory.php">Order List of Inventory.</a></li>
 				</td>
 				<td class="box">
 					<h2 class="box-head">Vender</h2>
-					<li><a href="components/venderSection/company.php">Vender</a></li>
 				</td>
 			</tr>
 		</table>
-		<form action="" method="POST">
-			<div class="cont_form_login">
-				<h2 class="box-head">Manager</h2>
-				<li><a href="Employee.php">Employee.php</a></li>
-
-        <li><a href="edit.php">Edit Report</a></li>
-
-        <li><a href="sreport.PHP">Daly Report</a></li>
-			</div>
-		</form>
-		<div>
-			<h2 class="box-head">Contact Us</h2>
-			<p>Some text..</p>
-		</div>
 	</div>
 
 </body>

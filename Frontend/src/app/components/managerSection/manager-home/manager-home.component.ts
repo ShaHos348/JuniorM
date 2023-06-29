@@ -16,11 +16,20 @@ export class ManagerHomeComponent implements OnInit {
 		private userService: UserService) { }
 
   ngOnInit(): void {
+		this.userService.managerCheckLogin().subscribe(
+			(response: any) => {
+				this.router.navigate(['manager/home']);
+				this.user = response.message;
+			},
+			(error) => {
+				this.router.navigate(['home']);
+			}
+		);
   }
 
 	logout() {
-		this.userService.logout().subscribe((Response) => {
-			this.router.navigate(['']);
+		this.userService.managerLogout().subscribe((Response) => {
+			this.router.navigate(['home']);
 		});
 	}
 
