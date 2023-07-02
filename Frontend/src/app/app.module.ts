@@ -24,6 +24,7 @@ import { LottoActiveComponent } from './components/lottoSection/lotto-active/lot
 import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
 import { DailyReportComponent } from './components/reportSection/daily-report/daily-report.component';
 import { MonthlyReportComponent } from './components/reportSection/monthly-report/monthly-report.component';
+import { EmployeeInfoComponent } from './components/employeeSection/employee-info/employee-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { MonthlyReportComponent } from './components/reportSection/monthly-repor
     LogReportComponent,
     DailyReportComponent,
     MonthlyReportComponent,
+    EmployeeInfoComponent,
    ],
   imports: [
     BrowserModule,

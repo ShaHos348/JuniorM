@@ -60,4 +60,32 @@ export class EmployeeService {
 			}
 		);
 	}
+
+	getEmployees() {
+		return this.httpClient.get(
+			this.url + '/employeeUser/getEmployees',
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	updateInfo(data: any) {
+		return this.httpClient.post(
+			this.url + '/employeeUser/employeeUpdateInfo',
+			data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	deleteEmployee(data: any) {
+		return this.httpClient.post(
+			this.url + '/employeeUser/deleteEmployee',
+			data
+		);
+	}
 }
