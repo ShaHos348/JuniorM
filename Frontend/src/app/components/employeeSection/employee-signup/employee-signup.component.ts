@@ -49,7 +49,7 @@ export class EmployeeSignupComponent implements OnInit {
 				this.inputs[3].value +
 				', ' +
 				this.inputs[4].value +
-				' ' +
+				', ' +
 				this.inputs[5].value,
 			phone: this.inputs[7].value,
 			email: this.inputs[9].value,

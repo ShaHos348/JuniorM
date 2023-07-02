@@ -25,40 +25,47 @@ router.post("/employeeSignup", (req, res) => {
             (err, results) => {
               if (!err) {
                 if (results.length <= 0) {
-                  idNum =
-                    String(date.getFullYear()) +
-                    String(date.getMonth() + 1).padStart(2, "0") +
-                    String(date.getDate()).padStart(2, "0");
-                  let business = req.session.user.business.name;
-                  query =
-                    "INSERT INTO employee (idnum,business,name,address,phone,email,birth,ssn,password,citizenship, salary) VALUES ('" +
-                    idNum +
-                    "','" +
-                    business +
-                    "',?,?,?,?,?,?,?,?,?)";
-                  connection.query(
-                    query,
-                    [
-                      user.name,
-                      user.address,
-                      user.phone,
-                      user.email,
-                      user.birth,
-                      user.ssn,
-                      user.password,
-                      user.citizenship,
-                      user.salary,
-                    ],
-                    (err, results) => {
-                      if (!err) {
-                        return res
-                          .status(200)
-                          .json({ message: "Succesfully Registered!", idnum: results.insertId });
-                      } else {
-                        return res.status(500).json(err);
+                  let lastIdNum = 20210001;
+                  query = "SELECT MAX(idnum) AS lastIdNum FROM employee";
+                  connection.query(query, (err, rows) => {
+                    if (!err) {
+                      if (rows[0].lastIdNum != null) {
+                        lastIdNum = rows[0].lastIdNum + 1;
                       }
+                      let businessid = req.session.user.business.idnum;
+                      query =
+                        "INSERT INTO employee (idnum,businessid,name,address,phone,email,birth,ssn,password,citizenship, salary) VALUES ('" +
+                        lastIdNum +
+                        "','" +
+                        businessid +
+                        "',?,?,?,?,?,?,?,?,?)";
+                      connection.query(
+                        query,
+                        [
+                          user.name,
+                          user.address,
+                          user.phone,
+                          user.email,
+                          user.birth,
+                          user.ssn,
+                          user.password,
+                          user.citizenship,
+                          user.salary,
+                        ],
+                        (err, results) => {
+                          if (!err) {
+                            return res
+                              .status(200)
+                              .json({ message: "Succesfully Registered!", idnum: results.insertId });
+                          } else {
+                            return res.status(500).json(err);
+                          }
+                        }
+                      );
+                    } else {
+                      return res.status(500).json(err);
                     }
-                  );
+                  });
                 } else {
                   return res.status(400).json({
                     message: "Employee name, ssn, and/or email already used!",
@@ -79,6 +86,46 @@ router.post("/employeeSignup", (req, res) => {
       }
     }
   );
+});
+
+router.post("/employeeUpdateInfo", (req, res) => {
+  let user = req.body;
+  query = "SELECT idnum FROM employee where idnum = ?";
+  connection.query(query, [user.idnum], (err, result) => {
+    if (!err) {
+      if (result.length == 1) {
+        query = "UPDATE employee SET name= ?, address= ?, phone= ?, email = ?,birth= ?, ssn= ?, password= ?, citizenship= ?, salary= ? WHERE idnum = ?";
+        connection.query(
+          query,
+          [
+            user.name,
+            user.address,
+            user.phone,
+            user.email,
+            user.birth,
+            user.ssn,
+            user.password,
+            user.citizenship,
+            user.salary,
+            user.idnum
+          ],
+          (err, results) => {
+            if (!err) {
+              return res
+                .status(200)
+                .json({ message: "Succesfully Updated!" });
+            } else {
+              return res.status(500).json(err);
+            }
+          }
+        );
+      } else {
+        return res.status(500).json({ message: "Employee Not Found!" });
+      }
+    } else {
+      return res.status(500).json(err);
+    }
+  })
 });
 
 router.post("/employeeClockingLookup", (req, res) => {
@@ -199,6 +246,46 @@ router.post("/employeeGetMessages", (req, res) => {
       return res.status(500).json(err);
     }
   });
+});
+
+router.get("/getEmployees", (req, res) => {
+  let businessid = req.session.user.business.idnum;
+  query = "SELECT * FROM employee where businessid = ?";
+  connection.query(query, [businessid], (err, results) => {
+    if (!err) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(500).json(err);
+    }
+  })
+})
+
+router.post("/deleteEmployee", (req, res) => {
+  let data = req.body;
+  query = "SELECT idnum FROM employee where idnum = ?";
+  connection.query(query, [data.idnum], (err, result) => {
+    if (!err) {
+      if (result.length == 1) {
+        query = "DELETE FROM employee WHERE idnum = ?";
+        connection.query(
+          query, [data.idnum], (err, results) => {
+            if (!err) {
+              return res
+                .status(200)
+                .json({ message: "Succesfully Deleted!" });
+            } else {
+              return res.status(500).json(err);
+            }
+          }
+        );
+      } else {
+        return res.status(500).json({ message: "Employee Not Found!" });
+      }
+    } else {
+      return res.status(500).json(err);
+    }
+  })
+
 });
 
 module.exports = router;
