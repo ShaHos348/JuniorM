@@ -120,16 +120,16 @@ export class MonthlyReportComponent implements OnInit {
 		this.report.forEach((item: { shreporttotal: number; paidout: number; shcounttotal: number; overshoot: number; }) => {
 			for (let index = 0; index < 10; index++) {
 				let element = eval('item.shreport' + (index + 1));
-				this.shreportAmounts[index] += element;
+				this.shreportAmounts[index] += Number(element);
 			}
-			this.shreportAmounts[10] += item.shreporttotal;
+			this.shreportAmounts[10] += Number(item.shreporttotal);
 			for (let index = 0; index < this.shiftCountNames.length-1; index++) {
 				let element = eval('item.shcount' + (index + 1));
-				this.shcountAmounts[index] += element;
+				this.shcountAmounts[index] += Number(element);
 			}
-			this.shcountAmounts[8] += item.paidout;
-			this.shcountAmounts[9] += item.shcounttotal;
-			this.shcountAmounts[10] += item.overshoot;
+			this.shcountAmounts[8] += Number(item.paidout);
+			this.shcountAmounts[9] += Number(item.shcounttotal);
+			this.shcountAmounts[10] += Number(item.overshoot);
 		});
 
 	}
