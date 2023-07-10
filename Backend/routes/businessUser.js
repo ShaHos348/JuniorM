@@ -10,7 +10,7 @@ var auth = require("../services/authentication");
 router.post("/businessSignup", (req, res) => {
   let user = req.body;
   query =
-    "(SELECT name,email FROM employee where name=? OR email=?) UNION (SELECT name,email from manager WHERE name=? OR email=?)";
+    "SELECT name,email FROM employee where name=? OR email=?";
   connection.query(query, [user.name, user.email, user.name, user.email], (err, results) => {
     if (!err) {
       if (results.length <= 0) {
