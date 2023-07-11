@@ -6,33 +6,27 @@
 
 <body>
 	<div class="main-content" id="content">
-		<div id="clocking-content">
+		<div id="info-options">
 			<h2 id="header"><strong>Employee Information</strong></h2>
-			<li class="options">
-				<button (click)="navigater('employee/signup');">Add Employee</button>
-				<button>Update Employee</button>
-				<button>Delete Employee</button>
-				<button>Show Employee Info</button>
+			<li id="option-btns">
+				<button class="option-btns" style="background-color: orange;" (click) = "showOptionBox(''); prefill('none')">Show Employee</button>
+				<button class="option-btns" style="background-color: greenyellow;" (click) = "navigater('employee/signup');">Add Employee</button>
+				<button class="option-btns" style="background-color: blue;" (click) = "showOptionBox('search-btn');">Update Employee</button>
+				<button class="option-btns" style="background-color: red;" (click) = "showOptionBox('delete-btn');">Delete Employee</button>
+				<button class="option-btns" style="background-color: purple;" (click) = "showOptionBox('print-btn');">Print Employee Info</button>
 			</li>
-			<li class="options">
-				<input type="number" #deleteInput placeholder="Enter Employee Id">
-				<button (click)="delete(deleteInput.value);">Delete Employee</button>
-			</li>
-			<li class="options">
-				<input type="number" #updateInput placeholder="Enter Employee Id">
-				<button (click)="prefill(updateInput.value);">Search Employee</button>
-			</li>
-			<li class="options">
-				<input type="number" #infoInput placeholder="Enter Employee Id">
-				<button (click)="prefill(infoInput.value);">Search Employee</button>
-				<button (click)="printPDF();">Print Employee Info</button>
+			<li id="option-box">
+				<input type="number" #idInput id='id-input' placeholder="Enter Employee Id">
+				<button class="options" id="delete-btn" (click)="delete(idInput.value);">Delete Employee</button>
+				<button class="options" id="search-btn" (click)="prefill(idInput.value);">Search Employee</button>
+				<button class="options" id="print-btn" (click)="prefill(idInput.value); printPDF();">Print Employee Info</button>
 			</li>
 
 			<li>
 				<a (click)="navigater('manager/home');" id="return">Return Home</a>
 			</li>
 		</div>
-		<table id="infoTable">
+		<table class="option-results" id="info-table">
 			<thead id="infoTableHead">
 				<th class="infoTableName">Name</th>
 				<th class="infoTableId">Id</th>
@@ -44,7 +38,8 @@
 				<td>{{ col.phone }}</td>
 			</tr>
 		</table>
-		<form id="signupForm" ngNativeValidate (ngSubmit)="update()">
+		<form class="option-results" id="updateForm" ngNativeValidate (ngSubmit)="update()">
+			<h2>Update Form</h2>
 			<li><input id="id" name="id" type="number" class="input" placeholder="Employee Id" value={{employee.idnum}}
 					required></li>
 			<li><input id="fname" name="fname" type="text" class="input" placeholder="Employee First Name"
@@ -80,13 +75,13 @@
 				</select>
 			</li>
 			<li><input id="salary" name="salary" type="number" class="input" placeholder="Employee Hourly Salary"
-					value={{employee.salary}} required>
+					value={{employee.salary}} step=".01" required>
 			</li>
 			<li>
 				<button id="signup-btn" type="submit" name='signup-btn'>UPDATE EMPLOYEE</button>
 			</li>
 		</form>
-		<div id="infoPdf">
+		<div class="option-results" id="infoPdf">
 			<h2>Employee Info</h2>
 			<li>Id: {{employee.idnum}}</li>
 			<li>Name: {{employee.fname}} {{employee.lname}}</li>
