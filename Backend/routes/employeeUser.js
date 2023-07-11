@@ -54,9 +54,10 @@ router.post("/employeeSignup", (req, res) => {
                         ],
                         (err, results) => {
                           if (!err) {
+                            console.log(results);
                             return res
                               .status(200)
-                              .json({ message: "Succesfully Registered!", idnum: results.insertId });
+                              .json({ message: "Succesfully Registered!", idnum: lastIdNum });
                           } else {
                             return res.status(500).json(err);
                           }

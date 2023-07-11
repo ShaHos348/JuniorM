@@ -16,6 +16,7 @@ export class EmployeeInfoComponent implements OnInit {
 	citizenship: any;
 	responseMessage: any;
 	inputs: any;
+	print: boolean = false;
 	employee: any = {
 		idnum: null,
 		fname: null,
@@ -52,8 +53,28 @@ export class EmployeeInfoComponent implements OnInit {
 		);
 	}
 
-	showInfo(idnum: any) {
-		this.prefill(idnum);
+	showOptionBox(btn: any) {
+		let optionBoxes = document.getElementsByClassName(
+			'options'
+		) as HTMLCollectionOf<HTMLElement>;
+		for (let index = 0; index < optionBoxes.length; index++) {
+			const element = optionBoxes[index];
+			element.style.display = 'none';
+		}
+		let input = document.getElementById('id-input') as HTMLButtonElement;
+		input.style.display = 'initial';
+		if (btn == '') {
+			input.style.display = 'none';
+			return;
+		}
+		this.print = false;
+		if (btn == 'print-btn') {
+			let button = document.getElementById('search-btn') as HTMLButtonElement;
+			button.style.display = 'initial';
+			this.print = true;
+		}
+		let button = document.getElementById(btn) as HTMLButtonElement;
+		button.style.display = 'initial';
 	}
 
 	update() {
@@ -70,7 +91,7 @@ export class EmployeeInfoComponent implements OnInit {
 				this.inputs[4].value +
 				', ' +
 				this.inputs[5].value +
-				' ' +
+				', ' +
 				this.inputs[6].value,
 			phone: this.inputs[8].value,
 			email: this.inputs[10].value,
@@ -88,6 +109,7 @@ export class EmployeeInfoComponent implements OnInit {
 				for (var i = 0; i < this.inputs.length; i++) {
 					this.inputs[i].value = null;
 				}
+				this.emptyPrefill();
 				this.getInfo();
 			},
 			(error) => {
@@ -105,16 +127,16 @@ export class EmployeeInfoComponent implements OnInit {
 	}
 
 	getInfo() {
-		let infoTable = document.getElementById('infoTable') as HTMLElement;
+		let infoTable = document.getElementById('info-table') as HTMLElement;
 		this.employeeService.getEmployees().subscribe((response: any) => {
 			this.info = response;
 			if (this.info.length != 0) {
 				for (let index = 0; index < this.info.length; index++) {
 					const element = this.info[index].citizenship;
 					if (element == 0) {
-						this.info[index].citizenship = "No";
+						this.info[index].citizenship = 'No';
 					} else {
-						this.info[index].citizenship = "Yes";
+						this.info[index].citizenship = 'Yes';
 					}
 				}
 				infoTable.style.display = 'table';
@@ -125,9 +147,10 @@ export class EmployeeInfoComponent implements OnInit {
 	}
 
 	delete(idnum: any) {
+		this.emptyPrefill();
 		let employeeId = {
-			idnum: idnum
-		}
+			idnum: idnum,
+		};
 		this.employeeService.deleteEmployee(employeeId).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
@@ -150,6 +173,7 @@ export class EmployeeInfoComponent implements OnInit {
 	}
 
 	prefill(idnum: any) {
+		this.emptyPrefill();
 		let index = 1000;
 		for (let i = 0; i < this.info.length; i++) {
 			const id = this.info[i].idnum;
@@ -159,13 +183,15 @@ export class EmployeeInfoComponent implements OnInit {
 			}
 		}
 		if (this.info.length < index) {
-			return this.emptyPrefill();
+			let optionResult = document.getElementById('info-table') as HTMLElement;
+			optionResult.style.display = 'table';
+			return;
 		}
 		this.employee.idnum = this.info[index - 1].idnum;
-		let name = this.info[index - 1].name.split(" ");
+		let name = this.info[index - 1].name.split(' ');
 		this.employee.fname = name[0];
 		this.employee.lname = name[name.length - 1];
-		let address = this.info[index - 1].address.split(", ");
+		let address = this.info[index - 1].address.split(', ');
 		this.employee.street = address[0];
 		this.employee.city = address[1];
 		this.employee.state = address[2];
@@ -177,9 +203,24 @@ export class EmployeeInfoComponent implements OnInit {
 		this.employee.password = this.info[index - 1].password;
 		this.employee.citizen = this.info[index - 1].citizenship;
 		this.employee.salary = this.info[index - 1].salary;
+
+		if (this.print) {
+			let optionResult = document.getElementById('infoPdf') as HTMLElement;
+			optionResult.style.display = 'initial';
+		} else {
+			let optionResult = document.getElementById('updateForm') as HTMLElement;
+			optionResult.style.display = 'initial';
+		}
 	}
 
 	emptyPrefill() {
+		let optionResults = document.getElementsByClassName(
+			'option-results'
+		) as HTMLCollectionOf<HTMLElement>;
+		for (let index = 0; index < optionResults.length; index++) {
+			const element = optionResults[index];
+			element.style.display = 'none';
+		}
 		this.employee.idnum = null;
 		this.employee.fname = null;
 		this.employee.lname = null;
@@ -203,13 +244,14 @@ export class EmployeeInfoComponent implements OnInit {
 
 		doc.html(div, {
 			html2canvas: {
-				scale: 1,
+				scale: 0.5,
 			},
-			x: 0,
-			filename: "Employee Information",
+			x: 10,
+			y: 10,
+			filename: 'Employee Information',
 			callback: function (doc) {
 				doc.output('dataurlnewwindow');
-			}
+			},
 		});
 	}
 
