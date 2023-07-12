@@ -129,33 +129,39 @@ router.post("/employeeUpdateInfo", (req, res) => {
   })
 });
 
-router.post("/employeeClockingLookup", (req, res) => {
-  let user = req.body;
-  query = "SELECT idnum FROM employee WHERE idnum = ?";
-  connection.query(query, [user.idnum], (err, results) => {
+router.get("/employeeClockingLookup/:idnum&:password", (req, res) => {
+  let idnum = req.params.idnum;
+  let password = req.params.password;
+  query = "SELECT idnum FROM employee WHERE idnum = ? AND password = ?";
+  connection.query(query, [idnum, password], (err, results) => {
     if (!err) {
       if (results.length > 0) {
         let idnum = results[0].idnum;
         query =
           "SELECT idnum, clockin, clockout FROM clocking WHERE idnum = " +
           idnum +
-          " AND clockout = '0000-00-00 00:00:00'";
+          " AND clockout IS NULL";
         connection.query(query, (err, results) => {
-          if (results == 0) {
-            return res.status(200).json({
-              message: "Clock In",
-              clocked: false,
-            });
+          if (!err) {
+            if (results == 0) {
+              return res.status(200).json({
+                message: "Clock In",
+                clocked: false,
+              });
+            } else {
+              return res.status(200).json({
+                message: "Clock Out",
+                clocked: true,
+              });
+            }
           } else {
-            return res.status(200).json({
-              message: "Clock Out",
-              clocked: true,
-            });
+            return res.status(500).json(err);
           }
         });
       } else {
         return res.status(400).json({
           message: "Employee not found!",
+
         });
       }
     } else {
@@ -176,7 +182,7 @@ router.post("/employeeClocking", (req, res) => {
     query =
       "UPDATE clocking SET clockout= now(),hours= (((clockout - clockin)/60)/60) WHERE idnum= " +
       idnum +
-      " AND clockout='0000-00-00 00:00:00'";
+      " AND clockout IS NULL";
     message = "Clocked Out!";
   }
 
@@ -229,10 +235,10 @@ router.post("/employeeSendMessage", (req, res) => {
   });
 });
 
-router.post("/employeeGetMessages", (req, res) => {
-  let idnum = req.body.idnum;
-  query =
-    "SELECT sender, message, date from emessage where seen = 0 AND idnum = " + idnum;
+router.get("/employeeGetMessages/:idnum", (req, res) => {
+  let idnum = req.params.idnum;
+  query = 
+    "SELECT sender, message, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage where seen = 0 AND idnum = " + idnum;
   connection.query(query, (err, results) => {
     if (!err) {
       query = "UPDATE emessage SET seen = 1 where seen = 0 AND idnum = " + idnum;
