@@ -22,9 +22,8 @@ export class EmployeeService {
 	}
 
 	lookup(data: any) {
-		return this.httpClient.post(
-			this.url + '/employeeUser/employeeClockingLookup',
-			data,
+		return this.httpClient.get(
+			this.url + '/employeeUser/employeeClockingLookup/' + data.idnum + "&" + data.password,
 			{
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
@@ -52,9 +51,8 @@ export class EmployeeService {
 	}
 
 	getMessages(data: any) {
-		return this.httpClient.post(
-			this.url + '/employeeUser/employeeGetMessages',
-			data,
+		return this.httpClient.get(
+			this.url + '/employeeUser/employeeGetMessages/' + data.idnum,
 			{
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
