@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { jsPDF } from 'jspdf';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+const pdfMake = require('pdfmake/build/pdfmake.js');
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
 	selector: 'app-employee-info',
@@ -238,21 +240,72 @@ export class EmployeeInfoComponent implements OnInit {
 	}
 
 	printPDF() {
-		let doc = new jsPDF('p', 'px', 'letter');
-
-		const div = document.getElementById('infoPdf') as HTMLElement;
-
-		doc.html(div, {
-			html2canvas: {
-				scale: 0.5,
+		let docDefinition = {
+			content: [
+				{
+					text: 'Employee Information',
+					style: 'header',
+				},
+				{
+					text: "Id: " + this.employee.idnum,
+					style: 'info',
+				},
+				{
+					text: "Name: " + this.employee.fname + " " + this.employee.lname,
+					style: 'info',
+				},
+				{
+					text: "Address: " + this.employee.street,
+					style: 'info',
+				},
+				{
+					text: this.employee.city + ", " + this.employee.state + " " + this.employee.zip,
+					style: 'info',
+				},
+				{
+					text: "Phone: " + this.employee.phone,
+					style: 'info',
+				},
+				{
+					text: "Email: " + this.employee.email,
+					style: 'info',
+				},
+				{
+					text: "Birth: " + this.employee.birth,
+					style: 'info',
+				},
+				{
+					text: "SSN: " + this.employee.ssn,
+					style: 'info',
+				},
+				{
+					text: "Citizenship: " + this.employee.citizen,
+					style: 'info',
+				},
+				{
+					text: "Salary: $" + this.employee.salary,
+					style: 'info',
+				}
+			],
+			styles: {
+				header: {
+					bold: true,
+					alignment: 'center',
+					decoration: 'underline',
+					fontSize: 20,
+					color: 'blue',
+					margin: [0, 15, 0, 15],
+				},
+				info: {
+					alignment: 'left',
+					fontSize: 15,
+					color: 'black',
+					margin: [0, 5, 0, 0],
+				},
 			},
-			x: 10,
-			y: 10,
-			filename: 'Employee Information',
-			callback: function (doc) {
-				doc.output('dataurlnewwindow');
-			},
-		});
+		};
+
+		pdfMake.createPdf(docDefinition).open();
 	}
 
 	navigater(route: string) {
