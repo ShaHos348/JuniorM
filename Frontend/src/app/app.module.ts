@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/material-module';
 import { HomeComponent } from './home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BusinessSignupComponent } from './components/business-components/business-signup/business-signup.component';
@@ -52,7 +51,6 @@ import { EmployeeInfoComponent } from './components/employeeSection/employee-inf
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FlexLayoutModule,
     SharedModule,
     HttpClientModule
   ],

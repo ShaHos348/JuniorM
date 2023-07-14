@@ -26,7 +26,9 @@ router.post("/businessSignup", (req, res) => {
                 query = "SELECT MAX(idnum) AS lastIdNum FROM business";
                 connection.query(query, (err, rows) => {
                   if (!err) {
-                    lastIdNum = rows[0].lastIdNum + 1;
+                    if (rows[0].lastIdNum != null) {
+                      lastIdNum = rows[0].lastIdNum + 1;
+                    }
                     query =
                       "INSERT INTO business (idnum,name,address,city,state,zipcode,country,phone,mobile,email,username,password) VALUES (" +
                       lastIdNum +
@@ -85,7 +87,7 @@ router.post("/businessLogin", (req, res) => {
   connection.query(query, [user.username, user.password], (err, results) => {
     if (!err) {
       if (results.length == 1) {
-        const user = { business: results[0] };
+        const user = { business: {idnum: results[0].idnum, username: results[0].username} };
         /*const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN, {
           expiresIn: "1h",
         });*/
