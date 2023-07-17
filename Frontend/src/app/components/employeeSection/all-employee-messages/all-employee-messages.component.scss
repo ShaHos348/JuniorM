@@ -12,11 +12,18 @@
 	margin: auto;
 }
 
-#clocking-table, #updateForm {
+#messages-table, #deleteForm {
 	display: none;
 	position: relative;
 	border: 5px solid cyan;
 	width: 50vw;
+	margin: auto;
+}
+
+#prefilled-table {
+	position: relative;
+	border: 1px solid greenyellow;
+	width: 90%;
 	margin: auto;
 }
 
@@ -37,6 +44,6 @@ td {
 	background-color: red;
 }
 
-#update-btn {
+#delete-btn {
 	background-color: aquamarine;
 }

@@ -160,7 +160,6 @@ export class EmployeeInfoComponent implements OnInit {
 				this.getInfo();
 			},
 			(error) => {
-				console.log(error);
 				if (error.error?.message) {
 					this.responseMessage = error.error?.message;
 				} else {

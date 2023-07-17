@@ -40,6 +40,26 @@ export class EmployeeService {
 		);
 	}
 
+	getClocking(data: any) {
+		return this.httpClient.get(
+			this.url + '/employeeUser/getEmployeeClocking/' + data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	updateClocking(data: any) {
+		return this.httpClient.patch(
+			this.url + '/employeeUser/updateClocking',
+			data,
+			{
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
 	sendMessage(data: any) {
 		return this.httpClient.post(
 			this.url + '/employeeUser/employeeSendMessage',
@@ -56,6 +76,23 @@ export class EmployeeService {
 			{
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
+		);
+	}
+
+	getPrevMessages(data: any) {
+		return this.httpClient.get(
+			this.url + '/employeeUser/employeeGetPrevMessages/' + data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	deleteMessages(data: any) {
+		return this.httpClient.post(
+			this.url + '/employeeUser/deleteMessages',
+			data
 		);
 	}
 

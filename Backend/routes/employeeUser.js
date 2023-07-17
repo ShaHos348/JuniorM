@@ -3,7 +3,6 @@ const connection = require("../connection");
 const router = express.Router();
 let date = new Date();
 const jwt = require("jsonwebtoken");
-//const nodemailer = require("nodemailer");  not working currently
 require("dotenv").config();
 var auth = require("../services/authentication");
 
@@ -54,7 +53,6 @@ router.post("/employeeSignup", (req, res) => {
                         ],
                         (err, results) => {
                           if (!err) {
-                            console.log(results);
                             return res
                               .status(200)
                               .json({ message: "Succesfully Registered!", idnum: lastIdNum });
@@ -180,7 +178,7 @@ router.post("/employeeClocking", (req, res) => {
     message = "Clocked In!";
   } else {
     query =
-      "UPDATE clocking SET clockout= now(),hours= (((clockout - clockin)/60)/60) WHERE idnum= " +
+      "UPDATE clocking SET clockout= now(), hours= (((TIMESTAMPDIFF(SECOND, clockin, clockout))/60)/60) WHERE idnum= " +
       idnum +
       " AND clockout IS NULL";
     message = "Clocked Out!";
@@ -190,6 +188,48 @@ router.post("/employeeClocking", (req, res) => {
     if (!err) {
       return res.status(200).json({
         message: message,
+      });
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.get("/getEmployeeClocking/:idnum", (req, res) => {
+  let id = req.params.idnum;
+  let businessid = req.session.user.business.idnum;
+  query = "SELECT idnum from employee where businessid = ? AND idnum = ?";
+  connection.query(query, [businessid, id], (err, result) => {
+    if (!err) {
+      if (result.length > 0) {
+        query = "SELECT *, CONVERT_TZ(clockin,'+00:00',@@SESSION.time_zone) as clockin, CONVERT_TZ(clockout,'+00:00',@@SESSION.time_zone) as clockout FROM clocking WHERE idnum = ? AND clockout IS NOT NULL";
+        connection.query(query, [id], (err, results) => {
+          if (!err) {
+            return res.status(200).json(results);
+          } else {
+            return res.status(500).json(err);
+          }
+        });
+      } else {
+        return res.status(400).json({
+          message: "Employee not found!",
+        });
+      }
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.patch("/updateClocking", (req, res) => {
+  let data = req.body;
+  data.clockin = data.clockin.replace("T", " ");
+  data.clockout = data.clockout.replace("T", " ");
+  query = "UPDATE clocking SET clockin = ?, clockout = ?, hours = (((TIMESTAMPDIFF(SECOND, clockin, clockout))/60)/60) WHERE sl = '?'";
+  connection.query(query, [data.clockin, data.clockout, data.sl], (err, result) => {
+    if (!err) {
+      return res.status(200).json({
+        message: "Employee Clocking Updated!",
       });
     } else {
       return res.status(500).json(err);
@@ -237,7 +277,7 @@ router.post("/employeeSendMessage", (req, res) => {
 
 router.get("/employeeGetMessages/:idnum", (req, res) => {
   let idnum = req.params.idnum;
-  query = 
+  query =
     "SELECT sender, message, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage where seen = 0 AND idnum = " + idnum;
   connection.query(query, (err, results) => {
     if (!err) {
@@ -253,6 +293,39 @@ router.get("/employeeGetMessages/:idnum", (req, res) => {
       return res.status(500).json(err);
     }
   });
+});
+
+router.get("/employeeGetPrevMessages/:idnum", (req, res) => {
+  let idnum = req.params.idnum;
+  let businessid = req.session.user.business.idnum;
+  if (idnum == "00000000") {
+    query = "SELECT *, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage WHERE idnum IN (SELECT idnum from employee where businessid = " + businessid + ")";
+  } else {
+    query = "SELECT *, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage WHERE idnum = " + idnum;
+  }
+  connection.query(query, (err, results) => {
+    if (!err) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.post("/deleteMessages", (req, res) => {
+  let data = req.body;
+  query = "DELETE FROM emessage WHERE slno = ?";
+  connection.query(
+    query, [data.slno], (err, results) => {
+      if (!err) {
+        return res
+          .status(200)
+          .json({ message: "Succesfully Deleted!" });
+      } else {
+        return res.status(500).json(err);
+      }
+    }
+  );
 });
 
 router.get("/getEmployees", (req, res) => {
