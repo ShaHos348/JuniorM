@@ -1,1 +1,63 @@
-<p>modify-clocking works!</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+	<div class="main-content" id="content">
+		<div id="top-content">
+			<h2 id="header"><strong>Manage Employee Clocking</strong></h2>
+			<li id="search-box">
+				<input type="number" #idInput id='id-input' placeholder="Enter Employee Id">
+				<button id="search-btn" (click)="getClockingInfo(idInput.value)">Search Employee</button>
+			</li>
+			<li>
+				<a (click)="navigater('manager/home');" id="return">Return Home</a>
+			</li>
+		</div>
+		<table class="action-div" id="clocking-table">
+			<thead id="infoTableHead">
+				<th class="tableIndex">Index</th>
+				<th class="tableId">Id</th>
+				<th class="tableClockin">Clock-In</th>
+				<th class="tableClockout">Clock-out</th>
+				<th class="tableHours">Hours</th>
+				<th class="tableColEdit">Edit</th>
+			</thead>
+			<tr class="infoTableRows" *ngFor="let col of clockingInfo; let i = index">
+				<td>{{ i + 1 }}</td>
+				<td>{{ col.idnum }}</td>
+				<td>{{ col.clockin }}</td>
+				<td>{{ col.clockout }}</td>
+				<td>{{ col.hours }}</td>
+				<td><button (click)="prefill(i)">EDIT</button></td>
+			</tr>
+		</table>
+		<form class="action-div" id="updateForm" ngNativeValidate (ngSubmit)="update({clockin: clockinInput.value, clockout: clockoutInput.value})">
+			<button id="back-btn" type="button" (click)="back()">X</button>
+			<h2>Update Form</h2>
+			<li>
+				<label id="id" name="id" class="input" >Employee Id: {{employee.idnum}}</label>
+			</li>
+			<li>
+			<li>
+				<input id="clockin" name="clockin" #clockinInput class="input" type="datetime-local" placeholder="Employee Clock-In" value={{employee.clockin}} required>
+			</li>
+			<li>
+			<li>
+				<input id="clockout" name="clockout" #clockoutInput class="input" type="datetime-local" placeholder="Employee Clock-out" value={{employee.clockout}} required>
+			</li>
+			<li>
+			<li>Hours:
+				<label id="hours" name="hours" class="input" >{{employee.hours}}</label>
+			</li>
+			<li>
+				<button id="update-btn" type="submit" name='update-btn'>UPDATE CLOCKING</button>
+			</li>
+		</form>
+	</div>
+
+</body>
+
+</html>
