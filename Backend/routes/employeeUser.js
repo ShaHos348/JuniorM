@@ -237,6 +237,40 @@ router.patch("/updateClocking", (req, res) => {
   });
 });
 
+router.get("/employeePay/:date", (req, res) => {
+  let startDate = req.params.date;
+  let businessid = req.session.user.business.idnum;
+  query = "SELECT idnum, name, salary FROM employee WHERE businessid = ?";
+  connection.query(query, [businessid], (err, employees) => {
+    if (!err) {
+      if (employees.length != 0) {
+        query = "SELECT idnum, SUM(hours) AS hours, Date(CONVERT_TZ(clockin,'+00:00',@@SESSION.time_zone)) as clockedin FROM clocking WHERE ((clockin BETWEEN ? AND ? + interval 7 day) AND idnum IN (SELECT idnum FROM employee WHERE businessid = ?)) GROUP BY clockedin, idnum ORDER BY idnum, clockedin";
+        connection.query(query, [startDate, startDate, businessid], (err, results) => {
+          if (!err) {
+            if (results.length != 0) {
+              return res.status(200).json({employees: employees, clockins: results});
+            } else {
+              return res.status(400).json({
+                message: "No Employees Clocked In this week!",
+              });
+            }
+          } else {
+            console.log(err);
+            return res.status(500).json(err);
+          }
+        });
+      } else {
+        return res.status(400).json({
+          message: "You have no employees!",
+        });
+      }
+    } else {
+      
+      return res.status(500).json(err);
+    }
+  });
+});
+
 router.post("/employeeSendMessage", (req, res) => {
   let content = req.body;
   query = "SELECT idnum, name FROM employee where phone = ?";
