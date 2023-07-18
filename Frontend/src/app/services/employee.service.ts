@@ -106,6 +106,16 @@ export class EmployeeService {
 		);
 	}
 
+	getEmployeePay(date: any) {
+		return this.httpClient.get(
+			this.url + '/employeeUser/employeePay/' + date,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
 	updateInfo(data: any) {
 		return this.httpClient.post(
 			this.url + '/employeeUser/employeeUpdateInfo',
