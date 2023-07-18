@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+	<div class="main-content" id="content">
+		<h2 id="header"><strong>Employee Signup</strong></h2>
+		<form id="signupForm" ngNativeValidate (ngSubmit)="signUp()">
+			<li><input id="fname" name="fname" type="text" class="input" placeholder="Employee First Name" required></li>
+			<li><input id="lname" name="lname" type="text" class="input" placeholder="Employee Last Name" required></li>
+			<li><input id="street" name="street" type="text" class="input" placeholder="Employee Street" required></li>
+			<li><input id="city" name="city" type="text" class="input" placeholder="Employee City" required></li>
+			<li><input id="state" name="state" type="text" class="input" placeholder="Employee State" required></li>
+			<li><input id="zip" name="zip" type="number" class="input" placeholder="Employee Zip code" min="10000" max="99999" required></li>
+			<li><input id="birth" name="birth" type="number" class="input" placeholder="Employee Date of Birth" min="10000000" max="99999999" required></li>
+			<li><input id="phone" name="phone" type="number" class="input" placeholder="Employee Phone number" min="1000000000" max="9999999999" required></li>
+			<li><input id="ssn" name="ssn" type="number" class="input" placeholder="Last 4 Digits of Employee SSN" min="1000" max="9999"></li>
+			<li><input id="email" name="email" type="text" class="input" placeholder="Employee Email" required></li>
+			<li>
+				<input id="password" #password name="password" type="password" class="input" data-type="password"
+					placeholder="Employee password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}"
+					title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+					required>
+			</li>
+			<li><label for="citizenship">U.S. Citizenship: </label>
+			<select name="citizenship" id="citizenship"  [(ngModel)]="citizenship" required>
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+			</select></li>
+			<li><input id="salary" name="salary" type="number" class="input" placeholder="Employee Hourly Salary" step=".01" required></li>
+			<li>
+				<button id="signup-btn" type="submit" name='signup-btn'>REGISTER</button>
+			</li>
+		</form>
+		<label id="id" style="display: none;">Employee Id: {{id}}</label>
+		<li>
+				<a (click)="navigater('manager/home');" id="return">Return Home</a>
+			</li>
+	</div>
+</body>
+
+</html>

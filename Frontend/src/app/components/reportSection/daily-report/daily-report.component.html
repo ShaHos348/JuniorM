@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+	<div class="main-content" id="content">
+		<form id="entry-content" (ngSubmit)="handleSubmit()">
+			<h1>Worksheet</h1>
+
+			<label for="date">Date: </label>
+			<input type="date" name="date" id="date" [(ngModel)]="shiftDate">
+			<label for="shift">Shift Time: </label>
+			<select name="shift" id="shift" [(ngModel)]="shift">
+				<option value="Day">Day Shift</option>
+				<option value="Night">Night Shift</option>
+			</select>
+			<button type="submit" id="submit">SUBMIT</button>
+
+
+
+			<li>
+				<a (click)="navigater('home');" id="return">Return Home</a>
+			</li>
+			<button id="print-btn" (click)="print()" style="display: none;">PRINT</button>
+		</form>
+		<table id="main-table" style="display: none;" #pdfTable>
+			<tr>
+				<td class="table-title">
+					{{formatDate(shiftDate)}} {{shift}} Shift
+				</td>
+				<td class="table-title">
+					Daily Report
+				</td>
+			</tr>
+			<tr>
+				<td class="main-table-section">
+					<table id="payout-table">
+						<thead>
+							<th>Sl</th>
+							<th>Company</th>
+							<th>Amount</th>
+						</thead>
+						<tr *ngFor="let a of listOfTen; let i = index">
+							<td>{{ i + 1 }}</td>
+							<td class="payout-company">{{companyNames[i]}}</td>
+							<td class="payout-company">{{companyAmounts[i]}}</td>
+						</tr>
+					</table>
+				</td>
+				<td class="main-table-section">
+					<table id="report-table">
+						<thead>
+							<th>Shift Report</th>
+							<th>Amount</th>
+						</thead>
+						<tr *ngFor="let name of shiftReportNames; let i = index">
+							<td class="shift-report-name">{{ name }}</td>
+							<td class="payout-company">{{shreportAmounts[i]}}</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="main-table-section">
+					<table id="lotto-active-table">
+						<thead>
+							<th>Sl</th>
+							<th>Lotto Active</th>
+							<th>Box</th>
+						</thead>
+						<tr *ngFor="let a of listOfTen; let i = index">
+							<td>{{ i + 1 }}</td>
+							<td class="lotto-active-name">{{lottoActiveNames[i]}}</td>
+							<td class="lotto-active-box">{{lottoActiveBox[i]}}</td>
+						</tr>
+					</table>
+				</td>
+				<td class="main-table-section">
+					<table id="count-table">
+						<thead>
+							<th>Shift Count</th>
+							<th>Amount</th>
+						</thead>
+						<tr *ngFor="let name of shiftCountNames; let i = index">
+							<td class="amount-type-name">{{ name }}</td>
+							<td class="amount-type-amount">{{shcountAmounts[i]}}</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+	</div>
+
+
+</body>
+
+</html>
+

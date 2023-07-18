@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+	<div class="main-content" id="content">
+		<div id="entry-content">
+			<h1 id="header"><strong>Order List Entry</strong></h1>
+			<button id="new-btn" (click)='newOrder()'>New Order</button>
+			<li>
+				<input id="name-input" #name type="text" placeholder="Enter Name" name="name">
+				<input id="quantity-input" #quantity type="number" placeholder="Enter Quantity" name="quantity">
+				<button id="add-btn" (click)='insert({name: name.value, quantity: quantity.value})'>Add</button>
+
+			</li>
+			<li>
+				<a (click)="navigater('home');" id="return">Return Home</a>
+			</li>
+
+			<button id="print-btn" (click)="navigater('order/print');">Go to Print Page</button>
+		</div>
+
+		<table id="orderTable">
+			<thead id="orderTableHead">
+				<th class="orderTableSl">Sl</th>
+				<th class="orderTableNames">Name</th>
+				<th class="orderTableQuantities">Quantity</th>
+			</thead>
+			<tr class="orderTableRows" *ngFor="let item of orderItems">
+				<td class="orderTableSl">{{ item.serialnum }}</td>
+				<td class="orderTableNames">{{ item.name }}</td>
+				<td class="orderTableQuantities">{{ item.quantity }}</td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+
+</html>
