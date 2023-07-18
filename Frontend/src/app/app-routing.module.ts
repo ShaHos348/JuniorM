@@ -9,6 +9,7 @@ import { ModifyClockingComponent } from './components/employeeSection/modify-clo
 import { ClockinOutComponent } from './components/employeeSection/clockin-out/clockin-out.component';
 import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
 import { AllEmployeeMessagesComponent } from './components/employeeSection/all-employee-messages/all-employee-messages.component';
+import { EmployeePayComponent } from './components/employeeSection/employee-pay/employee-pay.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
 import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
 import { DailyReportComponent } from './components/reportSection/daily-report/daily-report.component';
@@ -54,6 +55,10 @@ const routes: Routes = [
   {
     path: 'employee/messaging',
     component: EmployeeMessageComponent
+  },
+  {
+    path: 'employee/pay',
+    component: EmployeePayComponent
   },
 	{
     path: 'report/log',
