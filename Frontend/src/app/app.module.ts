@@ -26,6 +26,7 @@ import { MonthlyReportComponent } from './components/reportSection/monthly-repor
 import { EmployeeInfoComponent } from './components/employeeSection/employee-info/employee-info.component';
 import { AllEmployeeMessagesComponent } from './components/employeeSection/all-employee-messages/all-employee-messages.component';
 import { EmployeePayComponent } from './components/employeeSection/employee-pay/employee-pay.component';
+import { EditDailyReportComponent } from './components/reportSection/edit-daily-report/edit-daily-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +48,7 @@ import { EmployeePayComponent } from './components/employeeSection/employee-pay/
     EmployeeInfoComponent,
     AllEmployeeMessagesComponent,
     EmployeePayComponent,
+    EditDailyReportComponent,
    ],
   imports: [
     BrowserModule,

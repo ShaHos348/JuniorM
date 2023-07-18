@@ -1,0 +1,70 @@
+#content {
+	position: relative;
+	width: fit-content;
+	padding: 10px;
+	top: 5vh;
+}
+
+#entry-content {
+	position: relative;
+	width: 50vw;
+	border: 2.5px solid black;
+	padding-bottom: 10px;
+	margin: auto;
+}
+
+h1 {
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#date, #shift {
+	position: relative;
+	margin-right: 20px;
+}
+
+#main-table {
+	position: relative;
+	margin: auto;
+	margin-top: 10px;
+	width: fit-content;
+	border: 1px solid black;
+}
+
+.table-title {
+	color: blue;
+	border: 1px solid burlywood;
+}
+
+table {
+	width: 100%;
+	margin: auto;
+}
+
+.main-table-section {
+	position: relative;
+	border: 1px solid burlywood;
+}
+
+th {
+	position: relative;
+	top: 0;
+	color: red;
+	border-bottom: 3px solid red;
+}
+
+td {
+	position: relative;
+	vertical-align: 0;
+	color: green;
+}
+
+#submit {
+	color: blue;
+	background-color: orange;
+}
+
+#return {
+	color: red;
+}
