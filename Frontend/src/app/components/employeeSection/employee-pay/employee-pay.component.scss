@@ -12,7 +12,12 @@
 	margin: auto;
 }
 
-#clocking-table, #updateForm {
+#print-btn {
+	display: none;
+	background-color: lime;
+}
+
+#data-table {
 	display: none;
 	position: relative;
 	border: 5px solid cyan;
@@ -28,15 +33,4 @@ th {
 
 td {
 	border: 1px solid gray;
-}
-
-#back-btn {
-	position: absolute;
-	top: 0;
-	right: 0;
-	background-color: red;
-}
-
-#update-btn {
-	background-color: aquamarine;
 }

@@ -15,15 +15,15 @@ export class EmployeeService {
 			this.url + '/employeeUser/employeeSignup',
 			data,
 			{
+				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
 		);
 	}
 
 	lookup(data: any) {
-		return this.httpClient.post(
-			this.url + '/employeeUser/employeeClockingLookup',
-			data,
+		return this.httpClient.get(
+			this.url + '/employeeUser/employeeClockingLookup/' + data.idnum + "&" + data.password,
 			{
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
@@ -33,6 +33,26 @@ export class EmployeeService {
 	clocker(data: any) {
 		return this.httpClient.post(
 			this.url + '/employeeUser/employeeClocking',
+			data,
+			{
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	getClocking(data: any) {
+		return this.httpClient.get(
+			this.url + '/employeeUser/getEmployeeClocking/' + data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	updateClocking(data: any) {
+		return this.httpClient.patch(
+			this.url + '/employeeUser/updateClocking',
 			data,
 			{
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -51,12 +71,66 @@ export class EmployeeService {
 	}
 
 	getMessages(data: any) {
-		return this.httpClient.post(
-			this.url + '/employeeUser/employeeGetMessages',
-			data,
+		return this.httpClient.get(
+			this.url + '/employeeUser/employeeGetMessages/' + data.idnum,
 			{
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
+		);
+	}
+
+	getPrevMessages(data: any) {
+		return this.httpClient.get(
+			this.url + '/employeeUser/employeeGetPrevMessages/' + data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	deleteMessages(data: any) {
+		return this.httpClient.post(
+			this.url + '/employeeUser/deleteMessages',
+			data
+		);
+	}
+
+	getEmployees() {
+		return this.httpClient.get(
+			this.url + '/employeeUser/getEmployees',
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	getEmployeePay(date: any) {
+		return this.httpClient.get(
+			this.url + '/employeeUser/employeePay/' + date,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	updateInfo(data: any) {
+		return this.httpClient.post(
+			this.url + '/employeeUser/employeeUpdateInfo',
+			data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	deleteEmployee(data: any) {
+		return this.httpClient.post(
+			this.url + '/employeeUser/deleteEmployee',
+			data
 		);
 	}
 }

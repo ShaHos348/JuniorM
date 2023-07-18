@@ -3,8 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { BusinessLoginComponent } from './components/business-components/business-login/business-login.component';
 import { BusinessFPComponent } from './components/forgotInfoSection/business-fp/business-fp.component';
+import { EmployeeSignupComponent } from './components/employeeSection/employee-signup/employee-signup.component';
+import { EmployeeInfoComponent } from './components/employeeSection/employee-info/employee-info.component';
+import { ModifyClockingComponent } from './components/employeeSection/modify-clocking/modify-clocking.component';
 import { ClockinOutComponent } from './components/employeeSection/clockin-out/clockin-out.component';
 import { EmployeeMessageComponent } from './components/employeeSection/employee-message/employee-message.component';
+import { AllEmployeeMessagesComponent } from './components/employeeSection/all-employee-messages/all-employee-messages.component';
+import { EmployeePayComponent } from './components/employeeSection/employee-pay/employee-pay.component';
 import { ManagerHomeComponent } from './components/managerSection/manager-home/manager-home.component';
 import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
 import { DailyReportComponent } from './components/reportSection/daily-report/daily-report.component';
@@ -27,12 +32,33 @@ const routes: Routes = [
     component: BusinessFPComponent
   },
   {
+    path: 'employee/signup',
+    component: EmployeeSignupComponent,
+  },
+
+  {
+    path: 'employee/info',
+    component: EmployeeInfoComponent,
+  },
+  {
+    path: 'employee/modifyClocking',
+    component: ModifyClockingComponent,
+  },
+  {
     path: 'employee/clocking',
     component: ClockinOutComponent,
   },
   {
+    path: 'employee/messages',
+    component: AllEmployeeMessagesComponent
+  },
+  {
     path: 'employee/messaging',
     component: EmployeeMessageComponent
+  },
+  {
+    path: 'employee/pay',
+    component: EmployeePayComponent
   },
 	{
     path: 'report/log',

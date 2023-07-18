@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { jsPDF } from 'jspdf';
 import { ReportService } from 'src/app/services/report.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+const pdfMake = require('pdfmake/build/pdfmake.js');
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
 	selector: 'app-daily-report',
@@ -145,36 +147,135 @@ export class DailyReportComponent implements OnInit {
 			let element = eval('this.report.shcount' + (index + 1));
 			this.shcountAmounts[index] = element;
 		}
-		this.shcountAmounts[8] = this.report.paidout;
-		this.shcountAmounts[9] = this.report.shcounttotal;
-		this.shcountAmounts[10] = this.report.overshoot;
+		this.shcountAmounts[this.shiftCountNames.length-3] = this.report.paidout;
+		this.shcountAmounts[this.shiftCountNames.length-2] = this.report.shcounttotal;
+		this.shcountAmounts[this.shiftCountNames.length-1] = this.report.overshoot;
 	}
 
 	print() {
-		let doc = new jsPDF('p', 'px', 'letter');
+		let companyRows = [
+			['Sl', 'Company', 'Amount']
+		];
+		let lottoRows = [
+			['Sl', 'Lotto Active', 'Box']
+		];
+		let shiftReportRows = [
+			['Shift Report', 'Amount']
+		];
+		let shiftCountRows = [
+			['Shift Count', 'Amount']
+		];
+		for (let i = 0; i < this.listOfTen.length; i +=1) { // i suggest a for-loop since you need both arrays at a time
+			companyRows.push([i+1, this.companyNames[i], this.companyAmounts[i]]);
+			lottoRows.push([i+1, this.lottoActiveNames[i], this.lottoActiveBox[i]]);
+			shiftReportRows.push([this.shiftReportNames[i], this.shreportAmounts[i]]);
+		};
+		shiftReportRows.push([this.shiftReportNames[10], this.shreportAmounts[10]]);
+		for (let i = 0; i < this.shiftCountNames.length; i++) {
+			shiftCountRows.push([this.shiftCountNames[i], this.shcountAmounts[i]]);
+		}
+		shiftCountRows.pop();
+		shiftCountRows.pop();
+		shiftCountRows.pop();
+		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-3], this.shcountAmounts[this.shiftCountNames.length-3]]);
+		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-2], this.shcountAmounts[this.shiftCountNames.length-2]]);
+		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-1], this.shcountAmounts[this.shiftCountNames.length-1]]);
 
-		const div = document.getElementById('main-table') as HTMLElement;
 
-		doc.html(div, {
-			html2canvas: {
-				scale: 0.8,
+		let docDefinition = {
+			content: [
+				{
+					text: 'Daily Worksheet Report',
+					style: 'title',
+				},
+				{
+					text: this.formatDate(this.shiftDate) + ' ' + this.shift + ' Shift',
+					style: 'header',
+				},
+				{
+					table: {
+						headerRows: 1,
+						widths: ['*','*'],
+						body: [
+							[
+								[
+									{
+										table: {
+											headerRows: 1,
+											widths: ['auto', '*', 'auto'],
+											body: companyRows,
+										},
+									},
+								],
+								[
+									{
+										table: {
+											headerRows: 1,
+											widths: ['*', '*'],
+											body: shiftReportRows,
+										},
+									},
+								],
+							],
+							[
+								[
+									{
+										table: {
+											headerRows: 1,
+											widths: ['auto', '*', 'auto'],
+											body: lottoRows,
+										},
+									},
+								],
+								[
+									{
+										table: {
+											headerRows: 1,
+											widths: ['*', '*'],
+											body: shiftCountRows,
+										},
+									},
+								],
+							],
+						],
+					},
+					style: 'table',
+				},
+			],
+			styles: {
+				title: {
+					bold: true,
+					alignment: 'center',
+					decoration: 'underline',
+					fontSize: 20,
+					color: 'blue',
+					margin: [0, 15, 0, 15],
+				},
+				header: {
+					alignment: 'center',
+					fontSize: 15,
+					color: 'black',
+					margin: [0, 5, 0, 5],
+				},
+				table: {
+					alignment: 'center',
+					fontSize: 10,
+					color: 'black',
+				}
 			},
-			x: 20,
-			filename: "Daily Report Worksheet",
-			callback: function (doc) {
-				doc.output('dataurlnewwindow');
-			}
-		});
+		};
+
+		pdfMake.createPdf(docDefinition).open();
 	}
 
 	formatDate(dateInput: any) {
-		const year = dateInput.substring(0,4);
+		const year = dateInput.substring(0, 4);
 		const date = new Date();
-		const monthNumber = dateInput.substring(5,7);
+		const monthNumber = dateInput.substring(5, 7);
 		date.setMonth(monthNumber - 1);
 		const month = date.toLocaleString('en-US', { month: 'long' });
-		const day = dateInput.substring(8,10);
-		return month + " " + day + ", " + year;
+		const day = dateInput.substring(8, 10);
+		return month + ' ' + day + ', ' + year;
 	}
 
 	checkInputs() {
