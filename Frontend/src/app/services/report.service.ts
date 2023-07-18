@@ -22,9 +22,8 @@ export class ReportService {
 	}
 
 	dailyReport(data: any) {
-		return this.httpClient.post(
-			this.url + '/report/daily',
-			data,
+		return this.httpClient.get(
+			this.url + '/report/daily/' + data.date + "&" + data.shift,
 			{
 				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -33,8 +32,18 @@ export class ReportService {
 	}
 
 	monthlyReport(data: any) {
+		return this.httpClient.get(
+			this.url + '/report/monthly/' + data.year + "&" + data.month,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	updateReport(data: any) {
 		return this.httpClient.post(
-			this.url + '/report/monthly',
+			this.url + '/report/update',
 			data,
 			{
 				withCredentials: true,

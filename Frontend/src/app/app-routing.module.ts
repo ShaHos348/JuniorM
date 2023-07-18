@@ -14,6 +14,7 @@ import { ManagerHomeComponent } from './components/managerSection/manager-home/m
 import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
 import { DailyReportComponent } from './components/reportSection/daily-report/daily-report.component';
 import { MonthlyReportComponent } from './components/reportSection/monthly-report/monthly-report.component';
+import { EditDailyReportComponent } from './components/reportSection/edit-daily-report/edit-daily-report.component';
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
@@ -71,6 +72,10 @@ const routes: Routes = [
 	{
     path: 'report/monthly',
     component: MonthlyReportComponent
+  },
+	{
+    path: 'report/edit',
+    component: EditDailyReportComponent
   },
 	{
     path: 'manager/home',

@@ -93,6 +93,8 @@ export class MonthlyReportComponent implements OnInit {
 				if (this.report.length == 0) {
 					this.responseMessage = 'Error: No Worksheet Found!';
 					this.snackbarService.openSnackbar(this.responseMessage, '');
+					table.style.display = 'none';
+					printBtn.style.display = 'none';
 					return;
 				}
 				this.parseReport();
