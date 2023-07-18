@@ -5,15 +5,18 @@
 </head>
 
 <body>
-	<div class="main-content">
+	<div class="main-content" id="content">
 		<div id="clocking-content">
 			<h2 id="header"><strong>Employee Clocking</strong></h2>
-			<li><input id="lookup" #look type="number" placeholder="Seach Employee" name="lookup"></li>
-			<li><button id="lookup-btn" (click)='lookup({idnum: look.value})'>Search Employee</button></li>
+			<li>
+				<input class="lookup" #id type="number" placeholder="Enter Employee ID" name="id">
+				<input class="lookup" #password type="text" placeholder="Enter Employee Password" name="password">
+			</li>
+			<li><button id="lookup-btn" (click)='lookup({idnum: id.value, password: password.value})'>Search Employee</button></li>
 			<li>
 				<p id="response">{{response}}</p>
 			</li>
-			<li><button id="clocker" (click)='look.value = ""; clocker()'>{{clock}}</button></li>
+			<li><button id="clocker" (click)='id.value = ""; password.value = ""; clocker()'>{{clock}}</button></li>
 			<li>
 				<a (click)="navigater('home');" id="return">Return Home</a>
 			</li>
@@ -25,7 +28,7 @@
 				<th class="messageTableMessages">Message</th>
 			</thead>
 			<tr class="messageTableRows" *ngFor="let mess of messages">
-				<td style="font-size: xx-small;">{{ mess.date }}</td>
+				<td style="font-size: x-small;">{{ mess.date }}</td>
 				<td>{{ mess.sender }}</td>
 				<td>{{ mess.message }}</td>
 			</tr>

@@ -1,0 +1,49 @@
+#content {
+	position: relative;
+	height: initial;
+	top: 10%;
+}
+
+#top-content {
+	position: relative;
+	width: 50vw;
+	border: 5px solid red;
+	top: 10%;
+	margin: auto;
+}
+
+#messages-table, #deleteForm {
+	display: none;
+	position: relative;
+	border: 5px solid cyan;
+	width: 50vw;
+	margin: auto;
+}
+
+#prefilled-table {
+	position: relative;
+	border: 1px solid greenyellow;
+	width: 90%;
+	margin: auto;
+}
+
+th {
+	border: 1px solid gray;
+	border-bottom: 3px solid black;
+	color: black;
+}
+
+td {
+	border: 1px solid gray;
+}
+
+#back-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: red;
+}
+
+#delete-btn {
+	background-color: aquamarine;
+}

@@ -10,6 +10,7 @@
 		<h2 id="greeting">Hello {{user}},</h2>
 		<h3>Welcome to the Store Management System!</h3>
 		<button id="logout-btn" (click)='logout()'>Log Out</button>
+		<button class="manager-btn" id="manager-btn1" (click)='managerOpenLogin()'>Manager Home</button>
 		<table id="main-box">
 			<tr>
 				<td class="box">
@@ -19,23 +20,22 @@
 				</td>
 				<td class="box">
 					<h2 class="box-head">Shift</h2>
-					<li><a href="components/shiftSection/shiftcount.php">Shift Count</a></li>
-					<li><a href="components/shiftSection/shiftreport.php">Shift Report</a></li>
+					<li><a (click)="navigater('report/log')">Daily Worksheet</a></li>
 				<td class="box">
 					<h2 class="box-head">Lotto</h2>
-					<li><a href="components/lottoSection/lottoactive.php">Lotto ACt.</a></li>
+					<li><a (click)="navigater('lotto/active')">Lotto Active</a></li>
 					<li><a href="components/lottoSection/lottosale.php">Lotto Sale</a></li>
 				</td>
 			</tr>
 			<tr>
 				<td class="box">
 					<h2 class="box-head">Report</h2>
-					<li><a href="components/reportSection/workreport.php">Work Sheet Report.</a></li>
-					<li><a href="components/reportSection/preport.php">Pay Chack</a></li>
+					<li><a (click)="navigater('report/daily')">Daily Worksheet Report</a></li>
+					<li><a (click)="navigater('report/monthly')">Monthly Worksheet Report</a></li>
 				</td>
 				<td class="box">
 					<h2 class="box-head">Order</h2>
-					<li><a href="components/orderSection/inventory.php">Order List of Inventory.</a></li>
+					<li><a (click)="navigater('order/entry')">Order List of Inventory.</a></li>
 				</td>
 				<td class="box">
 					<h2 class="box-head">Vender</h2>
@@ -43,21 +43,18 @@
 				</td>
 			</tr>
 		</table>
-		<form action="" method="POST">
-			<div class="cont_form_login">
-				<h2 class="box-head">Manager</h2>
-				<input id="username" name="username" type="email" class="input" placeholder="Enter Your Username" required>
-				<input id="password" name="password" type="password" class="input" data-type="password"
-					placeholder="Enter Your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}"
-					title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-					required>
-				<button class="btn_login" type="submit" name='submit'>LOGIN</button>
-			</div>
+		<form id="managerLoginForm" style="display: none;" method="POST">
+			<button id="close-btn" (click)='managerOpenLogin()'>X</button>
+			<li><h2 class="box-head">Manager</h2></li>
+			<li><input id="username" #username name="username" type="email" class="input" placeholder="Enter Your Username"
+				required></li>
+			<li><input id="password" #password name="password" type="password" class="input" data-type="password"
+				placeholder="Enter Your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}"
+				title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+				required></li>
+			<li><button class="btn_login" type="submit" name='submit'
+				(click)="managerLogin({username: username.value, password:password.value})">LOGIN</button></li>
 		</form>
-		<div>
-			<h2 class="box-head">Contact Us</h2>
-			<p>Some text..</p>
-		</div>
 	</div>
 
 </body>
