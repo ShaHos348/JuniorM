@@ -3,14 +3,13 @@ const connection = require("../connection");
 const router = express.Router();
 let date = new Date();
 const jwt = require("jsonwebtoken");
-//const nodemailer = require("nodemailer");  not working currently
 require("dotenv").config();
 var auth = require("../services/authentication");
 
 router.post("/employeeSignup", (req, res) => {
   let user = req.body;
   query =
-    "(SELECT name, email FROM business WHERE name = ? OR email = ?) UNION (SELECT name, email FROM manager WHERE name = ? OR email = ?)";
+    "SELECT name, email FROM business WHERE name = ? OR email = ?";
   connection.query(
     query,
     [user.name, user.email, user.name, user.email],
@@ -25,40 +24,47 @@ router.post("/employeeSignup", (req, res) => {
             (err, results) => {
               if (!err) {
                 if (results.length <= 0) {
-                  idNum =
-                    String(date.getFullYear()) +
-                    String(date.getMonth() + 1).padStart(2, "0") +
-                    String(date.getDate()).padStart(2, "0");
-                  let business = req.session.user.business.name;
-                  query =
-                    "INSERT INTO employee (idnum,business,name,address,phone,email,birth,ssn,password,citizenship, salary) VALUES (" +
-                    idNum +
-                    "," +
-                    business +
-                    ",?,?,?,?,?,?,?,?,?)";
-                  connection.query(
-                    query,
-                    [
-                      user.name,
-                      user.address,
-                      user.phone,
-                      user.email,
-                      user.birth,
-                      user.ssn,
-                      user.password,
-                      user.citizenship,
-                      user.salary,
-                    ],
-                    (err, results) => {
-                      if (!err) {
-                        return res
-                          .status(200)
-                          .json({ message: "Succesfully Registered!" });
-                      } else {
-                        return res.status(500).json(err);
+                  let lastIdNum = 20210001;
+                  query = "SELECT MAX(idnum) AS lastIdNum FROM employee";
+                  connection.query(query, (err, rows) => {
+                    if (!err) {
+                      if (rows[0].lastIdNum != null) {
+                        lastIdNum = rows[0].lastIdNum + 1;
                       }
+                      let businessid = req.session.user.business.idnum;
+                      query =
+                        "INSERT INTO employee (idnum,businessid,name,address,phone,email,birth,ssn,password,citizenship, salary) VALUES ('" +
+                        lastIdNum +
+                        "','" +
+                        businessid +
+                        "',?,?,?,?,?,?,?,?,?)";
+                      connection.query(
+                        query,
+                        [
+                          user.name,
+                          user.address,
+                          user.phone,
+                          user.email,
+                          user.birth,
+                          user.ssn,
+                          user.password,
+                          user.citizenship,
+                          user.salary,
+                        ],
+                        (err, results) => {
+                          if (!err) {
+                            return res
+                              .status(200)
+                              .json({ message: "Succesfully Registered!", idnum: lastIdNum });
+                          } else {
+                            return res.status(500).json(err);
+                          }
+                        }
+                      );
+                    } else {
+                      return res.status(500).json(err);
                     }
-                  );
+                  });
                 } else {
                   return res.status(400).json({
                     message: "Employee name, ssn, and/or email already used!",
@@ -81,33 +87,79 @@ router.post("/employeeSignup", (req, res) => {
   );
 });
 
-router.post("/employeeClockingLookup", (req, res) => {
+router.post("/employeeUpdateInfo", (req, res) => {
   let user = req.body;
-  query = "SELECT idnum FROM employee WHERE idnum = ?";
-  connection.query(query, [user.idnum], (err, results) => {
+  query = "SELECT idnum FROM employee where idnum = ?";
+  connection.query(query, [user.idnum], (err, result) => {
+    if (!err) {
+      if (result.length == 1) {
+        query = "UPDATE employee SET name= ?, address= ?, phone= ?, email = ?,birth= ?, ssn= ?, password= ?, citizenship= ?, salary= ? WHERE idnum = ?";
+        connection.query(
+          query,
+          [
+            user.name,
+            user.address,
+            user.phone,
+            user.email,
+            user.birth,
+            user.ssn,
+            user.password,
+            user.citizenship,
+            user.salary,
+            user.idnum
+          ],
+          (err, results) => {
+            if (!err) {
+              return res
+                .status(200)
+                .json({ message: "Succesfully Updated!" });
+            } else {
+              return res.status(500).json(err);
+            }
+          }
+        );
+      } else {
+        return res.status(500).json({ message: "Employee Not Found!" });
+      }
+    } else {
+      return res.status(500).json(err);
+    }
+  })
+});
+
+router.get("/employeeClockingLookup/:idnum&:password", (req, res) => {
+  let idnum = req.params.idnum;
+  let password = req.params.password;
+  query = "SELECT idnum FROM employee WHERE idnum = ? AND password = ?";
+  connection.query(query, [idnum, password], (err, results) => {
     if (!err) {
       if (results.length > 0) {
         let idnum = results[0].idnum;
         query =
           "SELECT idnum, clockin, clockout FROM clocking WHERE idnum = " +
           idnum +
-          " AND clockout = '0000-00-00 00:00:00'";
+          " AND clockout IS NULL";
         connection.query(query, (err, results) => {
-          if (results == 0) {
-            return res.status(200).json({
-              message: "Clock In",
-              clocked: false,
-            });
+          if (!err) {
+            if (results == 0) {
+              return res.status(200).json({
+                message: "Clock In",
+                clocked: false,
+              });
+            } else {
+              return res.status(200).json({
+                message: "Clock Out",
+                clocked: true,
+              });
+            }
           } else {
-            return res.status(200).json({
-              message: "Clock Out",
-              clocked: true,
-            });
+            return res.status(500).json(err);
           }
         });
       } else {
         return res.status(400).json({
           message: "Employee not found!",
+
         });
       }
     } else {
@@ -126,9 +178,9 @@ router.post("/employeeClocking", (req, res) => {
     message = "Clocked In!";
   } else {
     query =
-      "UPDATE clocking SET clockout= now(),hours= (((clockout - clockin)/60)/60) WHERE idnum= " +
+      "UPDATE clocking SET clockout= now(), hours= (((TIMESTAMPDIFF(SECOND, clockin, clockout))/60)/60) WHERE idnum= " +
       idnum +
-      " AND clockout='0000-00-00 00:00:00'";
+      " AND clockout IS NULL";
     message = "Clocked Out!";
   }
 
@@ -138,6 +190,82 @@ router.post("/employeeClocking", (req, res) => {
         message: message,
       });
     } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.get("/getEmployeeClocking/:idnum", (req, res) => {
+  let id = req.params.idnum;
+  let businessid = req.session.user.business.idnum;
+  query = "SELECT idnum from employee where businessid = ? AND idnum = ?";
+  connection.query(query, [businessid, id], (err, result) => {
+    if (!err) {
+      if (result.length > 0) {
+        query = "SELECT *, CONVERT_TZ(clockin,'+00:00',@@SESSION.time_zone) as clockin, CONVERT_TZ(clockout,'+00:00',@@SESSION.time_zone) as clockout FROM clocking WHERE idnum = ? AND clockout IS NOT NULL";
+        connection.query(query, [id], (err, results) => {
+          if (!err) {
+            return res.status(200).json(results);
+          } else {
+            return res.status(500).json(err);
+          }
+        });
+      } else {
+        return res.status(400).json({
+          message: "Employee not found!",
+        });
+      }
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.patch("/updateClocking", (req, res) => {
+  let data = req.body;
+  data.clockin = data.clockin.replace("T", " ");
+  data.clockout = data.clockout.replace("T", " ");
+  query = "UPDATE clocking SET clockin = ?, clockout = ?, hours = (((TIMESTAMPDIFF(SECOND, clockin, clockout))/60)/60) WHERE sl = '?'";
+  connection.query(query, [data.clockin, data.clockout, data.sl], (err, result) => {
+    if (!err) {
+      return res.status(200).json({
+        message: "Employee Clocking Updated!",
+      });
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.get("/employeePay/:date", (req, res) => {
+  let startDate = req.params.date;
+  let businessid = req.session.user.business.idnum;
+  query = "SELECT idnum, name, salary FROM employee WHERE businessid = ?";
+  connection.query(query, [businessid], (err, employees) => {
+    if (!err) {
+      if (employees.length != 0) {
+        query = "SELECT idnum, SUM(hours) AS hours, Date(CONVERT_TZ(clockin,'+00:00',@@SESSION.time_zone)) as clockedin FROM clocking WHERE ((clockin BETWEEN ? AND ? + interval 7 day) AND idnum IN (SELECT idnum FROM employee WHERE businessid = ?)) GROUP BY clockedin, idnum ORDER BY idnum, clockedin";
+        connection.query(query, [startDate, startDate, businessid], (err, results) => {
+          if (!err) {
+            if (results.length != 0) {
+              return res.status(200).json({employees: employees, clockins: results});
+            } else {
+              return res.status(400).json({
+                message: "No Employees Clocked In this week!",
+              });
+            }
+          } else {
+            console.log(err);
+            return res.status(500).json(err);
+          }
+        });
+      } else {
+        return res.status(400).json({
+          message: "You have no employees!",
+        });
+      }
+    } else {
+      
       return res.status(500).json(err);
     }
   });
@@ -181,10 +309,10 @@ router.post("/employeeSendMessage", (req, res) => {
   });
 });
 
-router.post("/employeeGetMessages", (req, res) => {
-  let idnum = req.body.idnum;
+router.get("/employeeGetMessages/:idnum", (req, res) => {
+  let idnum = req.params.idnum;
   query =
-    "SELECT sender, message, date from emessage where seen = 0 AND idnum = " + idnum;
+    "SELECT sender, message, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage where seen = 0 AND idnum = " + idnum;
   connection.query(query, (err, results) => {
     if (!err) {
       query = "UPDATE emessage SET seen = 1 where seen = 0 AND idnum = " + idnum;
@@ -199,6 +327,79 @@ router.post("/employeeGetMessages", (req, res) => {
       return res.status(500).json(err);
     }
   });
+});
+
+router.get("/employeeGetPrevMessages/:idnum", (req, res) => {
+  let idnum = req.params.idnum;
+  let businessid = req.session.user.business.idnum;
+  if (idnum == "00000000") {
+    query = "SELECT *, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage WHERE idnum IN (SELECT idnum from employee where businessid = " + businessid + ")";
+  } else {
+    query = "SELECT *, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage WHERE idnum = " + idnum;
+  }
+  connection.query(query, (err, results) => {
+    if (!err) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.post("/deleteMessages", (req, res) => {
+  let data = req.body;
+  query = "DELETE FROM emessage WHERE slno = ?";
+  connection.query(
+    query, [data.slno], (err, results) => {
+      if (!err) {
+        return res
+          .status(200)
+          .json({ message: "Succesfully Deleted!" });
+      } else {
+        return res.status(500).json(err);
+      }
+    }
+  );
+});
+
+router.get("/getEmployees", (req, res) => {
+  let businessid = req.session.user.business.idnum;
+  query = "SELECT * FROM employee where businessid = ?";
+  connection.query(query, [businessid], (err, results) => {
+    if (!err) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(500).json(err);
+    }
+  })
+})
+
+router.post("/deleteEmployee", (req, res) => {
+  let data = req.body;
+  query = "SELECT idnum FROM employee where idnum = ?";
+  connection.query(query, [data.idnum], (err, result) => {
+    if (!err) {
+      if (result.length == 1) {
+        query = "DELETE FROM employee WHERE idnum = ?";
+        connection.query(
+          query, [data.idnum], (err, results) => {
+            if (!err) {
+              return res
+                .status(200)
+                .json({ message: "Succesfully Deleted!" });
+            } else {
+              return res.status(500).json(err);
+            }
+          }
+        );
+      } else {
+        return res.status(500).json({ message: "Employee Not Found!" });
+      }
+    } else {
+      return res.status(500).json(err);
+    }
+  })
+
 });
 
 module.exports = router;

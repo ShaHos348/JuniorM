@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/material-module';
 import { HomeComponent } from './home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BusinessSignupComponent } from './components/business-components/business-signup/business-signup.component';
@@ -24,6 +23,9 @@ import { LottoActiveComponent } from './components/lottoSection/lotto-active/lot
 import { LogReportComponent } from './components/reportSection/log-report/log-report.component';
 import { DailyReportComponent } from './components/reportSection/daily-report/daily-report.component';
 import { MonthlyReportComponent } from './components/reportSection/monthly-report/monthly-report.component';
+import { EmployeeInfoComponent } from './components/employeeSection/employee-info/employee-info.component';
+import { AllEmployeeMessagesComponent } from './components/employeeSection/all-employee-messages/all-employee-messages.component';
+import { EmployeePayComponent } from './components/employeeSection/employee-pay/employee-pay.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +44,9 @@ import { MonthlyReportComponent } from './components/reportSection/monthly-repor
     LogReportComponent,
     DailyReportComponent,
     MonthlyReportComponent,
+    EmployeeInfoComponent,
+    AllEmployeeMessagesComponent,
+    EmployeePayComponent,
    ],
   imports: [
     BrowserModule,
@@ -50,7 +55,6 @@ import { MonthlyReportComponent } from './components/reportSection/monthly-repor
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FlexLayoutModule,
     SharedModule,
     HttpClientModule
   ],

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { jsPDF } from 'jspdf';
 import { ReportService } from 'src/app/services/report.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+const pdfMake = require('pdfmake/build/pdfmake.js');
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
 	selector: 'app-monthly-report',
@@ -120,35 +122,108 @@ export class MonthlyReportComponent implements OnInit {
 		this.report.forEach((item: { shreporttotal: number; paidout: number; shcounttotal: number; overshoot: number; }) => {
 			for (let index = 0; index < 10; index++) {
 				let element = eval('item.shreport' + (index + 1));
-				this.shreportAmounts[index] += element;
+				this.shreportAmounts[index] += Number(element);
 			}
-			this.shreportAmounts[10] += item.shreporttotal;
+			this.shreportAmounts[10] += Number(item.shreporttotal);
 			for (let index = 0; index < this.shiftCountNames.length-1; index++) {
 				let element = eval('item.shcount' + (index + 1));
-				this.shcountAmounts[index] += element;
+				this.shcountAmounts[index] += Number(element);
 			}
-			this.shcountAmounts[8] += item.paidout;
-			this.shcountAmounts[9] += item.shcounttotal;
-			this.shcountAmounts[10] += item.overshoot;
+			this.shcountAmounts[8] += Number(item.paidout);
+			this.shcountAmounts[9] += Number(item.shcounttotal);
+			this.shcountAmounts[10] += Number(item.overshoot);
 		});
 
 	}
 
 	print() {
-		let doc = new jsPDF('p', 'px', 'letter');
+		let shiftReportRows = [
+			['Shift Report', 'Amount']
+		];
+		let shiftCountRows = [
+			['Shift Count', 'Amount']
+		];
+		for (let i = 0; i < this.listOfTen.length; i +=1) { // i suggest a for-loop since you need both arrays at a time
+			shiftReportRows.push([this.shiftReportNames[i], this.shreportAmounts[i]]);
+		};
+		shiftReportRows.push([this.shiftReportNames[10], this.shreportAmounts[10]]);
+		for (let i = 0; i < this.shiftCountNames.length; i++) {
+			shiftCountRows.push([this.shiftCountNames[i], this.shcountAmounts[i]]);
+		}
+		shiftCountRows.pop();
+		shiftCountRows.pop();
+		shiftCountRows.pop();
+		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-3], this.shcountAmounts[this.shiftCountNames.length-3]]);
+		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-2], this.shcountAmounts[this.shiftCountNames.length-2]]);
+		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-1], this.shcountAmounts[this.shiftCountNames.length-1]]);
 
-		const div = document.getElementById('main-table') as HTMLElement;
 
-		doc.html(div, {
-			html2canvas: {
-				scale: 0.9,
+		let docDefinition = {
+			content: [
+				{
+					text: 'Monthly Worksheet Report',
+					style: 'title',
+				},
+				{
+					text: this.getMonthName(this.month) + " " + this.year + " Monthly Report",
+					style: 'header',
+				},
+				{
+					table: {
+						headerRows: 1,
+						widths: ['*','*'],
+						body: [
+							[
+								[
+									{
+										table: {
+											headerRows: 1,
+											widths: ['*', '*'],
+											body: shiftReportRows,
+										},
+									},
+								],
+							],
+							[
+								[
+									{
+										table: {
+											headerRows: 1,
+											widths: ['*', '*'],
+											body: shiftCountRows,
+										},
+									},
+								],
+							],
+						],
+					},
+					style: 'table',
+				},
+			],
+			styles: {
+				title: {
+					bold: true,
+					alignment: 'center',
+					decoration: 'underline',
+					fontSize: 20,
+					color: 'blue',
+					margin: [0, 15, 0, 15],
+				},
+				header: {
+					alignment: 'center',
+					fontSize: 15,
+					color: 'black',
+					margin: [0, 5, 0, 5],
+				},
+				table: {
+					alignment: 'center',
+					fontSize: 10,
+					color: 'black',
+				}
 			},
-			x: 15,
-			filename: 'Monthly Report Worksheet',
-			callback: function (doc) {
-				doc.output('dataurlnewwindow');
-			},
-		});
+		};
+
+		pdfMake.createPdf(docDefinition).open();
 	}
 
 	getMonthName(monthNumber: number) {

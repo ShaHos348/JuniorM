@@ -30,6 +30,13 @@ router.post("/log", (req, res) => {
     shreportPart = String(shreportPart.map(d => `'${d}'`));
     shcountPart = String(shcountPart.map(d => `'${d}'`));
 
+    companyPart = companyPart.replaceAll("'undefined'", null);
+    lottoPart = lottoPart.replaceAll("'undefined'", null);
+    shreportPart = shreportPart.replaceAll("'null'", 0);
+    shcountPart = shcountPart.replaceAll("'null'", 0);
+    shreportPart = shreportPart.replaceAll("'undefined'", 0);
+    shcountPart = shcountPart.replaceAll("'undefined'", 0);
+
     value = part1 + "," + companyPart + "," + data.payoutTotal + "," + lottoPart + "," + shreportPart + "," + data.shiftReportTotal + "," + shcountPart + "," + data.shiftCountTotal + "," + data.overshoot;
 
     query = "INSERT INTO worksheet (businessid, date, shift," +
