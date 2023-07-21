@@ -51,6 +51,16 @@ export class OrderService {
 		);
 	}
 
+	delete(name: any) {
+		return this.httpClient.delete(
+			this.url + '/order/delete/' + name,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
 	print(data: any) {
 		return this.httpClient.post(
 			this.url + '/order/print',

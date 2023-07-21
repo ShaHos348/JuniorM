@@ -71,7 +71,7 @@ export class UserService {
 	}
 
 	managerLogout() {
-		return this.httpClient.get(this.url + '/managerUser/logout', {
+		return this.httpClient.get(this.url + '/adminUser/logout', {
 			withCredentials: true,
 		});
 	}

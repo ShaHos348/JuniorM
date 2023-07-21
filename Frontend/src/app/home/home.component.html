@@ -43,17 +43,12 @@
 				</td>
 			</tr>
 		</table>
-		<form id="managerLoginForm" style="display: none;" method="POST">
-			<button id="close-btn" (click)='managerOpenLogin()'>X</button>
+		<form id="managerLoginForm" style="display: none;"  ngNativeValidate (ngSubmit)="managerLogin({username: username.value, password:password.value})">
+			<button id="close-btn" type="button" (click)='managerOpenLogin()'>X</button>
 			<li><h2 class="box-head">Manager</h2></li>
-			<li><input id="username" #username name="username" type="email" class="input" placeholder="Enter Your Username"
-				required></li>
-			<li><input id="password" #password name="password" type="password" class="input" data-type="password"
-				placeholder="Enter Your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}"
-				title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-				required></li>
-			<li><button class="btn_login" type="submit" name='submit'
-				(click)="managerLogin({username: username.value, password:password.value})">LOGIN</button></li>
+			<li><input id="username" #username name="username" type="text" class="input" placeholder="Enter Your Username" autocomplete="off" required></li>
+			<li><input id="password" #password name="password" type="password" class="input" data-type="password" placeholder="Enter Your password" required></li>
+			<li><button class="btn_login" type="submit" name='submit'>LOGIN</button></li>
 		</form>
 	</div>
 

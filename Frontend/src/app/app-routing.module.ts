@@ -18,6 +18,7 @@ import { EditDailyReportComponent } from './components/reportSection/edit-daily-
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
+import { AdminHomeComponent } from './components/adminSection/admin-home/admin-home.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,10 @@ const routes: Routes = [
     component: ManagerHomeComponent
   },
 	{
+    path: 'admin/home',
+    component: AdminHomeComponent
+  },
+	{
     path: 'order/entry',
     component: OrderEntryComponent
   },
@@ -93,28 +98,7 @@ const routes: Routes = [
     path: 'lotto/active',
     component: LottoActiveComponent
   },
-  { path: '**', component: BusinessLoginComponent },
-
-  /*{
-    path: 'cafe',
-    component: FullComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: '/cafe/dashboard',
-        pathMatch: 'full',
-      },
-      {
-        path: '',
-        loadChildren:
-          () => import('./material-component/material.module').then(m => m.MaterialComponentsModule),
-      },
-      {
-        path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-      }
-    ]
-  }*/
+  { path: '**', component: BusinessLoginComponent }
 ];
 
 @NgModule({

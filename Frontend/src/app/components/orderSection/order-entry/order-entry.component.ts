@@ -35,15 +35,53 @@ export class OrderEntryComponent implements OnInit {
 		);
 	}
 
-	insert(data: any) {
+	insert() {
+		let name = document.getElementById('name-input') as HTMLInputElement;
+		let quantity = document.getElementById('quantity-input') as HTMLInputElement;
 		if (!this.checkInputs()) {
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
+		}
+		let data = {
+			name: name.value,
+			quantity: quantity.value
 		}
 		this.orderService.entry(data).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
 				this.snackbarService.openSnackbar(this.responseMessage, '');
+				name.value = '';
+				quantity.value = '';
+				name.focus();
+				this.getOrderList();
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+	}
+
+	delete() {
+		let input = document.getElementById('delete-input') as HTMLInputElement;
+		if (input.value == '') {
+			this.responseMessage = 'Error: Name is NOT GIVEN!';
+			this.snackbarService.openSnackbar(this.responseMessage, '');
+			return;
+		}
+		let itemName = input.value;
+		this.orderService.delete(itemName).subscribe(
+			(response: any) => {
+				this.responseMessage = response?.message;
+				this.snackbarService.openSnackbar(this.responseMessage, '');
+				input.value = '';
 				this.getOrderList();
 			},
 			(error) => {
@@ -82,9 +120,7 @@ export class OrderEntryComponent implements OnInit {
 
 	checkInputs() {
 		let name = document.getElementById('name-input') as HTMLInputElement;
-		let quantity = document.getElementById(
-			'quantity-input'
-		) as HTMLInputElement;
+		let quantity = document.getElementById('quantity-input') as HTMLInputElement;
 		if (name.value == '' || quantity.value == '') {
 			this.responseMessage = 'Error: Name/Quantity is NOT GIVEN!';
 			return false;

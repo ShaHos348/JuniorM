@@ -9,12 +9,20 @@
 		<div id="entry-content">
 			<h1 id="header"><strong>Order List Entry</strong></h1>
 			<button id="new-btn" (click)='newOrder()'>New Order</button>
-			<li>
-				<input id="name-input" #name type="text" placeholder="Enter Name" name="name">
-				<input id="quantity-input" #quantity type="number" placeholder="Enter Quantity" name="quantity">
-				<button id="add-btn" (click)='insert({name: name.value, quantity: quantity.value})'>Add</button>
+			<form (ngSubmit)="insert()">
+				<li>
+					<input id="name-input" #name type="text" placeholder="Enter Name" name="name" autocomplete="off">
+					<input id="quantity-input" #quantity type="number" placeholder="Enter Quantity" name="quantity">
+					<button id="add-btn" type="submit">Add</button>
+				</li>
+			</form>
+			<form (ngSubmit)="delete()">
+				<li>
+					<input id="delete-input" #deleteName type="text" placeholder="Enter Item Name to delete" name="deleteName" autocomplete="off">
+					<button id="delete-btn" type="submit">Delete</button>
+				</li>
+			</form>
 
-			</li>
 			<li>
 				<a (click)="navigater('home');" id="return">Return Home</a>
 			</li>

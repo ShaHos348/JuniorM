@@ -22,9 +22,8 @@ export class LottoService {
 	}
 
 	lottoActive(data: any) {
-		return this.httpClient.post(
-			this.url + '/lotto/getlottoactive',
-			data,
+		return this.httpClient.get(
+			this.url + '/lotto/getlottoactive/' + data.shift + "&" + data.date,
 			{
 				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),

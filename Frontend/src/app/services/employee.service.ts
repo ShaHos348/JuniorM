@@ -90,9 +90,8 @@ export class EmployeeService {
 	}
 
 	deleteMessages(data: any) {
-		return this.httpClient.post(
-			this.url + '/employeeUser/deleteMessages',
-			data
+		return this.httpClient.delete(
+			this.url + '/employeeUser/deleteMessages/' + data.slno
 		);
 	}
 
@@ -128,9 +127,8 @@ export class EmployeeService {
 	}
 
 	deleteEmployee(data: any) {
-		return this.httpClient.post(
-			this.url + '/employeeUser/deleteEmployee',
-			data
+		return this.httpClient.delete(
+			this.url + '/employeeUser/deleteEmployee/' + data.idnum
 		);
 	}
 }

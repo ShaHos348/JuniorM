@@ -42,7 +42,7 @@
 						</thead>
 						<tr *ngFor="let a of listOfTen; let i = index">
 							<td>{{ i + 1 }}</td>
-							<td class="payout-company"><input type="text" id="company-name-input{{i}}" [(ngModel)]="companyNames[i]" value={{companyNames[i]}}></td>
+							<td class="payout-company"><input type="text" id="company-name-input{{i}}" [(ngModel)]="companyNames[i]" value={{companyNames[i]}}  autocomplete="off"></td>
 							<td class="payout-company"><input type="text" id="company-amount-input{{i}}" [(ngModel)]="companyAmounts[i]" value={{companyAmounts[i]}}></td>
 						</tr>
 					</table>
@@ -74,7 +74,7 @@
 						</thead>
 						<tr *ngFor="let a of listOfTen; let i = index">
 							<td>{{ i + 1 }}</td>
-							<td class="lotto-active-name"><input type="text" id="lotto-active-names{{i}}" [(ngModel)]="lottoActiveNames[i]" value={{lottoActiveNames[i]}}></td>
+							<td class="lotto-active-name"><input type="text" id="lotto-active-names{{i}}" [(ngModel)]="lottoActiveNames[i]" value={{lottoActiveNames[i]}} autocomplete="off"></td>
 							<td class="lotto-active-box"><input type="text" id="lotto-active-box{{i}}"  [(ngModel)]="lottoActiveBox[i]" value={{lottoActiveBox[i]}}></td>
 						</tr>
 					</table>

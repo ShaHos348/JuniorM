@@ -9,8 +9,8 @@
 		<div id="clocking-content">
 			<h2 id="header"><strong>Employee Clocking</strong></h2>
 			<li>
-				<input class="lookup" #id type="number" placeholder="Enter Employee ID" name="id">
-				<input class="lookup" #password type="text" placeholder="Enter Employee Password" name="password">
+				<input class="lookup" #id type="number" placeholder="Enter Employee ID" name="id" autocomplete="off">
+				<input class="lookup" #password type="password" placeholder="Enter Employee Password" name="password" autocomplete="off">
 			</li>
 			<li><button id="lookup-btn" (click)='lookup({idnum: id.value, password: password.value})'>Search Employee</button></li>
 			<li>

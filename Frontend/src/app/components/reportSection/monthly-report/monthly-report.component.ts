@@ -62,6 +62,7 @@ export class MonthlyReportComponent implements OnInit {
 		this.userService.checkLogin().subscribe(
 			(response: any) => {
 				this.router.navigate(['report/monthly']);
+				this.setDate();
 			},
 			(error) => {
 				this.router.navigate(['']);
@@ -118,36 +119,39 @@ export class MonthlyReportComponent implements OnInit {
 	}
 
 	parseReport() {
-		this.shreportAmounts = [0,0,0,0,0,0,0,0,0,0,0];
-		this.shcountAmounts = [0,0,0,0,0,0,0,0,0,0,0];
+		this.shreportAmounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		this.shcountAmounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-		this.report.forEach((item: { shreporttotal: number; paidout: number; shcounttotal: number; overshoot: number; }) => {
-			for (let index = 0; index < 10; index++) {
-				let element = eval('item.shreport' + (index + 1));
-				this.shreportAmounts[index] += Number(element);
+		this.report.forEach(
+			(item: {
+				shreporttotal: number;
+				paidout: number;
+				shcounttotal: number;
+				overshoot: number;
+			}) => {
+				for (let index = 0; index < 10; index++) {
+					let element = eval('item.shreport' + (index + 1));
+					this.shreportAmounts[index] += Number(element);
+				}
+				this.shreportAmounts[10] += Number(item.shreporttotal);
+				for (let index = 0; index < this.shiftCountNames.length - 1; index++) {
+					let element = eval('item.shcount' + (index + 1));
+					this.shcountAmounts[index] += Number(element);
+				}
+				this.shcountAmounts[8] += Number(item.paidout);
+				this.shcountAmounts[9] += Number(item.shcounttotal);
+				this.shcountAmounts[10] += Number(item.overshoot);
 			}
-			this.shreportAmounts[10] += Number(item.shreporttotal);
-			for (let index = 0; index < this.shiftCountNames.length-1; index++) {
-				let element = eval('item.shcount' + (index + 1));
-				this.shcountAmounts[index] += Number(element);
-			}
-			this.shcountAmounts[8] += Number(item.paidout);
-			this.shcountAmounts[9] += Number(item.shcounttotal);
-			this.shcountAmounts[10] += Number(item.overshoot);
-		});
-
+		);
 	}
 
 	print() {
-		let shiftReportRows = [
-			['Shift Report', 'Amount']
-		];
-		let shiftCountRows = [
-			['Shift Count', 'Amount']
-		];
-		for (let i = 0; i < this.listOfTen.length; i +=1) { // i suggest a for-loop since you need both arrays at a time
+		let shiftReportRows = [['Shift Report', 'Amount']];
+		let shiftCountRows = [['Shift Count', 'Amount']];
+		for (let i = 0; i < this.listOfTen.length; i += 1) {
+			// i suggest a for-loop since you need both arrays at a time
 			shiftReportRows.push([this.shiftReportNames[i], this.shreportAmounts[i]]);
-		};
+		}
 		shiftReportRows.push([this.shiftReportNames[10], this.shreportAmounts[10]]);
 		for (let i = 0; i < this.shiftCountNames.length; i++) {
 			shiftCountRows.push([this.shiftCountNames[i], this.shcountAmounts[i]]);
@@ -155,10 +159,18 @@ export class MonthlyReportComponent implements OnInit {
 		shiftCountRows.pop();
 		shiftCountRows.pop();
 		shiftCountRows.pop();
-		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-3], this.shcountAmounts[this.shiftCountNames.length-3]]);
-		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-2], this.shcountAmounts[this.shiftCountNames.length-2]]);
-		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-1], this.shcountAmounts[this.shiftCountNames.length-1]]);
-
+		shiftCountRows.push([
+			this.shiftCountNames[this.shiftCountNames.length - 3],
+			this.shcountAmounts[this.shiftCountNames.length - 3],
+		]);
+		shiftCountRows.push([
+			this.shiftCountNames[this.shiftCountNames.length - 2],
+			this.shcountAmounts[this.shiftCountNames.length - 2],
+		]);
+		shiftCountRows.push([
+			this.shiftCountNames[this.shiftCountNames.length - 1],
+			this.shcountAmounts[this.shiftCountNames.length - 1],
+		]);
 
 		let docDefinition = {
 			content: [
@@ -167,13 +179,14 @@ export class MonthlyReportComponent implements OnInit {
 					style: 'title',
 				},
 				{
-					text: this.getMonthName(this.month) + " " + this.year + " Monthly Report",
+					text:
+						this.getMonthName(this.month) + ' ' + this.year + ' Monthly Report',
 					style: 'header',
 				},
 				{
 					table: {
 						headerRows: 1,
-						widths: ['*','*'],
+						widths: ['*', '*'],
 						body: [
 							[
 								[
@@ -221,7 +234,7 @@ export class MonthlyReportComponent implements OnInit {
 					alignment: 'center',
 					fontSize: 10,
 					color: 'black',
-				}
+				},
 			},
 		};
 
@@ -235,10 +248,15 @@ export class MonthlyReportComponent implements OnInit {
 		return date.toLocaleString('en-US', { month: 'long' });
 	}
 
+	setDate() {
+		let date = new Date();
+		this.year = date.getFullYear();
+		this.month = date.getMonth() + 1;
+	}
+
 	checkInputs() {
 		if (this.month == null || this.year == null) {
-			this.responseMessage =
-				'Error: Month/Year was no given!';
+			this.responseMessage = 'Error: Month/Year was no given!';
 			return false;
 		}
 

@@ -6,7 +6,7 @@
 
 <body>
 	<div class="main-content" id="content">
-		<div id="entry-content">
+		<form id="entry-content" (ngSubmit)="insert({box: box.value, lottoid: lottoid.value, name: name.value, quantity: quantity.value})">
 			<h1 id="header"><strong>Lotto Active Entry</strong></h1>
 			<li class="inputs">
 				<label for="shift">Shift Time:</label>
@@ -17,7 +17,7 @@
 			</li>
 			<li class="inputs">
 				<label for="box-input">Box:</label>
-				<input id="box-input" #box type="number" placeholder="Enter Box" name="box">
+				<input id="box-input" #box type="number" placeholder="Enter Box" name="box" autocomplete="off">
 				</li>
 				<li class="inputs">
 					<label for="lottoid-input">Lotto Id:</label>
@@ -25,7 +25,7 @@
 				</li>
 				<li class="inputs">
 					<label for="name-input">Name:</label>
-					<input id="name-input" #name type="text" placeholder="Enter Name" name="name">
+					<input id="name-input" #name type="text" placeholder="Enter Name" name="name" autocomplete="off">
 				</li>
 				<li class="inputs">
 					<label for="quantity-input">Quantity:</label>
@@ -33,16 +33,15 @@
 				</li>
 
 				<li>
-					<button id="add-btn"
-						(click)='insert({box: box.value, lottoid: lottoid.value, name: name.value, quantity: quantity.value})'>Add</button>
+					<button id="add-btn" type="submit">Add</button>
 				</li>
 				<li>
 					<a (click)="navigater('home');" id="return">Return Home</a>
 				</li>
 				<li>
-					<button id="table-btn" (click)='getLottoActives()'>Show Active Lotto Table</button>
+					<button id="table-btn" type="button" (click)='getLottoActives()'>Show Active Lotto Table</button>
 				</li>
-		</div>
+			</form>
 		<table id="lottoAcTable" style="display: none;">
 			<thead id="lottoAcTableHead">
 				<th class="lottoAcTableNames">Name</th>

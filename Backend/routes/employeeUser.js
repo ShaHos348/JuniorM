@@ -255,7 +255,6 @@ router.get("/employeePay/:date", (req, res) => {
               });
             }
           } else {
-            console.log(err);
             return res.status(500).json(err);
           }
         });
@@ -346,11 +345,11 @@ router.get("/employeeGetPrevMessages/:idnum", (req, res) => {
   });
 });
 
-router.post("/deleteMessages", (req, res) => {
-  let data = req.body;
+router.delete("/deleteMessages/:slno", (req, res) => {
+  let slno = req.params.slno;
   query = "DELETE FROM emessage WHERE slno = ?";
   connection.query(
-    query, [data.slno], (err, results) => {
+    query, [slno], (err, results) => {
       if (!err) {
         return res
           .status(200)
@@ -374,10 +373,10 @@ router.get("/getEmployees", (req, res) => {
   })
 })
 
-router.post("/deleteEmployee", (req, res) => {
-  let data = req.body;
+router.delete("/deleteEmployee/:idnum", (req, res) => {
+  let idnum = req.params.idnum;
   query = "SELECT idnum FROM employee where idnum = ?";
-  connection.query(query, [data.idnum], (err, result) => {
+  connection.query(query, [idnum], (err, result) => {
     if (!err) {
       if (result.length == 1) {
         query = "DELETE FROM employee WHERE idnum = ?";

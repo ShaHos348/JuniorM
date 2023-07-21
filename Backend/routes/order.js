@@ -138,6 +138,33 @@ router.get("/new", (req, res) => {
     });
 });
 
+router.delete("/delete/:name", (req, res) => {
+    let itemName = req.params.name;
+    businessidnum = req.session.user.business.idnum;
+
+    query = "SELECT name FROM orderlist where businessid = ? AND datecompleted IS NULL AND name = ?";
+    connection.query(query, [businessidnum, itemName], (err, result) => {
+        if (!err) {
+            if (result.length != 0) {
+                query = "DELETE FROM orderlist where businessid = ? AND datecompleted IS NULL AND name = ?";
+                connection.query(query, [businessidnum, itemName], (err, result) => {
+                    if (!err) {
+                        return res.status(200).json({ message: "Item Deleted!" });
+                    } else {
+                        return res.status(500).json(err);
+                    }
+                });
+            } else {
+                return res.status(400).json({ message: "Item is not on current orderlist!" });
+            }
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+
+
+});
+
 router.post('/print', (req, res) => {
     let orderid = req.body.orderid;
     businessidnum = req.session.user.business.idnum;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LottoService } from 'src/app/services/lotto.service';
 import { ReportService } from 'src/app/services/report.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
@@ -56,7 +57,8 @@ export class LogReportComponent implements OnInit {
 		private router: Router,
 		private userService: UserService,
 		private snackbarService: SnackbarService,
-		private reportService: ReportService
+		private reportService: ReportService,
+		private lottoService: LottoService
 	) {}
 
 	ngOnInit(): void {
@@ -152,6 +154,46 @@ export class LogReportComponent implements OnInit {
 				);
 			}
 		);
+	}
+
+	getLottoActives() {
+		if (!this.checkShiftInput()) {
+			this.snackbarService.openSnackbar(this.responseMessage, '');
+			return;
+		}
+		let data = {
+			shift: this.shift,
+			date: this.shiftDate
+		};
+		this.lottoService.lottoActive(data).subscribe(
+			(response: any) => {
+				let lottoActives = response;
+				for (let index = 0; index < 10; index++) {
+					const lotto = lottoActives[index];
+					this.lottoActiveNames[index] = lotto.name;
+					this.lottoActiveBox[index] = lotto.box;
+				}
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+	}
+
+	checkShiftInput() {
+		if (this.shift == null || this.shiftDate == null) {
+			this.responseMessage = 'Error: Shift/Date is NOT GIVEN!';
+			return false;
+		}
+		return true;
 	}
 
 	checkInputs() {

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+	<div class="main-content" id="content">
+		<h2 id="greeting">Hello {{user}},</h2>
+		<h3>Welcome to the System Management Home!</h3>
+		<button id="logout-btn" (click)='logout()'>Log Out Manager</button>
+		<table id="main-box">
+			<tr>
+				<td class="box">
+					<h2 class="box-head">Business Code Creation</h2>
+					<div>
+						<li><input type="text" #codeCInput placeholder="Enter Code for Creation"><button type="button" (click)="submitCode(codeCInput.value)">CREATE</button></li>
+						<li><input type="text" #codeDInput placeholder="Enter Code for Deletion"><button type="button" (click)="deleteCode(codeDInput.value)">DELETE</button></li>
+						<li><button type="button">VIEW CREATED CODES</button></li>
+					</div>
+					<div>
+						<li class="lottoAcTableRows" *ngFor="let code of codes">{{ code.code }}</li>
+					</div>
+
+				</td>
+				<td class="box">
+					<h2 class="box-head">Shift</h2>
+				<td class="box">
+					<h2 class="box-head">Lotto</h2>
+				</td>
+			</tr>
+			<tr>
+				<td class="box">
+					<h2 class="box-head">Report</h2>
+				</td>
+				<td class="box">
+					<h2 class="box-head">Order</h2>
+				</td>
+				<td class="box">
+					<h2 class="box-head">Vender</h2>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+
+</html>
