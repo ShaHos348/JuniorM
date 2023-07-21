@@ -25,6 +25,10 @@ export class BusinessSignupComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.signupForm = this.formBuilder.group({
+			code: [
+				null,
+				[Validators.required],
+			],
 			name: [
 				null,
 				[Validators.required, Validators.pattern(GlobalConstants.nameRegex)],
@@ -69,6 +73,7 @@ export class BusinessSignupComponent implements OnInit {
 	handleSubmit() {
 		var formData = this.signupForm.value;
 		var data = {
+			code: formData.code,
 			name: formData.name,
 			address: formData.address,
 			city: formData.city,

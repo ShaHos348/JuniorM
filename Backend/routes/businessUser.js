@@ -21,44 +21,55 @@ router.post("/businessSignup", (req, res) => {
           (err, results) => {
             if (!err) {
               if (results.length <= 0) {
-                let lastIdNum = 20220001;
-                query = "SELECT MAX(idnum) AS lastIdNum FROM business";
-                connection.query(query, (err, rows) => {
+                query = "DELETE FROM admin WHERE code = ?";
+                connection.query(query, [user.code], (err, deleted) => {
                   if (!err) {
-                    if (rows[0].lastIdNum != null) {
-                      lastIdNum = rows[0].lastIdNum + 1;
-                    }
-                    query =
-                      "INSERT INTO business (idnum,name,address,city,state,zipcode,country,phone,mobile,email,username,password) VALUES (" +
-                      lastIdNum +
-                      ",?,?,?,?,?,?,?,?,?,?,?)";
-                    connection.query(
-                      query,
-                      [
-                        user.name,
-                        user.address,
-                        user.city,
-                        user.state,
-                        user.zipcode,
-                        user.country,
-                        user.phone,
-                        user.mobile,
-                        user.email,
-                        user.username,
-                        user.password,
-                      ],
-                      (err, results) => {
+                    if (deleted.affectedRows != 0) {
+                      let lastIdNum = 20220001;
+                      query = "SELECT MAX(idnum) AS lastIdNum FROM business";
+                      connection.query(query, (err, rows) => {
                         if (!err) {
-                          return res
-                            .status(200)
-                            .json({ message: "Succesfully Registered!" });
-                        } else {
-                          return res.status(500).json(err);
+                          if (rows[0].lastIdNum != null) {
+                            lastIdNum = rows[0].lastIdNum + 1;
+                          }
+                          query =
+                            "INSERT INTO business (idnum,name,address,city,state,zipcode,country,phone,mobile,email,username,password) VALUES (" +
+                            lastIdNum +
+                            ",?,?,?,?,?,?,?,?,?,?,?)";
+                          connection.query(
+                            query,
+                            [
+                              user.name,
+                              user.address,
+                              user.city,
+                              user.state,
+                              user.zipcode,
+                              user.country,
+                              user.phone,
+                              user.mobile,
+                              user.email,
+                              user.username,
+                              user.password,
+                            ],
+                            (err, results) => {
+                              if (!err) {
+                                return res
+                                  .status(200)
+                                  .json({ message: "Succesfully Registered!" });
+                              } else {
+                                return res.status(500).json(err);
+                              }
+                            }
+                          );
                         }
-                      }
-                    );
+                      });
+                    } else {
+                      return res.status(400).json({ message: "Code is invalid!" });
+                    }
+                  } else {
+                    return res.status(500).json(err);
                   }
-                });
+                })
               } else {
                 return res.status(400).json({
                   message: "Company name, username, and/or email already used!",
@@ -86,7 +97,7 @@ router.post("/businessLogin", (req, res) => {
   connection.query(query, [user.username, user.password], (err, results) => {
     if (!err) {
       if (results.length == 1) {
-        const user = { business: {idnum: results[0].idnum, username: results[0].username} };
+        const user = { business: { idnum: results[0].idnum, username: results[0].username } };
         /*const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN, {
           expiresIn: "1h",
         });*/

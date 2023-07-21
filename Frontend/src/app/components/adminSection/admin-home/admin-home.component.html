@@ -14,15 +14,16 @@
 			<tr>
 				<td class="box">
 					<h2 class="box-head">Business Code Creation</h2>
-					<div>
+					<div class="business-code-section" id="codes-edit">
 						<li><input type="text" #codeCInput placeholder="Enter Code for Creation"><button type="button" (click)="submitCode(codeCInput.value)">CREATE</button></li>
 						<li><input type="text" #codeDInput placeholder="Enter Code for Deletion"><button type="button" (click)="deleteCode(codeDInput.value)">DELETE</button></li>
-						<li><button type="button">VIEW CREATED CODES</button></li>
+						<li><button type="button" (click)="getBusinessCodes()">VIEW CREATED CODES</button></li>
 					</div>
-					<div>
-						<li class="lottoAcTableRows" *ngFor="let code of codes">{{ code.code }}</li>
+					<div class="business-code-section" id="codes-list" style="display: none; overflow: scroll;">
+						<li><button (click)="displayCodeList()">BACK</button></li>
+						<li class="businessCodes" style="text-decoration: underline;">Codes</li>
+						<li class="businessCodes" *ngFor="let cod of codes">{{ cod.code }}</li>
 					</div>
-
 				</td>
 				<td class="box">
 					<h2 class="box-head">Shift</h2>

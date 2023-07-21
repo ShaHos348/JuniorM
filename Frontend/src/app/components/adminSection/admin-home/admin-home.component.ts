@@ -39,15 +39,14 @@ export class AdminHomeComponent implements OnInit {
 			return;
 		}
 		let data = {
-			code: input
-		}
+			code: input,
+		};
 		this.adminService.createBusinessCode(data).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
 				this.snackbarService.openSnackbar(this.responseMessage, '');
 			},
 			(error) => {
-				console.log(error);
 				if (error.error?.message) {
 					this.responseMessage = error.error?.message;
 				} else {
@@ -62,11 +61,63 @@ export class AdminHomeComponent implements OnInit {
 	}
 
 	deleteCode(input: any) {
-
+		if (input == '' || input == null) {
+			return;
+		}
+		let data = {
+			code: input,
+		};
+		this.adminService.deleteBusinessCode(data).subscribe(
+			(response: any) => {
+				this.responseMessage = response?.message;
+				this.snackbarService.openSnackbar(this.responseMessage, '');
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
 	}
 
 	getBusinessCodes() {
+		this.adminService.getBusinessCodes().subscribe(
+			(response: any) => {
+				this.codes = response;
+				if (this.codes.length != 0) {
+					this.displayCodeList();
+				}
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+	}
 
+	displayCodeList() {
+		let editDiv = document.getElementById('codes-edit') as HTMLDivElement;
+		let codeListDiv = document.getElementById('codes-list') as HTMLDivElement;
+		if (codeListDiv.style.display == 'none') {
+			editDiv.style.display = 'none';
+			codeListDiv.style.display = 'block';
+		} else {
+			editDiv.style.display = 'block';
+			codeListDiv.style.display = 'none';
+		}
 	}
 
 	logout() {

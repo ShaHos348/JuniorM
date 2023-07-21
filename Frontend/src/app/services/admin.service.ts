@@ -34,7 +34,7 @@ export class AdminService {
 
 	deleteBusinessCode(data: any) {
 		return this.httpClient.delete(
-			this.url + '/adminUser/deleteCode/' + data,
+			this.url + '/adminUser/deleteCode/' + data.code,
 			{
 				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -42,7 +42,7 @@ export class AdminService {
 		);
 	}
 
-	adminGetCodes() {
+	getBusinessCodes() {
 		return this.httpClient.get(this.url + '/adminUser/getCodes', {
 			withCredentials: true,
 		});
