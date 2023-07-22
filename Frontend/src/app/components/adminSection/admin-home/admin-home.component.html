@@ -14,32 +14,44 @@
 			<tr>
 				<td class="box">
 					<h2 class="box-head">Business Code Creation</h2>
-					<div class="business-code-section" id="codes-edit">
-						<li><input type="text" #codeCInput placeholder="Enter Code for Creation"><button type="button" (click)="submitCode(codeCInput.value)">CREATE</button></li>
-						<li><input type="text" #codeDInput placeholder="Enter Code for Deletion"><button type="button" (click)="deleteCode(codeDInput.value)">DELETE</button></li>
+					<div class="business-sections" id="codes-edit">
+						<li><input type="text" #codeCInput placeholder="Enter Code for Creation" id="codeCInput"><button type="button" (click)="submitCode(codeCInput.value)">CREATE</button></li>
+						<li><input type="text" #codeDInput placeholder="Enter Code for Deletion" id="codeDInput"><button type="button" (click)="deleteCode(codeDInput.value)">DELETE</button></li>
 						<li><button type="button" (click)="getBusinessCodes()">VIEW CREATED CODES</button></li>
 					</div>
-					<div class="business-code-section" id="codes-list" style="display: none; overflow: scroll;">
-						<li><button (click)="displayCodeList()">BACK</button></li>
-						<li class="businessCodes" style="text-decoration: underline;">Codes</li>
-						<li class="businessCodes" *ngFor="let cod of codes">{{ cod.code }}</li>
+					<div class="business-sections-list" id="codes-list">
+						<li><button (click)="displayList('codes-edit','codes-list')">BACK</button></li>
+						<li class="listData" style="text-decoration: underline;">Codes</li>
+						<li class="listData" *ngFor="let cod of codes">{{ cod.code }}</li>
 					</div>
 				</td>
 				<td class="box">
-					<h2 class="box-head">Shift</h2>
-				<td class="box">
-					<h2 class="box-head">Lotto</h2>
-				</td>
+					<h2 class="box-head">Destroy Sessions</h2>
+					<div class="business-sections" id="session-edit">
+						<li><input type="text" #sessionDInput placeholder="Enter SessionId for Deletion" id="sessionDInput"><button type="button" (click)="endSession(sessionDInput.value)">DELETE</button></li>
+						<li><button type="button" (click)="getSessionIDs()">VIEW SESSIONS</button></li>
+					</div>
+					<div class="business-sections-list" id="sessions-list">
+						<li><button (click)="displayList('session-edit','sessions-list')">BACK</button></li>
+						<li class="listData" style="text-decoration: underline;">Sessions</li>
+						<tr>
+							<th>Session ID</th>
+							<th>Info</th>
+						</tr>
+						<tr class="listData" *ngFor="let session of sessions">
+							<td>{{ session.session_id }}</td>
+							<td>{{ session.data }}</td>
+						</tr>
+					</div>
 			</tr>
 			<tr>
 				<td class="box">
-					<h2 class="box-head">Report</h2>
-				</td>
-				<td class="box">
-					<h2 class="box-head">Order</h2>
-				</td>
-				<td class="box">
-					<h2 class="box-head">Vender</h2>
+					<h2 class="box-head">Database Clearer</h2>
+						<li>
+							<label for="messagesClear">Clear Employee Messages:</label>
+							<button type="button" (click)="clearDatabase('3MonthMessages')">Older than 3 Months</button>
+							<button type="button" id="messagesClear" (click)="clearDatabase('AllMessages')">ALL</button>
+						</li>
 				</td>
 			</tr>
 		</table>

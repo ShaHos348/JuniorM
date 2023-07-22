@@ -48,6 +48,32 @@ export class AdminService {
 		});
 	}
 
+	destorySession(data: any) {
+		return this.httpClient.delete(
+			this.url + '/adminUser/destroySession/' + data.id,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	getSessions() {
+		return this.httpClient.get(this.url + '/adminUser/getSessions', {
+			withCredentials: true,
+		});
+	}
+
+	clearDatabase(data: any) {
+		return this.httpClient.delete(
+			this.url + '/adminUser/clearDatabase/' + data.input,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
 	adminCheckLogin() {
 		return this.httpClient.get(this.url + '/adminUser/checkLogin', {
 			withCredentials: true,

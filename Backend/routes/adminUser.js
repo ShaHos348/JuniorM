@@ -29,11 +29,11 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.post("/createCode", (req,res) => {
+router.post("/createCode", (req, res) => {
   let code = req.body.code;
   query = "INSERT INTO admin values(null, null, ?)";
   console.log(query);
-  connection.query(query, [code], (err,result) => {
+  connection.query(query, [code], (err, result) => {
     if (!err) {
       return res.status(200).json({ message: "Code Created" });
     } else {
@@ -42,10 +42,10 @@ router.post("/createCode", (req,res) => {
   })
 });
 
-router.delete("/deleteCode/:code", (req,res) => {
+router.delete("/deleteCode/:code", (req, res) => {
   let code = req.params.code;
   query = "DELETE FROM admin WHERE code = ?";
-  connection.query(query, [code], (err,result) => {
+  connection.query(query, [code], (err, result) => {
     if (!err) {
       return res.status(200).json({ message: "Code Deleted" });
     } else {
@@ -65,12 +65,57 @@ router.get("/getCodes", (req, res) => {
   });
 });
 
+router.get("/getSessions", (req, res) => {
+  query = "SELECT * FROM sessions";
+  connection.query(query, (err, results) => {
+    if (!err) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.delete("/destroySession/:id", (req, res) => {
+  let id = req.params.id;
+  query = "DELETE FROM sessions WHERE session_id = ?";
+  connection.query(query, [id], (err, result) => {
+    if (!err) {
+      return res.status(200).json({ message: "Session Destroyed!" });
+    } else {
+      return res.status(500).json(err);
+    }
+  })
+});
+
+router.delete("/clearDatabase/:input", (req, res) => {
+  let input = req.params.input;
+  let query = "SELECT code FROM admin WHERE username = 'ahsbfhwkkchajw'";
+  switch (input) {
+    case "3MonthMessages":
+      query = "DELETE FROM emessage WHERE date < DATE_SUB(NOW(), INTERVAL 3 MONTH);";
+      break;
+    case "AllMessages":
+      query = "DELETE FROM emessage WHERE 1=1";
+      break;
+    default:
+      break;
+  }
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json({ message: "Clearing Done!" });
+    } else {
+      return res.status(500).json(err);
+    }
+  })
+});
+
 router.get("/checkLogin", auth.authenticateAdmin, (req, res) => {
   return res.status(200).json({ message: "Admin" });
 });
 
 router.get("/logout", auth.authenticateAdmin, (req, res) => {
-  req.session.admin = false;
+  req.session.destroy();
   return res.status(200).json({ message: "Logged Out!" });
 });
 

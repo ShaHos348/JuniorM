@@ -13,6 +13,7 @@ import { GlobalConstants } from 'src/app/shared/global-constants';
 export class AdminHomeComponent implements OnInit {
 	user: string = '';
 	codes: any;
+	sessions: any;
 	responseMessage: any;
 
 	constructor(
@@ -91,7 +92,7 @@ export class AdminHomeComponent implements OnInit {
 			(response: any) => {
 				this.codes = response;
 				if (this.codes.length != 0) {
-					this.displayCodeList();
+					this.displayList("codes-edit","codes-list");
 				}
 			},
 			(error) => {
@@ -108,16 +109,99 @@ export class AdminHomeComponent implements OnInit {
 		);
 	}
 
-	displayCodeList() {
-		let editDiv = document.getElementById('codes-edit') as HTMLDivElement;
-		let codeListDiv = document.getElementById('codes-list') as HTMLDivElement;
-		if (codeListDiv.style.display == 'none') {
+	endSession(input: any) {
+		if (input == '' || input == null) {
+			return;
+		}
+		let data = {
+			id: input,
+		};
+		this.adminService.destorySession(data).subscribe(
+			(response: any) => {
+				this.responseMessage = response?.message;
+				this.snackbarService.openSnackbar(this.responseMessage, '');
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+	}
+
+	getSessionIDs() {
+		this.adminService.getSessions().subscribe(
+			(response: any) => {
+				this.sessions = response;
+				if (this.sessions.length != 0) {
+					for (let i = 0; i < this.sessions.length; i++) {
+						const session = this.sessions[i];
+						let index = session.data.indexOf("business");
+						if (index < 0) {
+							session.data = "{Business not Signed in}";
+						} else {
+							session.data = "{{"+ session.data.substring(index+10);
+						}
+					}
+					this.displayList("session-edit","sessions-list");
+				}
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+	}
+
+	displayList(main: any, list: any) {
+		let editDiv = document.getElementById(main) as HTMLDivElement;
+		let listDiv = document.getElementById(list) as HTMLDivElement;
+		if (listDiv.style.display == 'none') {
 			editDiv.style.display = 'none';
-			codeListDiv.style.display = 'block';
+			listDiv.style.display = 'block';
 		} else {
 			editDiv.style.display = 'block';
-			codeListDiv.style.display = 'none';
+			listDiv.style.display = 'none';
 		}
+	}
+
+	clearDatabase(clearInput: any) {
+		if (clearInput == '' || clearInput == null) {
+			return;
+		}
+		let data = {
+			input: clearInput,
+		};
+		this.adminService.clearDatabase(data).subscribe(
+			(response: any) => {
+				this.responseMessage = response?.message;
+				this.snackbarService.openSnackbar(this.responseMessage, '');
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
 	}
 
 	logout() {
