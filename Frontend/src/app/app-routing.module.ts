@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { BusinessLoginComponent } from './components/business-components/business-login/business-login.component';
 import { BusinessFPComponent } from './components/forgotInfoSection/business-fp/business-fp.component';
+import { BusinessInfoComponent } from './components/business-components/business-info/business-info.component';
 import { EmployeeSignupComponent } from './components/employeeSection/employee-signup/employee-signup.component';
 import { EmployeeInfoComponent } from './components/employeeSection/employee-info/employee-info.component';
 import { ModifyClockingComponent } from './components/employeeSection/modify-clocking/modify-clocking.component';
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: '',
     component: BusinessLoginComponent
+  },
+	{
+    path: 'business/info',
+    component: BusinessInfoComponent
   },
   {
     path: 'home',

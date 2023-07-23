@@ -41,6 +41,27 @@ export class UserService {
 		);
 	}
 
+	getBusinessInfo() {
+		return this.httpClient.get(
+			this.url + '/businessUser/businessInfo',
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	updateBusinessInfo(data: any) {
+		return this.httpClient.patch(
+			this.url + '/businessUser/updateInfo',
+			data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
 	checkLogin() {
 		return this.httpClient.get(this.url + '/businessUser/checkLogin', {
 			withCredentials: true,
@@ -71,7 +92,7 @@ export class UserService {
 	}
 
 	managerLogout() {
-		return this.httpClient.get(this.url + '/adminUser/logout', {
+		return this.httpClient.get(this.url + '/managerUser/logout', {
 			withCredentials: true,
 		});
 	}

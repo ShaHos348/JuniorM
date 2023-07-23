@@ -141,6 +141,46 @@ router.post("/businessForgotPassword", (req, res) => {
   });
 });
 
+router.get("/businessInfo", (req, res) => {
+  businessidnum = req.session.user.business.idnum;
+  query = "SELECT * FROM business WHERE idnum = ?";
+  connection.query(query, [businessidnum], (err, result) => {
+    if (!err) {
+      return res.status(200).json(result[0]);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.patch("/updateInfo", (req, res) => {
+  let user = req.body;
+  businessidnum = req.session.user.business.idnum;
+  query = "UPDATE business SET name= ?, address= ?, city = ?, state = ?, zipcode = ?, country = ?, phone = ?, mobile = ?, email = ?, username = ?, password = ? WHERE idnum = ?";
+  connection.query(query, 
+    [
+      user.name,
+      user.address,
+      user.city,
+      user.state,
+      user.zipcode,
+      user.country,
+      user.phone,
+      user.mobile,
+      user.email,
+      user.username,
+      user.password,
+      businessidnum
+    ], (err, result) => {
+    if (!err) {
+      return res.status(200).json({ message: "Business Info Updated!" });
+    } else {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  });
+});
+
 router.get("/checkLogin", auth.authenticateBusiness, (req, res) => {
   return res.status(200).json({ message: req.session.user.business.username });
 });

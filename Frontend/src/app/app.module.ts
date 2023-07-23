@@ -28,6 +28,7 @@ import { AllEmployeeMessagesComponent } from './components/employeeSection/all-e
 import { EmployeePayComponent } from './components/employeeSection/employee-pay/employee-pay.component';
 import { EditDailyReportComponent } from './components/reportSection/edit-daily-report/edit-daily-report.component';
 import { AdminHomeComponent } from './components/adminSection/admin-home/admin-home.component';
+import { BusinessInfoComponent } from './components/business-components/business-info/business-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { AdminHomeComponent } from './components/adminSection/admin-home/admin-h
     EmployeePayComponent,
     EditDailyReportComponent,
     AdminHomeComponent,
+    BusinessInfoComponent,
    ],
   imports: [
     BrowserModule,

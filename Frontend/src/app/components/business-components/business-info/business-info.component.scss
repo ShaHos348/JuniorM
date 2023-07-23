@@ -1,0 +1,35 @@
+#content {
+	position: relative;
+	width: 90vw;
+	top: 25px;
+	display: flex;
+}
+
+#info-options {
+	position: relative;
+	border: 5px solid red;
+	width: 50%;
+	height: fit-content;
+	margin-right: 50px;
+	left: 0;
+}
+
+.option-btns {
+	position: relative;
+	margin-right: 2px;
+}
+
+#updateForm {
+	display: none;
+}
+
+#info-table, #updateForm, #infoPDF {
+	position: relative;
+	border: 5px solid cyan;
+	width: 40%;
+	height: fit-content;
+}
+
+.input {
+	width: 50%;
+}
