@@ -1,0 +1,47 @@
+#content {
+	position: relative;
+	width: 90vw;
+	top: 25px;
+	display: flex;
+}
+
+#registry-div {
+	position: relative;
+	border: 5px solid red;
+	width: 50%;
+	height: fit-content;
+	margin-right: 50px;
+	left: 0;
+}
+
+.option-btns {
+	position: relative;
+	margin-right: 10px;
+}
+
+#items-table {
+	position: relative;
+	border: 5px solid cyan;
+	width: 40%;
+	height: fit-content;
+}
+
+.input {
+	width: 50%;
+}
+
+.itemTableSl {
+	width: 10%;
+}
+
+.itemTableBarcode {
+	width: 40%;
+}
+
+.itemTableName {
+	width: 50%;
+}
+
+td {
+	border: 1px solid red;
+}

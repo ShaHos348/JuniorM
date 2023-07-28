@@ -9,6 +9,7 @@ const PDFDocument = require('pdfkit');
 router.post("/entry", (req, res) => {
     let data = req.body;
     businessidnum = req.session.user.business.idnum;
+    let itemBarcode = data.barcode;
     let itemName = data.name;
     let quantity = data.quantity;
     let orderidnum = 1;
@@ -23,6 +24,15 @@ router.post("/entry", (req, res) => {
                     orderidnum++;
                 }
             }
+
+            /*query = "SELECT name as name FROM itemregistry WHERE businessid = ? AND barcode = ?";
+            connection.query(query, [businessidnum, itemBarcode], (err, results) => {
+                if (!err) {
+                    return res.status(200).json(results);
+                } else {
+                    return res.status(500).json(err);
+                }
+            });*/
 
             query = "SELECT serialnum FROM orderlist where businessid = ? AND orderid = ? order by serialnum desc limit 0,1";
             connection.query(query, [businessidnum, orderidnum], (err, result) => {
@@ -80,7 +90,7 @@ router.get("/getOrder", (req, res) => {
         if (!err) {
             if (result.length != 0) {
                 let orderid = result[0].orderid;
-                query = "SELECT serialnum, name, quantity from orderlist where businessid = ? AND orderid = ?";
+                query = "SELECT * from orderlist where businessid = ? AND orderid = ?";
                 connection.query(query, [businessidnum, orderid], (err, results) => {
                     if (!err) {
                         if (!err) {
@@ -138,16 +148,16 @@ router.get("/new", (req, res) => {
     });
 });
 
-router.delete("/delete/:name", (req, res) => {
-    let itemName = req.params.name;
+router.delete("/delete/:id", (req, res) => {
+    let itemId = req.params.id;
     businessidnum = req.session.user.business.idnum;
 
-    query = "SELECT name FROM orderlist where businessid = ? AND datecompleted IS NULL AND name = ?";
-    connection.query(query, [businessidnum, itemName], (err, result) => {
+    query = "SELECT name FROM orderlist where businessid = ? AND datecompleted IS NULL AND entrynum = ?";
+    connection.query(query, [businessidnum, itemId], (err, result) => {
         if (!err) {
             if (result.length != 0) {
-                query = "DELETE FROM orderlist where businessid = ? AND datecompleted IS NULL AND name = ?";
-                connection.query(query, [businessidnum, itemName], (err, result) => {
+                query = "DELETE FROM orderlist where businessid = ? AND datecompleted IS NULL AND entrynum = ?";
+                connection.query(query, [businessidnum, itemId], (err, result) => {
                     if (!err) {
                         return res.status(200).json({ message: "Item Deleted!" });
                     } else {
@@ -243,6 +253,81 @@ router.post('/print', (req, res) => {
     });
 
 
+});
+
+router.post("/itemRegistry", (req, res) => {
+    let barcode = req.body.barcode;
+    let name = req.body.name;
+    businessidnum = req.session.user.business.idnum;
+
+    query = "SELECT barcode FROM itemregistry WHERE businessid = ? AND barcode = ?";
+    connection.query(query, [businessidnum, barcode], (err, result) => {
+        if (!err) {
+            if (result.length == 0) {
+                query = "INSERT INTO itemregistry (barcode, name, businessid) VALUES (?,?,?)";
+                connection.query(query, [barcode, name, businessidnum], (err, result) => {
+                    if (!err) {
+                        return res
+                            .status(200)
+                            .json({ message: "Item Inserted!" });
+                    } else {
+                        return res.status(500).json(err);
+                    }
+                });
+            } else {
+                query = "UPDATE itemregistry SET name = ? WHERE businessid = ? AND barcode = ?";
+                connection.query(query, [name, businessidnum, barcode], (err, result) => {
+                    if (!err) {
+                        return res
+                            .status(200)
+                            .json({ message: "Item Name Updated!" });
+                    } else {
+                        return res.status(500).json(err);
+                    }
+                });
+            }
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+});
+
+router.get("/getItems", (req, res) => {
+    businessidnum = req.session.user.business.idnum;
+
+    query = "SELECT barcode,name FROM itemregistry WHERE businessid = ? ORDER BY name";
+    connection.query(query, [businessidnum], (err, results) => {
+        if (!err) {
+            return res.status(200).json(results);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+});
+
+router.delete("/deleteItem/:barcode", (req, res) => {
+    let barcode = req.params.barcode;
+    businessidnum = req.session.user.business.idnum;
+
+    query = "SELECT barcode FROM itemregistry where businessid = ? AND barcode = ?";
+    connection.query(query, [businessidnum, barcode], (err, result) => {
+        if (!err) {
+            if (result.length != 0) {
+                query = "DELETE FROM itemregistry where businessid = ? AND barcode = ?";
+                connection.query(query, [businessidnum, barcode], (err, result) => {
+                    if (!err) {
+                        return res.status(200).json({ message: "Item Deleted!" });
+                    } else {
+                        return res.status(500).json(err);
+                    }
+                });
+            } else {
+                return res.status(400).json({ message: "Item is not in business item registry!" });
+            }
+        } else {
+            return res.status(500).json(err);
+        }
+    });
 });
 
 module.exports = router;

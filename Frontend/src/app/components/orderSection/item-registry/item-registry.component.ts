@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -7,27 +6,26 @@ import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-	selector: 'app-order-entry',
-	templateUrl: './order-entry.component.html',
-	styleUrls: ['./order-entry.component.scss'],
+  selector: 'app-item-registry',
+  templateUrl: './item-registry.component.html',
+  styleUrls: ['./item-registry.component.scss']
 })
-export class OrderEntryComponent implements OnInit {
-	orderItems: any;
+export class ItemRegistryComponent implements OnInit {
 	responseMessage: any;
+	items: any;
 
 	constructor(
-		private dialog: MatDialog,
 		private router: Router,
-		private userService: UserService,
 		private snackbarService: SnackbarService,
+		private userService: UserService,
 		private orderService: OrderService
 	) {}
 
 	ngOnInit(): void {
 		this.userService.checkLogin().subscribe(
 			(response: any) => {
-				this.router.navigate(['order/entry']);
-				this.getOrderList();
+				this.router.navigate(['order/registry']);
+				this.getItems();
 			},
 			(error) => {
 				this.router.navigate(['']);
@@ -35,28 +33,26 @@ export class OrderEntryComponent implements OnInit {
 		);
 	}
 
-	insert() {
+	register() {
 		let barcode = document.getElementById('barcode-input') as HTMLInputElement;
 		let name = document.getElementById('name-input') as HTMLInputElement;
-		let quantity = document.getElementById('quantity-input') as HTMLInputElement;
-		if (!this.checkInputs()) {
+		if (barcode.value == "" || name.value == "") {
+			this.responseMessage = "Barcode/Name field is empty";
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
 		}
-		let data = {
+		let item = {
 			barcode: barcode.value,
-			name: name.value,
-			quantity: quantity.value
+			name: name.value
 		}
-		this.orderService.entry(data).subscribe(
+		this.orderService.registerItem(item).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
 				this.snackbarService.openSnackbar(this.responseMessage, '');
 				barcode.value = '';
 				name.value = '';
-				quantity.value = '';
-				name.focus();
-				this.getOrderList();
+				barcode.focus();
+				this.getItems();
 			},
 			(error) => {
 				if (error.error?.message) {
@@ -72,20 +68,32 @@ export class OrderEntryComponent implements OnInit {
 		);
 	}
 
-	delete() {
-		let input = document.getElementById('delete-input') as HTMLInputElement;
-		if (input.value == '') {
-			this.responseMessage = 'Error: Item ID is NOT GIVEN!';
+	getItems() {
+		let itemsTable = document.getElementById('items-table') as HTMLElement;
+		this.orderService.getItems().subscribe((response: any) => {
+			this.items = response;
+			if (this.items.length != 0) {
+				itemsTable.style.display = 'table';
+			} else {
+				itemsTable.style.display = 'none';
+			}
+		});
+	}
+
+	deleteItem() {
+		let barcode = document.getElementById('barcode-input') as HTMLInputElement;
+		if (barcode.value == '') {
+			this.responseMessage = 'Error: Barcode is NOT GIVEN!';
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
 		}
-		let itemID = input.value;
-		this.orderService.delete(itemID).subscribe(
+		let itemBarcode = barcode.value;
+		this.orderService.deleteItem(itemBarcode).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
 				this.snackbarService.openSnackbar(this.responseMessage, '');
-				input.value = '';
-				this.getOrderList();
+				barcode.value = '';
+				this.getItems();
 			},
 			(error) => {
 				if (error.error?.message) {
@@ -99,38 +107,6 @@ export class OrderEntryComponent implements OnInit {
 				);
 			}
 		);
-	}
-
-	getOrderList() {
-		let orderTable = document.getElementById('orderTable') as HTMLElement;
-		this.orderService.getCurrentList().subscribe((response: any) => {
-			this.orderItems = response;
-			if (this.orderItems.length != 0) {
-				orderTable.style.display = 'table';
-			} else {
-				orderTable.style.display = 'none';
-			}
-		});
-	}
-
-	newOrder() {
-		this.orderService.new().subscribe((response: any) => {
-			this.responseMessage = response?.message;
-			this.snackbarService.openSnackbar(this.responseMessage, '');
-			this.getOrderList();
-		});
-	}
-
-	checkInputs() {
-		let barcode = document.getElementById('barcode-input') as HTMLInputElement;
-		let name = document.getElementById('name-input') as HTMLInputElement;
-		let quantity = document.getElementById('quantity-input') as HTMLInputElement;
-		if ((barcode.value == '' && name.value == '') || quantity.value == '') {
-			this.responseMessage = 'Error: Name/Quantity is NOT GIVEN!';
-			return false;
-		}
-
-		return true;
 	}
 
 	navigater(route: string) {

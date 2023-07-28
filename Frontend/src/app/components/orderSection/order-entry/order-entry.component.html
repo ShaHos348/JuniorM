@@ -11,6 +11,7 @@
 			<button id="new-btn" (click)='newOrder()'>New Order</button>
 			<form (ngSubmit)="insert()">
 				<li>
+					<input id="barcode-input" #barcode type="text" placeholder="Enter Barcode" name="barcode" autocomplete="off"> OR
 					<input id="name-input" #name type="text" placeholder="Enter Name" name="name" autocomplete="off">
 					<input id="quantity-input" #quantity type="number" placeholder="Enter Quantity" name="quantity">
 					<button id="add-btn" type="submit">Add</button>
@@ -18,7 +19,7 @@
 			</form>
 			<form (ngSubmit)="delete()">
 				<li>
-					<input id="delete-input" #deleteName type="text" placeholder="Enter Item Name to delete" name="deleteName" autocomplete="off">
+					<input id="delete-input" #deleteName type="text" placeholder="Enter Item ID to delete" name="deleteName" autocomplete="off">
 					<button id="delete-btn" type="submit">Delete</button>
 				</li>
 			</form>
@@ -33,11 +34,13 @@
 		<table id="orderTable">
 			<thead id="orderTableHead">
 				<th class="orderTableSl">Sl</th>
+				<th class="orderTableENum">ID</th>
 				<th class="orderTableNames">Name</th>
 				<th class="orderTableQuantities">Quantity</th>
 			</thead>
 			<tr class="orderTableRows" *ngFor="let item of orderItems">
 				<td class="orderTableSl">{{ item.serialnum }}</td>
+				<td class="orderTableENum">{{ item.entrynum }}</td>
 				<td class="orderTableNames">{{ item.name }}</td>
 				<td class="orderTableQuantities">{{ item.quantity }}</td>
 			</tr>

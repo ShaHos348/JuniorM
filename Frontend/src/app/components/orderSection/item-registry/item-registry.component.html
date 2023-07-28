@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+	<div class="main-content" id="content">
+		<div id="registry-div">
+			<h2 id="header"><strong>Item Registry</strong></h2>
+			<li>
+				<form id="entry-form" (ngSubmit)="register();">
+					<button class="option-btns" type="button" style="background-color: red;" (click)="deleteItem();">Delete Item</button>
+					<input type="text" id="barcode-input" placeholder="Enter item barcode">
+					<input type="text" id="name-input" placeholder="Enter item name">
+					<button class="option-btns" type="submit" style="background-color: orange;">Register Item</button>
+				</form>
+			</li>
+			<li>
+				<a (click)="navigater('manager/home');" id="return">Return Home</a>
+			</li>
+		</div>
+		<table id="items-table">
+			<thead id="infoTableHead">
+				<th class="itemTableSl">Sl</th>
+				<th class="itemTableBarcode">Barcode</th>
+				<th class="itemTablename">Name</th>
+			</thead>
+			<tr class="itemTableRows" *ngFor="let item of items; let i = index">
+				<td>{{ i+1 }}</td>
+				<td>{{ item.barcode }}</td>
+				<td>{{ item.name }}</td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>

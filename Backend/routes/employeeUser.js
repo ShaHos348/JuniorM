@@ -381,7 +381,7 @@ router.delete("/deleteEmployee/:idnum", (req, res) => {
       if (result.length == 1) {
         query = "DELETE FROM employee WHERE idnum = ?";
         connection.query(
-          query, [data.idnum], (err, results) => {
+          query, [idnum], (err, results) => {
             if (!err) {
               return res
                 .status(200)

@@ -51,9 +51,9 @@ export class OrderService {
 		);
 	}
 
-	delete(name: any) {
+	delete(id: any) {
 		return this.httpClient.delete(
-			this.url + '/order/delete/' + name,
+			this.url + '/order/delete/' + id,
 			{
 				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -68,6 +68,37 @@ export class OrderService {
 			{
 				withCredentials: true,
 				responseType: 'blob',
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	registerItem(data: any) {
+		return this.httpClient.post(
+			this.url + '/order/itemRegistry',
+			data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	getItems() {
+		return this.httpClient.get(
+			this.url + '/order/getItems',
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	deleteItem(barcode: any) {
+		return this.httpClient.delete(
+			this.url + '/order/deleteItem/' + barcode,
+			{
+				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
 		);
