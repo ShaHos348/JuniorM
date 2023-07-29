@@ -15,6 +15,10 @@ export class OrderEntryComponent implements OnInit {
 	orderItems: any;
 	responseMessage: any;
 
+	barcode: any;
+	name: any;
+	quantity: any;
+
 	constructor(
 		private dialog: MatDialog,
 		private router: Router,
@@ -35,27 +39,54 @@ export class OrderEntryComponent implements OnInit {
 		);
 	}
 
-	insert() {
-		let barcode = document.getElementById('barcode-input') as HTMLInputElement;
+	getItem() {
 		let name = document.getElementById('name-input') as HTMLInputElement;
-		let quantity = document.getElementById('quantity-input') as HTMLInputElement;
+		if ((this.barcode == '')) {
+			this.responseMessage = 'Error: Barcode is NOT GIVEN!';
+			this.snackbarService.openSnackbar(this.responseMessage, '');
+			return;
+		}
+		this.orderService.getSpecificItems(this.barcode).subscribe(
+			(response: any) => {
+				this.name = response.name;
+				this.quantity = 1;
+			},
+			(error) => {
+				name.focus();
+				this.quantity = 1;
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+	}
+
+	insert() {
+		let barcodeInput = document.getElementById('name-input') as HTMLInputElement;
 		if (!this.checkInputs()) {
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
 		}
+		this.addItem();
 		let data = {
-			barcode: barcode.value,
-			name: name.value,
-			quantity: quantity.value
-		}
+			barcode: this.barcode,
+			name: this.name,
+			quantity: this.quantity,
+		};
 		this.orderService.entry(data).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
 				this.snackbarService.openSnackbar(this.responseMessage, '');
-				barcode.value = '';
-				name.value = '';
-				quantity.value = '';
-				name.focus();
+				this.barcode = '';
+				this.name = '';
+				this.quantity = '';
+				barcodeInput.focus();
 				this.getOrderList();
 			},
 			(error) => {
@@ -75,7 +106,7 @@ export class OrderEntryComponent implements OnInit {
 	delete() {
 		let input = document.getElementById('delete-input') as HTMLInputElement;
 		if (input.value == '') {
-			this.responseMessage = 'Error: Item ID is NOT GIVEN!';
+			this.responseMessage = 'Error: Item Barcode is NOT GIVEN!';
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
 		}
@@ -121,11 +152,32 @@ export class OrderEntryComponent implements OnInit {
 		});
 	}
 
+	addItem() {
+		let item = {
+			barcode: this.barcode,
+			name: this.name
+		}
+		this.orderService.registerItem(item).subscribe(
+			(response: any) => {
+				this.responseMessage = response?.message;
+				this.snackbarService.openSnackbar(this.responseMessage, '');
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+	}
+
 	checkInputs() {
-		let barcode = document.getElementById('barcode-input') as HTMLInputElement;
-		let name = document.getElementById('name-input') as HTMLInputElement;
-		let quantity = document.getElementById('quantity-input') as HTMLInputElement;
-		if ((barcode.value == '' && name.value == '') || quantity.value == '') {
+		if (this.barcode == '' || this.name == '' || this.quantity == '') {
 			this.responseMessage = 'Error: Name/Quantity is NOT GIVEN!';
 			return false;
 		}

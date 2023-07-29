@@ -16,7 +16,7 @@ import { LogReportComponent } from './components/reportSection/log-report/log-re
 import { DailyReportComponent } from './components/reportSection/daily-report/daily-report.component';
 import { MonthlyReportComponent } from './components/reportSection/monthly-report/monthly-report.component';
 import { EditDailyReportComponent } from './components/reportSection/edit-daily-report/edit-daily-report.component';
-import { ItemRegistryComponent } from './components/orderSection/item-registry/item-registry.component';
+import { ItemRegistryComponent } from './components/adminSection/item-registry/item-registry.component';
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';

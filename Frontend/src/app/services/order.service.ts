@@ -94,6 +94,16 @@ export class OrderService {
 		);
 	}
 
+	getSpecificItems(barcode: any) {
+		return this.httpClient.get(
+			this.url + '/order/getSpecificItem/' + barcode,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
 	deleteItem(barcode: any) {
 		return this.httpClient.delete(
 			this.url + '/order/deleteItem/' + barcode,
