@@ -30,4 +30,45 @@ export class LottoService {
 			}
 		);
 	}
+
+	registerLotto(data: any) {
+		return this.httpClient.post(
+			this.url + '/lotto/lottoRegistry',
+			data,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	getLottos() {
+		return this.httpClient.get(
+			this.url + '/lotto/getLottos',
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	getSpecificLotto(lottoid: any) {
+		return this.httpClient.get(
+			this.url + '/lotto/getSpecificLotto/' + lottoid,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	deleteLotto(lottoid: any) {
+		return this.httpClient.delete(
+			this.url + '/lotto/deleteLotto/' + lottoid,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
 }

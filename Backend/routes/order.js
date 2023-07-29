@@ -323,7 +323,7 @@ router.delete("/deleteItem/:barcode", (req, res) => {
         if (!err) {
             if (result.length != 0) {
                 query = "DELETE FROM itemregistry WHERE barcode = ?";
-                connection.query(query, [businessidnum, barcode], (err, result) => {
+                connection.query(query, [barcode], (err, result) => {
                     if (!err) {
                         return res.status(200).json({ message: "Item Deleted!" });
                     } else {
