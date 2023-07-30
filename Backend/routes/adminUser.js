@@ -32,7 +32,6 @@ router.post("/login", (req, res) => {
 router.post("/createCode", (req, res) => {
   let code = req.body.code;
   query = "INSERT INTO admin values(null, null, ?)";
-  console.log(query);
   connection.query(query, [code], (err, result) => {
     if (!err) {
       return res.status(200).json({ message: "Code Created" });

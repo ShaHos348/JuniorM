@@ -43,7 +43,6 @@ router.post("/entry", (req, res) => {
                                             .status(200)
                                             .json({ message: "Item Inserted!" });
                                     } else {
-                                        console.log(err);
                                         return res.status(500).json(err);
                                     }
                                 });

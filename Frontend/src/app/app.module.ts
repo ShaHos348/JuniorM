@@ -30,6 +30,7 @@ import { EditDailyReportComponent } from './components/reportSection/edit-daily-
 import { AdminHomeComponent } from './components/adminSection/admin-home/admin-home.component';
 import { BusinessInfoComponent } from './components/business-components/business-info/business-info.component';
 import { ItemRegistryComponent } from './components/adminSection/item-registry/item-registry.component';
+import { LottoSaleComponent } from './components/lottoSection/lotto-sale/lotto-sale.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,7 @@ import { ItemRegistryComponent } from './components/adminSection/item-registry/i
     AdminHomeComponent,
     BusinessInfoComponent,
     ItemRegistryComponent,
+    LottoSaleComponent,
    ],
   imports: [
     BrowserModule,

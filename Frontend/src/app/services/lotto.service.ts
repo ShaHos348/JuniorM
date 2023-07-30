@@ -71,4 +71,25 @@ export class LottoService {
 			}
 		);
 	}
+
+	enterLottoSales(sale: any) {
+		return this.httpClient.post(
+			this.url + '/lotto/lottoSaleEntry',
+			sale,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
+
+	getLottoSale(data: any) {
+		return this.httpClient.get(
+			this.url + '/lotto/getLottoSale/' + data.shift + "&" + data.date,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
+		);
+	}
 }

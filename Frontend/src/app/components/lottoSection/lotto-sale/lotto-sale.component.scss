@@ -1,0 +1,43 @@
+#content {
+	position: relative;
+	height: initial;
+	top: 5%;
+}
+
+#entry-content {
+	position: relative;
+	width: 90vw;
+	border: 2.5px solid black;
+	padding-bottom: 10px;
+	margin: auto;
+}
+
+h1 {
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#box-table {
+	border-collapse: collapse;
+	margin: auto;
+}
+
+.column {
+	border: 5px solid red;
+}
+
+.box-rows {
+	width: 50%;
+	border: 1px solid cyan;
+}
+
+.box-cols {
+	border-left: 1px solid blue;
+	padding: 5px;
+	color: black;
+}
+
+#return {
+	color: red;
+}

@@ -175,7 +175,6 @@ router.patch("/updateInfo", (req, res) => {
     if (!err) {
       return res.status(200).json({ message: "Business Info Updated!" });
     } else {
-      console.log(err);
       return res.status(500).json(err);
     }
   });

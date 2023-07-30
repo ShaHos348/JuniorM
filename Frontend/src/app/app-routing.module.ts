@@ -20,6 +20,7 @@ import { ItemRegistryComponent } from './components/adminSection/item-registry/i
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
+import { LottoSaleComponent } from './components/lottoSection/lotto-sale/lotto-sale.component';
 import { AdminHomeComponent } from './components/adminSection/admin-home/admin-home.component';
 
 const routes: Routes = [
@@ -107,6 +108,10 @@ const routes: Routes = [
 	{
     path: 'lotto/active',
     component: LottoActiveComponent
+  },
+	{
+    path: 'lotto/sale',
+    component: LottoSaleComponent
   },
   { path: '**', component: BusinessLoginComponent }
 ];
