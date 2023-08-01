@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+	<div class="main-content" id="content">
+		<div id="entry-content">
+			<h1>Worksheet</h1>
+
+			<label for="date">Date: </label>
+			<input type="date" name="date" id="date" [(ngModel)]="shiftDate">
+			<label for="shift">Shift Time: </label>
+			<select name="shift" id="shift" [(ngModel)]="shift">
+				<option value="Day">Day Shift</option>
+				<option value="Night">Night Shift</option>
+			</select>
+			<button type="button" id="active-submit" (click)="getLottoActives()">Get Lotto Active</button>
+			<button type="button" id="sale-submit" (click)="getLottoSales()">Get Lotto Sale</button>
+
+
+
+			<li>
+				<a (click)="navigater('manager/home');" id="return">Return Home</a>
+			</li>
+			<button id="print-btn" (click)="print()" style="display: none;">PRINT</button>
+		</div>
+		<table id="lotto-active-table" style="display: none;">
+			<thead id="lottoAcTableHead">
+				<th class="lottoAcTableDates">Activated Date/Time</th>
+				<th class="lottoAcTableIDs">Lotto ID</th>
+			</thead>
+			<tr class="lottoAcTableRows" *ngFor="let lotto of lottoActives">
+				<td class="lottoAcTableDates">{{ lotto.date }}</td>
+				<td class="lottoAcTableIDs">{{ lotto.lottoid }}</td>
+			</tr>
+			<tr class="lottoAcTableRows">
+				<td class="lottoAcTableDates">Total Packs Activated: </td>
+				<td class="lottoAcTableIDs">{{ lottoActives.length }}</td>
+			</tr>
+		</table>
+
+		<table id="lotto-sale-table" style="display: none;">
+			<thead id="lottoSaleTableHead">
+				<th class="lottoSaleTableBox">Box</th>
+				<th class="lottoSaleTableNames">Name</th>
+				<th class="lottoSaleTableStart">Start</th>
+				<th class="lottoSaleTableEnd">End</th>
+				<th class="lottoSaleTableSales">Sale</th>
+				<th class="lottoSaleTableAmount">Amount</th>
+			</thead>
+			<tr class="lottoSaleTableRows" *ngFor="let lotto of lottoSale">
+				<td class="lottoSaleTableBox">{{ lotto.box }}</td>
+				<td class="lottoAcTableNames">{{ lotto.name }}</td>
+				<td class="lottoSaleTableStart">{{ lotto.start }}</td>
+				<td class="lottoSaleTableEnd">{{ lotto.end }}</td>
+				<td class="lottoSaleTableSales">{{ lotto.sale }}</td>
+				<td class="lottoSaleTableAmount">${{ lotto.total }}</td>
+			</tr>
+		</table>
+
+	</div>
+
+
+</body>
+
+</html>
+

@@ -9,7 +9,7 @@ router.post("/entry", (req, res) => {
     let data = req.body;
     businessid = req.session.user.business.idnum;
 
-    query = "INSERT INTO lottoactive(businessid, lottoid, quantity, name, box, shift, date, count) VALUES (?,?,?,?,?,?,now(),1)";
+    query = "INSERT INTO lottoactive(businessid, lottoid, quantity, name, box, shift, date) VALUES (?,?,?,?,?,?,now())";
     connection.query(query, [businessid, data.lottoid, data.quantity, data.name, data.box, data.shift], (err, result) => {
         if (!err) {
             return res.status(200).json({ message: "Lotto Activated" });
@@ -33,7 +33,7 @@ router.get("/getlottoactive/:shift&:date", (req, res) => {
     }
 
 
-    query = "SELECT name, box, quantity FROM lottoactive WHERE businessid = ? AND shift = ? AND date(date) = ?";
+    query = "SELECT name, box, quantity, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date, lottoid FROM lottoactive WHERE businessid = ? AND shift = ? AND date(date) = ?";
     connection.query(query, [businessid, shift, currentDate], (err, results) => {
         if (!err) {
             return res.status(200).json(results);
@@ -183,7 +183,7 @@ router.get("/getLottoSale/:shift&:date", (req, res) => {
             query = "SELECT box, end FROM lottosale WHERE businessid = " + businessid + " AND shift = 'Day' AND date = '" + currentDate + "'";
         }
     } else {
-        query = "SELECT * FROM lottosale WHERE businessid = " + businessid + " AND shift = " + shift + " AND date = '" + currentDate + "'";
+        query = "SELECT *, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date FROM lottosale WHERE businessid = " + businessid + " AND shift = '" + shift + "' AND date = '" + currentDate + "'";
     }
     
     connection.query(query, (err, results) => {

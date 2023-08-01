@@ -21,6 +21,7 @@ import { OrderEntryComponent } from './components/orderSection/order-entry/order
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
 import { LottoSaleComponent } from './components/lottoSection/lotto-sale/lotto-sale.component';
+import { LottoPrintComponent } from './components/lottoSection/lotto-print/lotto-print.component';
 import { AdminHomeComponent } from './components/adminSection/admin-home/admin-home.component';
 
 const routes: Routes = [
@@ -112,6 +113,10 @@ const routes: Routes = [
 	{
     path: 'lotto/sale',
     component: LottoSaleComponent
+  },
+	{
+    path: 'lotto/print',
+    component: LottoPrintComponent
   },
   { path: '**', component: BusinessLoginComponent }
 ];
