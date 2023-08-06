@@ -41,7 +41,7 @@ export class OrderEntryComponent implements OnInit {
 
 	getItem() {
 		let name = document.getElementById('name-input') as HTMLInputElement;
-		if ((this.barcode == '')) {
+		if (this.barcode == '') {
 			this.responseMessage = 'Error: Barcode is NOT GIVEN!';
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
@@ -68,7 +68,9 @@ export class OrderEntryComponent implements OnInit {
 	}
 
 	insert() {
-		let barcodeInput = document.getElementById('name-input') as HTMLInputElement;
+		let barcodeInput = document.getElementById(
+			'name-input'
+		) as HTMLInputElement;
 		if (!this.checkInputs()) {
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
@@ -155,8 +157,8 @@ export class OrderEntryComponent implements OnInit {
 	addItem() {
 		let item = {
 			barcode: this.barcode,
-			name: this.name
-		}
+			name: this.name,
+		};
 		this.orderService.registerItem(item).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;

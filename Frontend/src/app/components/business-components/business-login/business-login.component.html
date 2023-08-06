@@ -1,47 +1,99 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
-</head>
-
-<body>
-	<form id="admin-form" (ngSubmit)="adminSubmit({username: adminUsername.value, password:adminPassword.value, code: adminCode.value})">
-		<h2 id="header"><strong>Admin Login</strong></h2>
-		<li>
-			<input id="adminUsername" #adminUsername type="password" class="input" autocomplete="off">
-		</li>
-		<li>
-			<input id="adminPassword" #adminPassword type="password" class="input" data-type="password" autocomplete="off">
-		</li>
-		<li>
-			<input id="adminCode" #adminCode type="password" class="input" data-type="password" autocomplete="off">
-		</li>
-		<li>
-			<button id="admin-btn-login" type="submit">LOGIN</button>
-		</li>
-	</form>
-	<div class="main-content" id="content">
-		<h2 id="header"><strong>Business Login</strong></h2>
-		<div id="register">
-			<a (click)="businessSignupAction()">Register</a>
-		</div>
-		<button id="admin-btn" (click)="adminForm()">ADMIN</button>
-
-		<form id="login" ngNativeValidate (ngSubmit)="handleSubmit({username: username.value, password:password.value})">
+	<body>
+		<form
+			id="admin-form"
+			(ngSubmit)="
+				adminSubmit({
+					username: adminUsername.value,
+					password: adminPassword.value,
+					code: adminCode.value
+				})
+			"
+		>
+			<h2 id="header"><strong>Admin Login</strong></h2>
 			<li>
-				<input id="username" #username name="username" type="text" class="input" placeholder="Enter Your Username" autocomplete="off" required>
+				<input
+					id="adminUsername"
+					#adminUsername
+					type="password"
+					class="input"
+					autocomplete="off"
+				/>
 			</li>
 			<li>
-				<input id="password" #password name="password" type="password" class="input" data-type="password" placeholder="Enter Your password" required>
+				<input
+					id="adminPassword"
+					#adminPassword
+					type="password"
+					class="input"
+					data-type="password"
+					autocomplete="off"
+				/>
 			</li>
 			<li>
-				<button id="btn_login" type="submit" name='login_submit'>LOGIN</button>
+				<input
+					id="adminCode"
+					#adminCode
+					type="password"
+					class="input"
+					data-type="password"
+					autocomplete="off"
+				/>
+			</li>
+			<li>
+				<button id="admin-btn-login" type="submit">LOGIN</button>
 			</li>
 		</form>
-		<li>
-			<a (click)="businessFP()">Forgot Username/Password</a>
-		</li>
-	</div>
-</body>
+		<div class="main-content" id="content">
+			<h2 id="header"><strong>Business Login</strong></h2>
+			<div id="register">
+				<a (click)="businessSignupAction()">Register</a>
+			</div>
+			<button id="admin-btn" (click)="adminForm()">ADMIN</button>
 
+			<form
+				id="login"
+				ngNativeValidate
+				(ngSubmit)="
+					handleSubmit({ username: username.value, password: password.value })
+				"
+			>
+				<li>
+					<input
+						id="username"
+						#username
+						name="username"
+						type="text"
+						class="input"
+						placeholder="Enter Your Username"
+						autocomplete="off"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="password"
+						#password
+						name="password"
+						type="password"
+						class="input"
+						data-type="password"
+						placeholder="Enter Your password"
+						required
+					/>
+				</li>
+				<li>
+					<button id="btn_login" type="submit" name="login_submit">
+						LOGIN
+					</button>
+				</li>
+			</form>
+			<li>
+				<a (click)="businessFP()">Forgot Username/Password</a>
+			</li>
+		</div>
+	</body>
 </html>

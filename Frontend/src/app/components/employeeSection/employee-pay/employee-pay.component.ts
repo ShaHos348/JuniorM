@@ -148,13 +148,38 @@ export class EmployeePayComponent implements OnInit {
 
 	printPDF(date: any) {
 		let employeeRows = [
-			['Index', 'Id', 'Name', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Total Hours', 'Pay']
+			[
+				'Index',
+				'Id',
+				'Name',
+				'Mon',
+				'Tue',
+				'Wed',
+				'Thu',
+				'Fri',
+				'Sat',
+				'Sun',
+				'Total Hours',
+				'Pay',
+			],
 		];
-		for (let i = 0; i < this.employeeData.length; i +=1) {
+		for (let i = 0; i < this.employeeData.length; i += 1) {
 			let e = this.employeeData[i];
-			employeeRows.push([i+1, e.idnum, e.name, e.mon, e.tue, e.wed, e.thu, e.fri, e.sat, e.sun, e.total, "$" + e.pay]);
-		};
-
+			employeeRows.push([
+				i + 1,
+				e.idnum,
+				e.name,
+				e.mon,
+				e.tue,
+				e.wed,
+				e.thu,
+				e.fri,
+				e.sat,
+				e.sun,
+				e.total,
+				'$' + e.pay,
+			]);
+		}
 
 		let docDefinition = {
 			content: [
@@ -163,13 +188,26 @@ export class EmployeePayComponent implements OnInit {
 					style: 'title',
 				},
 				{
-					text: "Week of " + this.formatDate(date),
+					text: 'Week of ' + this.formatDate(date),
 					style: 'header',
 				},
 				{
 					table: {
 						headerRows: 1,
-						widths: ['auto','auto','auto','auto','auto','auto','auto','auto','auto','auto','auto','*'],
+						widths: [
+							'auto',
+							'auto',
+							'auto',
+							'auto',
+							'auto',
+							'auto',
+							'auto',
+							'auto',
+							'auto',
+							'auto',
+							'auto',
+							'*',
+						],
 						body: employeeRows,
 					},
 					style: 'table',
@@ -194,7 +232,7 @@ export class EmployeePayComponent implements OnInit {
 					alignment: 'center',
 					fontSize: 10,
 					color: 'black',
-				}
+				},
 			},
 		};
 

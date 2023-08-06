@@ -36,8 +36,8 @@ export class BusinessLoginComponent implements OnInit {
 
 	handleSubmit(formData: any) {
 		var data = {
-			username: formData.username,
-			password: formData.password,
+			username: formData.username.replaceAll(' ', ''),
+			password: formData.password.replaceAll(' ', ''),
 		};
 		this.userService.login(data).subscribe(
 			(response: any) => {
@@ -61,9 +61,9 @@ export class BusinessLoginComponent implements OnInit {
 
 	adminSubmit(formData: any) {
 		var data = {
-			username: formData.username,
-			password: formData.password,
-			code: formData.code
+			username: formData.username.replaceAll(' ', ''),
+			password: formData.password.replaceAll(' ', ''),
+			code: formData.code.replaceAll(' ', ''),
 		};
 		this.adminService.adminLogin(data).subscribe(
 			(response: any) => {
@@ -92,11 +92,11 @@ export class BusinessLoginComponent implements OnInit {
 	}
 
 	adminForm() {
-		let adminForm = document.getElementById("admin-form") as HTMLFormElement;
-		if (adminForm.style.display == 'none') {
-			adminForm.style.display = 'block';
-		} else {
+		let adminForm = document.getElementById('admin-form') as HTMLFormElement;
+		if (adminForm.style.display == 'block') {
 			adminForm.style.display = 'none';
+		} else {
+			adminForm.style.display = 'block';
 		}
 	}
 

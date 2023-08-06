@@ -36,6 +36,11 @@ h1 {
 	border-left: 1px solid blue;
 	padding: 5px;
 	color: black;
+	width: calc(100%/7);
+}
+
+input {
+	width: 100%;
 }
 
 #return {

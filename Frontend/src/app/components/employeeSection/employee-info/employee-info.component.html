@@ -1,101 +1,279 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
-</head>
+	<body>
+		<div class="main-content" id="content">
+			<div id="info-options">
+				<h2 id="header"><strong>Employee Information</strong></h2>
+				<li id="option-btns">
+					<button
+						class="option-btns"
+						style="background-color: orange"
+						(click)="showOptionBox(''); prefill('none')"
+					>
+						Show Employee
+					</button>
+					<button
+						class="option-btns"
+						style="background-color: greenyellow"
+						(click)="navigater('employee/signup')"
+					>
+						Add Employee
+					</button>
+					<button
+						class="option-btns"
+						style="background-color: blue"
+						(click)="showOptionBox('search-btn')"
+					>
+						Update Employee
+					</button>
+					<button
+						class="option-btns"
+						style="background-color: red"
+						(click)="showOptionBox('delete-btn')"
+					>
+						Delete Employee
+					</button>
+					<button
+						class="option-btns"
+						style="background-color: purple"
+						(click)="showOptionBox('print-btn')"
+					>
+						Print Employee Info
+					</button>
+				</li>
+				<li id="option-box">
+					<input
+						type="number"
+						#idInput
+						id="id-input"
+						placeholder="Enter Employee Id"
+					/>
+					<button
+						class="options"
+						id="delete-btn"
+						(click)="delete(idInput.value)"
+					>
+						Delete Employee
+					</button>
+					<button
+						class="options"
+						id="search-btn"
+						(click)="prefill(idInput.value)"
+					>
+						Search Employee
+					</button>
+					<button
+						class="options"
+						id="print-btn"
+						(click)="prefill(idInput.value); printPDF()"
+					>
+						Print Employee Info
+					</button>
+				</li>
 
-<body>
-	<div class="main-content" id="content">
-		<div id="info-options">
-			<h2 id="header"><strong>Employee Information</strong></h2>
-			<li id="option-btns">
-				<button class="option-btns" style="background-color: orange;" (click) = "showOptionBox(''); prefill('none')">Show Employee</button>
-				<button class="option-btns" style="background-color: greenyellow;" (click) = "navigater('employee/signup');">Add Employee</button>
-				<button class="option-btns" style="background-color: blue;" (click) = "showOptionBox('search-btn');">Update Employee</button>
-				<button class="option-btns" style="background-color: red;" (click) = "showOptionBox('delete-btn');">Delete Employee</button>
-				<button class="option-btns" style="background-color: purple;" (click) = "showOptionBox('print-btn');">Print Employee Info</button>
-			</li>
-			<li id="option-box">
-				<input type="number" #idInput id='id-input' placeholder="Enter Employee Id">
-				<button class="options" id="delete-btn" (click)="delete(idInput.value);">Delete Employee</button>
-				<button class="options" id="search-btn" (click)="prefill(idInput.value);">Search Employee</button>
-				<button class="options" id="print-btn" (click)="prefill(idInput.value); printPDF();">Print Employee Info</button>
-			</li>
-
-			<li>
-				<a (click)="navigater('manager/home');" id="return">Return Home</a>
-			</li>
+				<li>
+					<a (click)="navigater('manager/home')" id="return">Return Home</a>
+				</li>
+			</div>
+			<table class="option-results" id="info-table">
+				<thead id="infoTableHead">
+					<th class="infoTableName">Name</th>
+					<th class="infoTableId">Id</th>
+					<th class="infoTablePhone">Phone</th>
+				</thead>
+				<tr class="infoTableRows" *ngFor="let col of info">
+					<td>{{ col.name }}</td>
+					<td>{{ col.idnum }}</td>
+					<td>{{ col.phone }}</td>
+				</tr>
+			</table>
+			<form
+				class="option-results"
+				id="updateForm"
+				ngNativeValidate
+				(ngSubmit)="update()"
+			>
+				<h2>Update Form</h2>
+				<li>
+					{{ employee.idnum }}
+				</li>
+				<li>
+					<input
+						id="fname"
+						name="fname"
+						type="text"
+						class="input"
+						placeholder="Employee First Name"
+						value="{{ employee.fname }}"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="lname"
+						name="lname"
+						type="text"
+						class="input"
+						placeholder="Employee Last Name"
+						value="{{ employee.lname }}"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="street"
+						name="street"
+						type="text"
+						class="input"
+						placeholder="Employee Street"
+						value="{{ employee.street }}"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="city"
+						name="city"
+						type="text"
+						class="input"
+						placeholder="Employee City"
+						value="{{ employee.city }}"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="state"
+						name="state"
+						type="text"
+						class="input"
+						placeholder="Employee State"
+						value="{{ employee.state }}"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="zip"
+						name="zip"
+						type="number"
+						class="input"
+						placeholder="Employee Zip code"
+						value="{{ employee.zip }}"
+						min="10000"
+						max="99999"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="birth"
+						name="birth"
+						type="number"
+						class="input"
+						placeholder="Employee Date of Birth"
+						min="10000000"
+						max="99999999"
+						value="{{ employee.birth }}"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="phone"
+						name="phone"
+						type="number"
+						class="input"
+						placeholder="Employee Phone number"
+						min="1000000000"
+						max="9999999999"
+						value="{{ employee.phone }}"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="ssn"
+						name="ssn"
+						type="number"
+						class="input"
+						placeholder="Last 4 Digits of Employee SSN"
+						min="1000"
+						max="9999"
+						value="{{ employee.ssn }}"
+					/>
+				</li>
+				<li>
+					<input
+						id="email"
+						name="email"
+						type="text"
+						class="input"
+						placeholder="Employee Email"
+						value="{{ employee.email }}"
+						required
+					/>
+				</li>
+				<li>
+					<input
+						id="password"
+						#password
+						name="password"
+						type="password"
+						class="input"
+						data-type="password"
+						placeholder="Employee password"
+						pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}"
+						title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+						value="{{ employee.password }}"
+						required
+					/>
+				</li>
+				<li>
+					<label for="citizenship">U.S. Citizenship: </label>
+					<select
+						name="citizenship"
+						id="citizenship"
+						[(ngModel)]="citizenship"
+						required
+					>
+						<option value="1">Yes</option>
+						<option value="0">No</option>
+					</select>
+				</li>
+				<li>
+					<input
+						id="salary"
+						name="salary"
+						type="number"
+						class="input"
+						placeholder="Employee Hourly Salary"
+						value="{{ employee.salary }}"
+						step=".01"
+						required
+					/>
+				</li>
+				<li>
+					<button id="signup-btn" type="submit" name="signup-btn">
+						UPDATE EMPLOYEE
+					</button>
+				</li>
+			</form>
+			<div class="option-results" id="infoPdf">
+				<h2>Employee Info</h2>
+				<li>Id: {{ employee.idnum }}</li>
+				<li>Name: {{ employee.fname }} {{ employee.lname }}</li>
+				<li>Address: {{ employee.street }}</li>
+				<li>{{ employee.city }}, {{ employee.state }} {{ employee.zip }}</li>
+				<li>Phone: {{ employee.phone }}</li>
+				<li>Email: {{ employee.email }}</li>
+				<li>Birth: {{ employee.birth }}</li>
+				<li>SSN: {{ employee.ssn }}</li>
+				<li>Citizenship: {{ employee.citizen }}</li>
+				<li>Salary: {{ employee.salary }}</li>
+			</div>
 		</div>
-		<table class="option-results" id="info-table">
-			<thead id="infoTableHead">
-				<th class="infoTableName">Name</th>
-				<th class="infoTableId">Id</th>
-				<th class="infoTablePhone">Phone</th>
-			</thead>
-			<tr class="infoTableRows" *ngFor="let col of info">
-				<td>{{ col.name }}</td>
-				<td>{{ col.idnum }}</td>
-				<td>{{ col.phone }}</td>
-			</tr>
-		</table>
-		<form class="option-results" id="updateForm" ngNativeValidate (ngSubmit)="update()">
-			<h2>Update Form</h2>
-			<li><input id="id" name="id" type="number" class="input" placeholder="Employee Id" value={{employee.idnum}}
-					required></li>
-			<li><input id="fname" name="fname" type="text" class="input" placeholder="Employee First Name"
-					value={{employee.fname}} required></li>
-			<li><input id="lname" name="lname" type="text" class="input" placeholder="Employee Last Name"
-					value={{employee.lname}} required></li>
-			<li><input id="street" name="street" type="text" class="input" placeholder="Employee Street"
-					value={{employee.street}} required></li>
-			<li><input id="city" name="city" type="text" class="input" placeholder="Employee City" value={{employee.city}}
-					required></li>
-			<li><input id="state" name="state" type="text" class="input" placeholder="Employee State" value={{employee.state}}
-					required></li>
-			<li><input id="zip" name="zip" type="number" class="input" placeholder="Employee Zip code" value={{employee.zip}}
-					min="10000" max="99999" required></li>
-			<li><input id="birth" name="birth" type="number" class="input" placeholder="Employee Date of Birth" min="10000000"
-					max="99999999" value={{employee.birth}} required></li>
-			<li><input id="phone" name="phone" type="number" class="input" placeholder="Employee Phone number"
-					min="1000000000" max="9999999999" value={{employee.phone}} required></li>
-			<li><input id="ssn" name="ssn" type="number" class="input" placeholder="Last 4 Digits of Employee SSN" min="1000"
-					max="9999" value={{employee.ssn}}></li>
-			<li><input id="email" name="email" type="text" class="input" placeholder="Employee Email" value={{employee.email}}
-					required></li>
-			<li>
-				<input id="password" #password name="password" type="password" class="input" data-type="password"
-					placeholder="Employee password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}"
-					title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-					value={{employee.password}} required>
-			</li>
-			<li><label for="citizenship">U.S. Citizenship: </label>
-				<select name="citizenship" id="citizenship" [(ngModel)]="citizenship" required>
-					<option value="1">Yes</option>
-					<option value="0">No</option>
-				</select>
-			</li>
-			<li><input id="salary" name="salary" type="number" class="input" placeholder="Employee Hourly Salary"
-					value={{employee.salary}} step=".01" required>
-			</li>
-			<li>
-				<button id="signup-btn" type="submit" name='signup-btn'>UPDATE EMPLOYEE</button>
-			</li>
-		</form>
-		<div class="option-results" id="infoPdf">
-			<h2>Employee Info</h2>
-			<li>Id: {{employee.idnum}}</li>
-			<li>Name: {{employee.fname}} {{employee.lname}}</li>
-			<li>Address: {{employee.street}}</li>
-			<li>{{employee.city}}, {{employee.state}} {{employee.zip}}</li>
-			<li>Phone: {{employee.phone}}</li>
-			<li>Email: {{employee.email}}</li>
-			<li>Birth: {{employee.birth}}</li>
-			<li>SSN: {{employee.ssn}}</li>
-			<li>Citizenship: {{employee.citizen}}</li>
-			<li>Salary: {{employee.salary}}</li>
-		</div>
-	</div>
-
-</body>
-
+	</body>
 </html>

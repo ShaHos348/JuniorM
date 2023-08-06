@@ -11,7 +11,6 @@ import { GlobalConstants } from 'src/app/shared/global-constants';
 	styleUrls: ['./admin-home.component.scss'],
 })
 export class AdminHomeComponent implements OnInit {
-	user: string = '';
 	codes: any;
 	sessions: any;
 	responseMessage: any;
@@ -27,7 +26,6 @@ export class AdminHomeComponent implements OnInit {
 		this.adminService.adminCheckLogin().subscribe(
 			(response: any) => {
 				this.router.navigate(['admin/home']);
-				this.user = response.message;
 			},
 			(error) => {
 				this.router.navigate(['']);
@@ -92,7 +90,7 @@ export class AdminHomeComponent implements OnInit {
 			(response: any) => {
 				this.codes = response;
 				if (this.codes.length != 0) {
-					this.displayList("codes-edit","codes-list");
+					this.displayList('codes-edit', 'codes-list');
 				}
 			},
 			(error) => {
@@ -142,14 +140,14 @@ export class AdminHomeComponent implements OnInit {
 				if (this.sessions.length != 0) {
 					for (let i = 0; i < this.sessions.length; i++) {
 						const session = this.sessions[i];
-						let index = session.data.indexOf("business");
+						let index = session.data.indexOf('business');
 						if (index < 0) {
-							session.data = "{Business not Signed in}";
+							session.data = '{Business not Signed in}';
 						} else {
-							session.data = "{{"+ session.data.substring(index+10);
+							session.data = '{{' + session.data.substring(index + 10);
 						}
 					}
-					this.displayList("session-edit","sessions-list");
+					this.displayList('session-edit', 'sessions-list');
 				}
 			},
 			(error) => {

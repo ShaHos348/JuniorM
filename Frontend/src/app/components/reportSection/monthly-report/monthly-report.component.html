@@ -1,79 +1,80 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
+	<body>
+		<div class="main-content" id="content">
+			<form id="entry-content" (ngSubmit)="handleSubmit()">
+				<h1>Worksheet</h1>
 
-</head>
+				<label for="month">Month: </label>
+				<select name="month" id="month" [(ngModel)]="month">
+					<option value="1">January</option>
+					<option value="2">February</option>
+					<option value="3">March</option>
+					<option value="4">April</option>
+					<option value="5">May</option>
+					<option value="6">June</option>
+					<option value="7">July</option>
+					<option value="8">August</option>
+					<option value="9">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select>
+				<label for="year">Year: </label>
+				<input
+					type="number"
+					name="year"
+					id="year"
+					style="width: 5%"
+					[(ngModel)]="year"
+					autocomplete="off"
+				/>
+				<button type="submit" id="submit">SUBMIT</button>
 
-<body>
-	<div class="main-content" id="content">
-		<form id="entry-content" (ngSubmit)="handleSubmit()">
-			<h1>Worksheet</h1>
-
-			<label for="month">Month: </label>
-			<select name="month" id="month" [(ngModel)]="month">
-				<option value="1">January</option>
-				<option value="2">February</option>
-				<option value="3">March</option>
-				<option value="4">April</option>
-				<option value="5">May</option>
-				<option value="6">June</option>
-				<option value="7">July</option>
-				<option value="8">August</option>
-				<option value="9">September</option>
-				<option value="10">October</option>
-				<option value="11">November</option>
-				<option value="12">December</option>
-			</select>
-			<label for="year">Year: </label>
-			<input type="number" name="year" id="year" style="width:5%" [(ngModel)]="year" autocomplete="off">
-			<button type="submit" id="submit">SUBMIT</button>
-
-			<li>
-				<a (click)="navigater('home');" id="return">Return Home</a>
-			</li>
-			<button id="print-btn" (click)="print()" style="display: none;">PRINT</button>
-		</form>
-		<table id="main-table" style="display: none;" #pdfTable>
-			<tr>
-				<td id="table-title">
-					{{getMonthName(month)}} {{year}} Monthly Report
-				</td>
-			</tr>
-			<tr>
-				<td class="main-table-section">
-					<table id="report-table">
-						<thead>
-							<th>Shift Report</th>
-							<th>Total Amount</th>
-						</thead>
-						<tr *ngFor="let name of shiftReportNames; let i = index">
-							<td class="shift-report-name">{{ name }}</td>
-							<td class="payout-company">{{shreportAmounts[i]}}</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td class="main-table-section">
-					<table id="count-table">
-						<thead>
-							<th>Shift Count</th>
-							<th>Total Amount</th>
-						</thead>
-						<tr *ngFor="let name of shiftCountNames; let i = index">
-							<td class="amount-type-name">{{ name }}</td>
-							<td class="amount-type-amount">{{shcountAmounts[i]}}</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-
-	</div>
-
-
-</body>
-
+				<li>
+					<a (click)="navigater('home')" id="return">Return Home</a>
+				</li>
+				<button id="print-btn" (click)="print()" style="display: none">
+					PRINT
+				</button>
+			</form>
+			<table id="main-table" style="display: none" #pdfTable>
+				<tr>
+					<td id="table-title">
+						{{ getMonthName(month) }} {{ year }} Monthly Report
+					</td>
+				</tr>
+				<tr>
+					<td class="main-table-section">
+						<table id="report-table">
+							<thead>
+								<th>Shift Report</th>
+								<th>Total Amount</th>
+							</thead>
+							<tr *ngFor="let name of shiftReportNames; let i = index">
+								<td class="shift-report-name">{{ name }}</td>
+								<td class="payout-company">{{ shreportAmounts[i] }}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td class="main-table-section">
+						<table id="count-table">
+							<thead>
+								<th>Shift Count</th>
+								<th>Total Amount</th>
+							</thead>
+							<tr *ngFor="let name of shiftCountNames; let i = index">
+								<td class="amount-type-name">{{ name }}</td>
+								<td class="amount-type-amount">{{ shcountAmounts[i] }}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
 </html>
-

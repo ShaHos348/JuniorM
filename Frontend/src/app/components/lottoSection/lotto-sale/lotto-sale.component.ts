@@ -40,13 +40,13 @@ export class LottoSaleComponent implements OnInit {
 	}
 
 	submitLottoSale() {
-		if (!this.checkShiftInput) {
+		if (!this.checkShiftInput()) {
 			return;
 		}
 		let data = {
 			shift: this.shift,
-			boxes: this.boxes
-		}
+			boxes: this.boxes,
+		};
 		this.lottoService.enterLottoSales(data).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
@@ -94,7 +94,7 @@ export class LottoSaleComponent implements OnInit {
 		this.lottoService.getLottoSale(data).subscribe(
 			(response: any) => {
 				this.startAmounts = response;
-				this.setStartAmounts();
+				this.setStartEndAmounts();
 			},
 			(error) => {
 				if (error.error?.message) {
@@ -121,23 +121,24 @@ export class LottoSaleComponent implements OnInit {
 		}
 	}
 
-	setStartAmounts() {
+	setStartEndAmounts() {
 		this.boxes.forEach((element) => {
 			element.start = 0;
+			element.end = 0;
 		});
 		for (let index = 0; index < this.startAmounts.length; index++) {
 			const lotto = this.startAmounts[index];
 			this.boxes[Number(lotto.box) - 1].start = Number(lotto.end);
+			this.boxes[Number(lotto.box) - 1].end = Number(lotto.end);
 		}
 	}
 
 	focusNext(col: any, i: any) {
 		let endInput = document.getElementById(col + (i + 1)) as HTMLInputElement;
-		if (i<this.numOfBoxes) {
-		 endInput.focus();
+		if (i < this.numOfBoxes) {
+			endInput.focus();
 		}
-
-}
+	}
 
 	makeBoxesArray() {
 		this.boxes = [];
@@ -170,7 +171,7 @@ export class LottoSaleComponent implements OnInit {
 	}
 
 	checkShiftInput() {
-		if (this.shift == null) {
+		if (this.shift == null || this.shift == '') {
 			this.responseMessage = 'Error: Shift is NOT GIVEN!';
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return false;

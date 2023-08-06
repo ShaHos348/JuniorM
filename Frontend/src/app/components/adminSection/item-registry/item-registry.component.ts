@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { UserService } from 'src/app/services/user.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-item-registry',
-  templateUrl: './item-registry.component.html',
-  styleUrls: ['./item-registry.component.scss']
+	selector: 'app-item-registry',
+	templateUrl: './item-registry.component.html',
+	styleUrls: ['./item-registry.component.scss'],
 })
 export class ItemRegistryComponent implements OnInit {
 	responseMessage: any;
@@ -17,12 +17,12 @@ export class ItemRegistryComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private snackbarService: SnackbarService,
-		private userService: UserService,
+		private adminService: AdminService,
 		private orderService: OrderService
 	) {}
 
 	ngOnInit(): void {
-		this.userService.checkLogin().subscribe(
+		this.adminService.adminCheckLogin().subscribe(
 			(response: any) => {
 				this.router.navigate(['order/registry']);
 				this.getItems();
@@ -36,15 +36,15 @@ export class ItemRegistryComponent implements OnInit {
 	register() {
 		let barcode = document.getElementById('barcode-input') as HTMLInputElement;
 		let name = document.getElementById('name-input') as HTMLInputElement;
-		if (barcode.value == "" || name.value == "") {
-			this.responseMessage = "Barcode/Name field is empty";
+		if (barcode.value == '' || name.value == '') {
+			this.responseMessage = 'Barcode/Name field is empty';
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
 		}
 		let item = {
 			barcode: barcode.value,
-			name: name.value
-		}
+			name: name.value,
+		};
 		this.orderService.registerItem(item).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;

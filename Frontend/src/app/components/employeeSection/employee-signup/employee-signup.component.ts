@@ -66,7 +66,7 @@ export class EmployeeSignupComponent implements OnInit {
 				this.snackbarService.openSnackbar(this.responseMessage, '');
 				this.id = response?.idnum;
 				let idLabel = document.getElementById('id') as HTMLLabelElement;
-				idLabel.style.display = "initial";
+				idLabel.style.display = 'initial';
 				for (var i = 0; i < this.inputs.length; i++) {
 					this.inputs[i].value = null;
 				}

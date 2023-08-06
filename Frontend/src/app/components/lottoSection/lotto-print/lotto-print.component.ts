@@ -10,9 +10,9 @@ import { GlobalConstants } from 'src/app/shared/global-constants';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-lotto-print',
-  templateUrl: './lotto-print.component.html',
-  styleUrls: ['./lotto-print.component.scss']
+	selector: 'app-lotto-print',
+	templateUrl: './lotto-print.component.html',
+	styleUrls: ['./lotto-print.component.scss'],
 })
 export class LottoPrintComponent implements OnInit {
 	responseMessage: any;
@@ -49,13 +49,15 @@ export class LottoPrintComponent implements OnInit {
 			return;
 		}
 		this.setData();
-		let lottoTable = document.getElementById('lotto-active-table') as HTMLElement;
+		let lottoTable = document.getElementById(
+			'lotto-active-table'
+		) as HTMLElement;
 		this.lottoService.lottoActive(this.data).subscribe(
 			(response: any) => {
 				this.lottoActives = response;
 				if (this.lottoActives.length != 0) {
 					this.formatTime();
-					this.setPrint("active");
+					this.setPrint('active');
 					lottoTable.style.display = 'table';
 				} else {
 					lottoTable.style.display = 'none';
@@ -87,7 +89,7 @@ export class LottoPrintComponent implements OnInit {
 			(response: any) => {
 				this.lottoSale = response;
 				if (this.lottoSale.length != 0) {
-					this.setPrint("sale");
+					this.setPrint('sale');
 					lottoTable.style.display = 'table';
 				} else {
 					lottoTable.style.display = 'none';
@@ -112,36 +114,41 @@ export class LottoPrintComponent implements OnInit {
 		this.goInvisible();
 		this.data = {
 			date: this.shiftDate,
-			shift: this.shift
+			shift: this.shift,
 		};
 	}
 
 	setPrint(what: any) {
 		let printBtn = document.getElementById('print-btn') as HTMLElement;
-		printBtn.style.display = "inline-block";
+		printBtn.style.display = 'inline-block';
 		this.printWhat = what;
 	}
 
 	print() {
 		let printRows = [];
-		let title = " Report";
+		let title = ' Report';
 		if (this.printWhat == null) {
 			return;
-		} else if (this.printWhat == "active") {
-			title = "Lotto Active" + title;
+		} else if (this.printWhat == 'active') {
+			title = 'Lotto Active' + title;
 			printRows.push(['Activated Date/Time', 'LottoID']);
-			this.lottoActives.forEach(element => {
+			this.lottoActives.forEach((element) => {
 				printRows.push([element.date, element.lottoid]);
 			});
-			printRows.push(["Total Packs Activated:", this.lottoActives.length]);
+			printRows.push(['Total Packs Activated:', this.lottoActives.length]);
 		} else {
-			title = "Lotto Sale" + title;
+			title = 'Lotto Sale' + title;
 			printRows.push(['Box', 'Start', 'End', 'Sale', 'Amount']);
-			this.lottoSale.forEach(element => {
-				printRows.push([element.box, element.start, element.end, element.sale, element.total]);
+			this.lottoSale.forEach((element) => {
+				printRows.push([
+					element.box,
+					element.start,
+					element.end,
+					element.sale,
+					element.total,
+				]);
 			});
 		}
-
 
 		let docDefinition = {
 			content: [
@@ -158,7 +165,7 @@ export class LottoPrintComponent implements OnInit {
 						headerRows: 1,
 						body: printRows,
 					},
-					style: 'table'
+					style: 'table',
 				},
 			],
 			styles: {
@@ -180,7 +187,7 @@ export class LottoPrintComponent implements OnInit {
 					alignment: 'center',
 					fontSize: 10,
 					color: 'black',
-				}
+				},
 			},
 		};
 
@@ -200,7 +207,8 @@ export class LottoPrintComponent implements OnInit {
 	formatTime() {
 		for (let index = 0; index < this.lottoActives.length; index++) {
 			const lotto = this.lottoActives[index];
-			lotto.date = lotto.date.substring(0,10) + " " + lotto.date.substring(11,19);
+			lotto.date =
+				lotto.date.substring(0, 10) + ' ' + lotto.date.substring(11, 19);
 		}
 	}
 
@@ -215,12 +223,16 @@ export class LottoPrintComponent implements OnInit {
 	}
 
 	goInvisible() {
-		let lottoActiveTable = document.getElementById('lotto-active-table') as HTMLElement;
-		let lottoSaleTable = document.getElementById('lotto-sale-table') as HTMLElement;
+		let lottoActiveTable = document.getElementById(
+			'lotto-active-table'
+		) as HTMLElement;
+		let lottoSaleTable = document.getElementById(
+			'lotto-sale-table'
+		) as HTMLElement;
 		let printBtn = document.getElementById('print-btn') as HTMLElement;
-		printBtn.style.display = "none";
-		lottoActiveTable.style.display = "none";
-		lottoSaleTable.style.display = "none";
+		printBtn.style.display = 'none';
+		lottoActiveTable.style.display = 'none';
+		lottoSaleTable.style.display = 'none';
 		this.printWhat = null;
 	}
 

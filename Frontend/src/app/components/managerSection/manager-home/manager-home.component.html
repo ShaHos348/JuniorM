@@ -1,48 +1,59 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
+	<body>
+		<div class="main-content" id="content">
+			<h2 id="greeting">Hello {{ user }},</h2>
+			<h3>Welcome to the Store Management System!</h3>
+			<button id="logout-btn" (click)="logout()">Log Out Manager</button>
+			<button id="business-info-btn" (click)="navigater('business/info')">
+				Business Info
+			</button>
+			<table id="main-box">
+				<tr>
+					<td class="box">
+						<h2 class="box-head">Employee</h2>
+						<li>
+							<a (click)="navigater('employee/signup')">Register Employee</a>
+						</li>
+						<li>
+							<a (click)="navigater('employee/info')">Employee Information</a>
+						</li>
+						<li>
+							<a (click)="navigater('employee/modifyClocking')"
+								>Update Clock In</a
+							>
+						</li>
+						<li>
+							<a (click)="navigater('employee/messages')"
+								>View Employee Messages</a
+							>
+						</li>
+					</td>
+					<td class="box">
+						<h2 class="box-head">Report</h2>
+						<li><a (click)="navigater('report/edit')">Edit Daily Report</a></li>
+					</td>
 
-</head>
-
-<body>
-	<div class="main-content" id="content">
-		<h2 id="greeting">Hello {{user}},</h2>
-		<h3>Welcome to the Store Management System!</h3>
-		<button id="logout-btn" (click)='logout()'>Log Out Manager</button>
-		<button id="business-info-btn" (click)="navigater('business/info')">Business Info</button>
-		<table id="main-box">
-			<tr>
-				<td class="box">
-					<h2 class="box-head">Employee</h2>
-					<li><a (click)="navigater('employee/signup')">Register Employee</a></li>
-					<li><a (click)="navigater('employee/info')">Employee Information</a></li>
-					<li><a (click)="navigater('employee/modifyClocking')">Update Clock In</a></li>
-					<li><a (click)="navigater('employee/messages')">View Employee Messages</a></li>
-				</td>
-				<td class="box">
-					<h2 class="box-head">Report</h2>
-					<li><a (click)="navigater('report/edit')">Edit Daily Report</a></li>
-				<td class="box">
-					<h2 class="box-head">Lotto</h2>
-					<li><a (click)="navigater('lotto/print')">Print Lotto</a></li>
-				</td>
-			</tr>
-			<tr>
-				<td class="box">
-					<h2 class="box-head">Pay</h2>
-					<li><a (click)="navigater('employee/pay')">Pay Check</a></li>
-				</td>
-				<td class="box">
-					<h2 class="box-head">Order</h2>
-				</td>
-				<td class="box">
-					<h2 class="box-head">Vender</h2>
-				</td>
-			</tr>
-		</table>
-	</div>
-
-</body>
-
+					<td class="box">
+						<h2 class="box-head">Lotto</h2>
+						<li><a (click)="navigater('lotto/print')">Print Lotto</a></li>
+					</td>
+				</tr>
+				<tr>
+					<td class="box">
+						<h2 class="box-head">Pay</h2>
+						<li><a (click)="navigater('employee/pay')">Pay Check</a></li>
+					</td>
+					<td class="box">
+						<h2 class="box-head">Order</h2>
+					</td>
+					<td class="box">
+						<h2 class="box-head">Vender</h2>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
 </html>

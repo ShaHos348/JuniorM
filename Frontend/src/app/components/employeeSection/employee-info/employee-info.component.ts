@@ -85,23 +85,23 @@ export class EmployeeInfoComponent implements OnInit {
 		) as HTMLCollectionOf<HTMLInputElement>;
 
 		var data = {
-			idnum: this.inputs[0].value,
-			name: this.inputs[1].value + ' ' + this.inputs[2].value,
+			idnum: this.employee.idnum,
+			name: this.inputs[0].value + ' ' + this.inputs[1].value,
 			address:
+				this.inputs[2].value +
+				', ' +
 				this.inputs[3].value +
 				', ' +
 				this.inputs[4].value +
 				', ' +
-				this.inputs[5].value +
-				', ' +
-				this.inputs[6].value,
-			phone: this.inputs[8].value,
-			email: this.inputs[10].value,
-			birth: this.inputs[7].value,
-			ssn: this.inputs[9].value,
-			password: this.inputs[11].value,
+				this.inputs[5].value,
+			phone: this.inputs[7].value,
+			email: this.inputs[9].value,
+			birth: this.inputs[6].value,
+			ssn: this.inputs[8].value,
+			password: this.inputs[10].value,
 			citizenship: this.citizenship,
-			salary: this.inputs[12].value,
+			salary: this.inputs[11].value,
 		};
 
 		this.employeeService.updateInfo(data).subscribe(
@@ -246,45 +246,50 @@ export class EmployeeInfoComponent implements OnInit {
 					style: 'header',
 				},
 				{
-					text: "Id: " + this.employee.idnum,
+					text: 'Id: ' + this.employee.idnum,
 					style: 'info',
 				},
 				{
-					text: "Name: " + this.employee.fname + " " + this.employee.lname,
+					text: 'Name: ' + this.employee.fname + ' ' + this.employee.lname,
 					style: 'info',
 				},
 				{
-					text: "Address: " + this.employee.street,
+					text: 'Address: ' + this.employee.street,
 					style: 'info',
 				},
 				{
-					text: this.employee.city + ", " + this.employee.state + " " + this.employee.zip,
+					text:
+						this.employee.city +
+						', ' +
+						this.employee.state +
+						' ' +
+						this.employee.zip,
 					style: 'info',
 				},
 				{
-					text: "Phone: " + this.employee.phone,
+					text: 'Phone: ' + this.employee.phone,
 					style: 'info',
 				},
 				{
-					text: "Email: " + this.employee.email,
+					text: 'Email: ' + this.employee.email,
 					style: 'info',
 				},
 				{
-					text: "Birth: " + this.employee.birth,
+					text: 'Birth: ' + this.employee.birth,
 					style: 'info',
 				},
 				{
-					text: "SSN: " + this.employee.ssn,
+					text: 'SSN: ' + this.employee.ssn,
 					style: 'info',
 				},
 				{
-					text: "Citizenship: " + this.employee.citizen,
+					text: 'Citizenship: ' + this.employee.citizen,
 					style: 'info',
 				},
 				{
-					text: "Salary: $" + this.employee.salary,
+					text: 'Salary: $' + this.employee.salary,
 					style: 'info',
-				}
+				},
 			],
 			styles: {
 				header: {

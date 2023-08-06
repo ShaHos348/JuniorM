@@ -1,67 +1,90 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
-</head>
+	<body>
+		<div class="main-content" id="content">
+			<form id="entry-content" (ngSubmit)="insert()">
+				<h1 id="header"><strong>Lotto Active Entry</strong></h1>
+				<li class="input-row">
+					<label for="shift">Shift Time:</label>
+					<select name="shift" id="shift" [(ngModel)]="inputs.shift">
+						<option value="Day">Day Shift</option>
+						<option value="Night">Night Shift</option>
+					</select>
+				</li>
+				<li class="input-row">
+					<form id="lottoid-content" (ngSubmit)="getLottoInfo()">
+						<label for="lottoid-input">Lotto Id:</label>
+						<input
+							class="inputs"
+							id="lottoid-input"
+							type="number"
+							placeholder="Enter Lotto Id"
+							name="lottoid"
+							[(ngModel)]="inputs.lottoid"
+						/>
+						<button type="submit">GET LOTTO</button>
+					</form>
+				</li>
+				<li class="input-row">
+					<label for="name-input">Name:</label>
+					<input
+						class="inputs"
+						id="name-input"
+						type="text"
+						placeholder="Enter Name"
+						name="name"
+						autocomplete="off"
+						[(ngModel)]="inputs.name"
+					/>
+				</li>
+				<li class="input-row">
+					<label for="quantity-input">Quantity:</label>
+					<input
+						class="inputs"
+						id="quantity-input"
+						type="number"
+						placeholder="Enter Quantity"
+						name="quantity"
+						[(ngModel)]="inputs.quantity"
+					/>
+				</li>
+				<li class="input-row">
+					<label for="box-input">Box:</label>
+					<input
+						class="inputs"
+						id="box-input"
+						type="number"
+						placeholder="Enter Box"
+						name="box"
+						autocomplete="off"
+						[(ngModel)]="inputs.box"
+					/>
+				</li>
 
-<body>
-	<div class="main-content" id="content">
-		<form id="entry-content" (ngSubmit)="insert()">
-			<h1 id="header"><strong>Lotto Active Entry</strong></h1>
-			<li class="input-row">
-				<label for="shift">Shift Time:</label>
-				<select name="shift" id="shift" [(ngModel)]="inputs.shift">
-					<option value="Day">Day Shift</option>
-					<option value="Night">Night Shift</option>
-				</select>
-			</li>
-			<li class="input-row">
-				<form id="lottoid-content" (ngSubmit)="getLottoInfo()">
-					<label for="lottoid-input">Lotto Id:</label>
-				<input class="inputs" id="lottoid-input" type="number" placeholder="Enter Lotto Id" name="lottoid"
-					[(ngModel)]="inputs.lottoid">
-				<button type="submit">GET LOTTO</button>
-				</form>
-
-			</li>
-			<li class="input-row">
-				<label for="name-input">Name:</label>
-				<input class="inputs" id="name-input" type="text" placeholder="Enter Name" name="name" autocomplete="off"
-					[(ngModel)]="inputs.name">
-			</li>
-			<li class="input-row">
-				<label for="quantity-input">Quantity:</label>
-				<input class="inputs" id="quantity-input" type="number" placeholder="Enter Quantity" name="quantity"
-					[(ngModel)]="inputs.quantity">
-			</li>
-			<li class="input-row">
-				<label for="box-input">Box:</label>
-				<input class="inputs" id="box-input" type="number" placeholder="Enter Box" name="box" autocomplete="off"
-					[(ngModel)]="inputs.box">
-			</li>
-
-			<li>
-				<button id="add-btn" type="submit">Add</button>
-			</li>
-			<li>
-				<a (click)="navigater('home');" id="return">Return Home</a>
-			</li>
-			<li>
-				<button id="table-btn" type="button" (click)='getLottoActives()'>Show Active Lotto Table</button>
-			</li>
-		</form>
-		<table id="lottoAcTable" style="display: none;">
-			<thead id="lottoAcTableHead">
-				<th class="lottoAcTableNames">Name</th>
-				<th class="lottoAcTableQuantities">Box</th>
-			</thead>
-			<tr class="lottoAcTableRows" *ngFor="let lotto of lottoActives">
-				<td class="lottoAcTableNames">{{ lotto.name }}</td>
-				<td class="lottoAcTableQuantities">{{ lotto.box }}</td>
-			</tr>
-		</table>
-	</div>
-
-</body>
-
+				<li>
+					<button id="add-btn" type="submit">Add</button>
+				</li>
+				<li>
+					<a (click)="navigater('home')" id="return">Return Home</a>
+				</li>
+				<li>
+					<button id="table-btn" type="button" (click)="getLottoActives()">
+						Show Active Lotto Table
+					</button>
+				</li>
+			</form>
+			<table id="lottoAcTable" style="display: none">
+				<thead id="lottoAcTableHead">
+					<th class="lottoAcTableNames">Name</th>
+					<th class="lottoAcTableQuantities">Box</th>
+				</thead>
+				<tr class="lottoAcTableRows" *ngFor="let lotto of lottoActives">
+					<td class="lottoAcTableNames">{{ lotto.name }}</td>
+					<td class="lottoAcTableQuantities">{{ lotto.box }}</td>
+				</tr>
+			</table>
+		</div>
+	</body>
 </html>

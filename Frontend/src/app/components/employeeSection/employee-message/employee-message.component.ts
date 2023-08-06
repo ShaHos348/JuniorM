@@ -30,14 +30,16 @@ export class EmployeeMessageComponent implements OnInit {
 
 	sendMessage(data: any) {
 		if (this.checkInput(data)) {
-			this.response = "Fill all fields!";
+			this.response = 'Fill all fields!';
 			return;
 		}
 		this.employeeService.sendMessage(data).subscribe(
 			(response: any) => {
 				this.response = response?.message;
-				let messageField = document.getElementById('messageInput') as HTMLInputElement;
-				messageField.value = "";
+				let messageField = document.getElementById(
+					'messageInput'
+				) as HTMLInputElement;
+				messageField.value = '';
 			},
 			(error) => {
 				this.response = error.error?.message;

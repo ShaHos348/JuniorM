@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
-</head>
-
-<body>
-	<div class="main-content" id="content">
-		<div id="top-content">
-			<h2 id="header"><strong>Employee Paycheck</strong></h2>
-			<li id="search-box">
-				<input type="date" #dateInput id='date-input'>
-				<button id="table-btn" (click)="getData(dateInput.value)">Make Spreadsheet</button>
-			</li>
-			<li>
-				<a (click)="navigater('manager/home');" id="return">Return Home</a>
-			</li>
-			<li>
-				<button id="print-btn" (click)="printPDF(dateInput.value)">Print PDF</button>
-			</li>
+	<body>
+		<div class="main-content" id="content">
+			<div id="top-content">
+				<h2 id="header"><strong>Employee Paycheck</strong></h2>
+				<li id="search-box">
+					<input type="date" #dateInput id="date-input" />
+					<button id="table-btn" (click)="getData(dateInput.value)">
+						Make Spreadsheet
+					</button>
+				</li>
+				<li>
+					<a (click)="navigater('manager/home')" id="return">Return Home</a>
+				</li>
+				<li>
+					<button id="print-btn" (click)="printPDF(dateInput.value)">
+						Print PDF
+					</button>
+				</li>
+			</div>
+			<table class="action-div" id="data-table">
+				<thead class="dataTableHead">
+					<th class="tableIndex">Index</th>
+					<th class="tableId">Id</th>
+					<th class="tableName">Name</th>
+					<th class="tableDay">Mon</th>
+					<th class="tableDay">Tue</th>
+					<th class="tableDay">Wed</th>
+					<th class="tableDay">Thu</th>
+					<th class="tableDay">Fri</th>
+					<th class="tableDay">Sat</th>
+					<th class="tableDay">Sun</th>
+					<th class="tableHours">Total Hours</th>
+					<th class="tablePay">Pay</th>
+				</thead>
+				<tr
+					class="dataTableRows"
+					*ngFor="let employee of employeeData; let i = index"
+				>
+					<td>{{ i + 1 }}</td>
+					<td>{{ employee.idnum }}</td>
+					<td>{{ employee.name }}</td>
+					<td>{{ employee.mon.toFixed(2) }}</td>
+					<td>{{ employee.tue.toFixed(2) }}</td>
+					<td>{{ employee.wed.toFixed(2) }}</td>
+					<td>{{ employee.thu.toFixed(2) }}</td>
+					<td>{{ employee.fri.toFixed(2) }}</td>
+					<td>{{ employee.sat.toFixed(2) }}</td>
+					<td>{{ employee.sun.toFixed(2) }}</td>
+					<td>{{ employee.total.toFixed(2) }}</td>
+					<td>${{ employee.pay.toFixed(2) }}</td>
+				</tr>
+			</table>
 		</div>
-		<table class="action-div" id="data-table">
-			<thead class="dataTableHead">
-				<th class="tableIndex">Index</th>
-				<th class="tableId">Id</th>
-				<th class="tableName">Name</th>
-				<th class="tableDay">Mon</th>
-				<th class="tableDay">Tue</th>
-				<th class="tableDay">Wed</th>
-				<th class="tableDay">Thu</th>
-				<th class="tableDay">Fri</th>
-				<th class="tableDay">Sat</th>
-				<th class="tableDay">Sun</th>
-				<th class="tableHours">Total Hours</th>
-				<th class="tablePay">Pay</th>
-			</thead>
-			<tr class="dataTableRows" *ngFor="let employee of employeeData; let i = index">
-				<td>{{ i + 1 }}</td>
-				<td>{{ employee.idnum }}</td>
-				<td>{{ employee.name }}</td>
-				<td>{{ employee.mon.toFixed(2) }}</td>
-				<td>{{ employee.tue.toFixed(2) }}</td>
-				<td>{{ employee.wed.toFixed(2) }}</td>
-				<td>{{ employee.thu.toFixed(2) }}</td>
-				<td>{{ employee.fri.toFixed(2) }}</td>
-				<td>{{ employee.sat.toFixed(2) }}</td>
-				<td>{{ employee.sun.toFixed(2) }}</td>
-				<td>{{ employee.total.toFixed(2) }}</td>
-				<td>${{ employee.pay.toFixed(2) }}</td>
-			</tr>
-		</table>
-	</div>
-
-</body>
-
+	</body>
 </html>

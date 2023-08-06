@@ -4,18 +4,20 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-manager-home',
-  templateUrl: './manager-home.component.html',
-  styleUrls: ['./manager-home.component.scss']
+	selector: 'app-manager-home',
+	templateUrl: './manager-home.component.html',
+	styleUrls: ['./manager-home.component.scss'],
 })
 export class ManagerHomeComponent implements OnInit {
 	user: string = '';
 
-  constructor(private dialog: MatDialog,
+	constructor(
+		private dialog: MatDialog,
 		private router: Router,
-		private userService: UserService) { }
+		private userService: UserService
+	) {}
 
-  ngOnInit(): void {
+	ngOnInit(): void {
 		this.userService.managerCheckLogin().subscribe(
 			(response: any) => {
 				this.router.navigate(['manager/home']);
@@ -25,7 +27,7 @@ export class ManagerHomeComponent implements OnInit {
 				this.router.navigate(['home']);
 			}
 		);
-  }
+	}
 
 	logout() {
 		this.userService.managerLogout().subscribe((Response) => {
@@ -33,9 +35,7 @@ export class ManagerHomeComponent implements OnInit {
 		});
 	}
 
-
 	navigater(route: string) {
 		this.router.navigate([route]);
 	}
-
 }

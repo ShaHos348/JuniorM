@@ -8,9 +8,9 @@ import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-edit-daily-report',
-  templateUrl: './edit-daily-report.component.html',
-  styleUrls: ['./edit-daily-report.component.scss']
+	selector: 'app-edit-daily-report',
+	templateUrl: './edit-daily-report.component.html',
+	styleUrls: ['./edit-daily-report.component.scss'],
 })
 export class EditDailyReportComponent implements OnInit {
 	responseMessage: any;
@@ -40,7 +40,7 @@ export class EditDailyReportComponent implements OnInit {
 		'Money Order:',
 		'Check:',
 		'Paid In:',
-		'Others:'
+		'Others:',
 	];
 	shiftCountNames: any[] = [
 		'Cash:',
@@ -50,7 +50,7 @@ export class EditDailyReportComponent implements OnInit {
 		'Mobile:',
 		'EBT:',
 		'Lotto Pay Online:',
-		'Lotto Pay Inside:'
+		'Lotto Pay Inside:',
 	];
 
 	constructor(
@@ -174,14 +174,23 @@ export class EditDailyReportComponent implements OnInit {
 	}
 
 	calculate(output: string) {
-		this.companyAmounts = this.companyAmounts.map(num => {return Number(num);});
-		this.shreportAmounts = this.shreportAmounts.map(num => {return Number(num);});
-		this.shcountAmounts = this.shcountAmounts.map(num => {return Number(num);});
-
+		this.companyAmounts = this.companyAmounts.map((num) => {
+			return Number(num);
+		});
+		this.shreportAmounts = this.shreportAmounts.map((num) => {
+			return Number(num);
+		});
+		this.shcountAmounts = this.shcountAmounts.map((num) => {
+			return Number(num);
+		});
 
 		this.payoutTotal = this.companyAmounts.reduce((sum, num) => sum + num, 0);
-		this.shiftReportTotal = this.shreportAmounts.reduce((sum, num) => sum + num,0);
-		this.shiftCountTotal = this.shcountAmounts.reduce((sum, num) => sum + num, 0) + this.payoutTotal;
+		this.shiftReportTotal = this.shreportAmounts.reduce(
+			(sum, num) => sum + num,
+			0
+		);
+		this.shiftCountTotal =
+			this.shcountAmounts.reduce((sum, num) => sum + num, 0) + this.payoutTotal;
 		this.overshoot = this.shiftCountTotal - this.shiftReportTotal;
 
 		switch (output) {
@@ -278,5 +287,4 @@ export class EditDailyReportComponent implements OnInit {
 
 		return true;
 	}
-
 }

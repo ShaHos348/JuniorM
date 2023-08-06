@@ -53,8 +53,8 @@ export class HomeComponent implements OnInit {
 
 	managerLogin(formData: any) {
 		var data = {
-			username: formData.username,
-			password: formData.password,
+			username: formData.username.replaceAll(' ', ''),
+			password: formData.password.replaceAll(' ', ''),
 		};
 		this.userService.managerLogin(data).subscribe(
 			(response: any) => {

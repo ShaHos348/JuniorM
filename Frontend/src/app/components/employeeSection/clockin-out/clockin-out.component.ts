@@ -79,10 +79,16 @@ export class ClockinOutComponent implements OnInit {
 			if (this.messages.length != 0) {
 				for (let index = 0; index < this.messages.length; index++) {
 					const message = this.messages[index];
-					let hour = Number(message.date.substring(11,13));
+					let hour = Number(message.date.substring(11, 13));
 					var AmOrPm = hour >= 12 ? 'PM' : 'AM';
-					hour = (hour % 12) || 12;
-					message.date = message.date.substring(0,10) + " " + hour + message.date.substring(13,16) + " " + AmOrPm;
+					hour = hour % 12 || 12;
+					message.date =
+						message.date.substring(0, 10) +
+						' ' +
+						hour +
+						message.date.substring(13, 16) +
+						' ' +
+						AmOrPm;
 				}
 				messagesTable.style.display = 'table';
 			}

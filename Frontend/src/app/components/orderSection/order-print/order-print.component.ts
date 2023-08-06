@@ -7,9 +7,9 @@ import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-order-print',
-  templateUrl: './order-print.component.html',
-  styleUrls: ['./order-print.component.scss']
+	selector: 'app-order-print',
+	templateUrl: './order-print.component.html',
+	styleUrls: ['./order-print.component.scss'],
 })
 export class OrderPrintComponent implements OnInit {
 	orders: any;
@@ -40,11 +40,11 @@ export class OrderPrintComponent implements OnInit {
 		this.orderService.getAllOrders().subscribe((response: any) => {
 			this.orders = response;
 			if (this.orders.length != 0) {
-				this.orders.forEach((element: { datecompleted: string | null; }) => {
+				this.orders.forEach((element: { datecompleted: string | null }) => {
 					if (element.datecompleted == null) {
-						element.datecompleted = "Currently Open";
+						element.datecompleted = 'Currently Open';
 					} else {
-						element.datecompleted = element.datecompleted.substring(0,10);
+						element.datecompleted = element.datecompleted.substring(0, 10);
 					}
 				});
 				orderTable.style.display = 'table';
@@ -56,8 +56,8 @@ export class OrderPrintComponent implements OnInit {
 
 	print(data: any) {
 		data = {
-			orderid: data
-		}
+			orderid: data,
+		};
 		if (!this.checkInputs()) {
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
@@ -70,9 +70,8 @@ export class OrderPrintComponent implements OnInit {
 
 	checkInputs() {
 		let orderid = document.getElementById('order-input') as HTMLInputElement;
-		if (orderid.value == "") {
-			this.responseMessage =
-				'Error: Order Id is NOT GIVEN!';
+		if (orderid.value == '') {
+			this.responseMessage = 'Error: Order Id is NOT GIVEN!';
 			return false;
 		}
 

@@ -1,75 +1,126 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
-</head>
-
-<body>
-	<div class="main-content" id="content">
-		<div id="entry-content">
-			<h1 id="header"><strong>Lotto Sale Entry</strong></h1>
-			<li>
-				<a (click)="navigater('home');" id="return">Return Home</a>
-			</li>
-			<li>
-				<button id="add-btn" type="submit" (click)="submitLottoSale()">Add</button>
-			</li>
-			<li class="input-row">
-				<label for="shift">Shift Time:</label>
-				<select name="shift" id="shift" [(ngModel)]="shift">
-					<option value="Day">Day Shift</option>
-					<option value="Night">Night Shift</option>
-				</select>
-				<button type="button" (click)="retrieveData()">RETRIEVE DATA</button>
-			</li>
-			<table id="box-table">
-				<tr id="single-row">
-					<td class="column">
-						<thead class="box-rows">
-							<th class="box-cols">Box</th>
-							<th class="box-cols">Start</th>
-							<th class="box-cols">End</th>
-							<th class="box-cols">Active</th>
-							<th class="box-cols">Value</th>
-							<th class="box-cols">Sale</th>
-							<th class="box-cols">Total</th>
-						</thead>
-						<tr class="box-rows" *ngFor="let row of boxes | slice:0:40; let i = index;">
-							<td class="box-cols">{{row.box}}</td>
-							<td class="box-cols">{{row.start}}</td>
-							<td class="box-cols"><input type="number" id="end{{i}}" name="end{{i}}" [(ngModel)]="boxes[i].end" (keyup.enter)="focusNext('end',i)"></td>
-							<td class="box-cols"><input type="number" id="active{{i}}" name="active{{i}}" [(ngModel)]="boxes[i].active" (keyup.enter)="focusNext('active',i)"></td>
-							<td class="box-cols"><input type="number" id="value{{i}}" name="value{{i}}" [(ngModel)]="boxes[i].value" (keyup.enter)="focusNext('value',i)"></td>
-							<td class="box-cols">{{ calculate(i,'sale') }}</td>
-							<td class="box-cols">{{ calculate(i,'total') }}</td>
-						</tr>
-					</td>
-					<td class="column">
-						<thead class="box-rows">
-							<th class="box-cols">Box</th>
-							<th class="box-cols">Start</th>
-							<th class="box-cols">End</th>
-							<th class="box-cols">Active</th>
-							<th class="box-cols">Value</th>
-							<th class="box-cols">Sale</th>
-							<th class="box-cols">Total</th>
-						</thead>
-						<tr class="box-rows" *ngFor="let row of boxes | slice:40:80; let i = index;">
-							<td class="box-cols">{{row.box}}</td>
-							<td class="box-cols">{{row.start}}</td>
-							<td class="box-cols"><input type="number" id="end{{i+40}}" name="end{{i+40}}" [(ngModel)]="boxes[i+40].end" (keyup.enter)="focusNext('end',i+40)"></td>
-							<td class="box-cols"><input type="number" id="active{{i+40}}" name="active{{i+40}}" [(ngModel)]="boxes[i+40].active" (keyup.enter)="focusNext('active',i+40)"></td>
-							<td class="box-cols"><input type="number" id="value{{i+40}}" name="value{{i+40}}" [(ngModel)]="boxes[i+40].value" (keyup.enter)="focusNext('value',i+40)"></td>
-							<td class="box-cols">{{ calculate(i+40,'sale') }}</td>
-							<td class="box-cols">{{ calculate(i+40,'total') }}</td>
-						</tr>
-					</td>
-				</tr>
-			</table>
-
+	<body>
+		<div class="main-content" id="content">
+			<div id="entry-content">
+				<h1 id="header"><strong>Lotto Sale Entry</strong></h1>
+				<li>
+					<a (click)="navigater('home')" id="return">Return Home</a>
+				</li>
+				<li>
+					<button id="add-btn" type="submit" (click)="submitLottoSale()">
+						Add
+					</button>
+				</li>
+				<li class="input-row">
+					<label for="shift">Shift Time:</label>
+					<select name="shift" id="shift" [(ngModel)]="shift">
+						<option value="Day">Day Shift</option>
+						<option value="Night">Night Shift</option>
+					</select>
+					<button type="button" (click)="retrieveData()">RETRIEVE DATA</button>
+				</li>
+				<table id="box-table">
+					<tr id="single-row">
+						<td class="column">
+							<thead class="box-rows">
+								<th class="box-cols">Box</th>
+								<th class="box-cols">Start</th>
+								<th class="box-cols">End</th>
+								<th class="box-cols">Active</th>
+								<th class="box-cols">Value</th>
+								<th class="box-cols">Sale</th>
+								<th class="box-cols">Total</th>
+							</thead>
+							<tr
+								class="box-rows"
+								*ngFor="let row of boxes | slice : 0 : 40; let i = index"
+							>
+								<td class="box-cols">{{ row.box }}</td>
+								<td class="box-cols">{{ row.start }}</td>
+								<td class="box-cols">
+									<input
+										type="number"
+										id="end{{ i }}"
+										name="end{{ i }}"
+										[(ngModel)]="boxes[i].end"
+										(keyup.enter)="focusNext('end', i)"
+									/>
+								</td>
+								<td class="box-cols">
+									<input
+										type="number"
+										id="active{{ i }}"
+										name="active{{ i }}"
+										[(ngModel)]="boxes[i].active"
+										(keyup.enter)="focusNext('active', i)"
+									/>
+								</td>
+								<td class="box-cols">
+									<input
+										type="number"
+										id="value{{ i }}"
+										name="value{{ i }}"
+										[(ngModel)]="boxes[i].value"
+										(keyup.enter)="focusNext('value', i)"
+									/>
+								</td>
+								<td class="box-cols">{{ calculate(i, 'sale') }}</td>
+								<td class="box-cols">{{ calculate(i, 'total') }}</td>
+							</tr>
+						</td>
+						<td class="column">
+							<thead class="box-rows">
+								<th class="box-cols">Box</th>
+								<th class="box-cols">Start</th>
+								<th class="box-cols">End</th>
+								<th class="box-cols">Active</th>
+								<th class="box-cols">Value</th>
+								<th class="box-cols">Sale</th>
+								<th class="box-cols">Total</th>
+							</thead>
+							<tr
+								class="box-rows"
+								*ngFor="let row of boxes | slice : 40 : 80; let i = index"
+							>
+								<td class="box-cols">{{ row.box }}</td>
+								<td class="box-cols">{{ row.start }}</td>
+								<td class="box-cols">
+									<input
+										type="number"
+										id="end{{ i + 40 }}"
+										name="end{{ i + 40 }}"
+										[(ngModel)]="boxes[i + 40].end"
+										(keyup.enter)="focusNext('end', i + 40)"
+									/>
+								</td>
+								<td class="box-cols">
+									<input
+										type="number"
+										id="active{{ i + 40 }}"
+										name="active{{ i + 40 }}"
+										[(ngModel)]="boxes[i + 40].active"
+										(keyup.enter)="focusNext('active', i + 40)"
+									/>
+								</td>
+								<td class="box-cols">
+									<input
+										type="number"
+										id="value{{ i + 40 }}"
+										name="value{{ i + 40 }}"
+										[(ngModel)]="boxes[i + 40].value"
+										(keyup.enter)="focusNext('value', i + 40)"
+									/>
+								</td>
+								<td class="box-cols">{{ calculate(i + 40, 'sale') }}</td>
+								<td class="box-cols">{{ calculate(i + 40, 'total') }}</td>
+							</tr>
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
-	</div>
-
-</body>
-
+	</body>
 </html>

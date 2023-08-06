@@ -19,11 +19,16 @@
 	margin-right: 2px;
 }
 
-#id-input, .options, #updateForm, #infoPdf {
+#id-input,
+.options,
+#updateForm,
+#infoPdf {
 	display: none;
 }
 
-#info-table, #updateForm, #infoPdf {
+#info-table,
+#updateForm,
+#infoPdf {
 	position: relative;
 	border: 5px solid cyan;
 	width: 40%;

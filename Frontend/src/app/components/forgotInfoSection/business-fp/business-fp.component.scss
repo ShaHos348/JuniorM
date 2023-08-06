@@ -24,7 +24,7 @@ body {
 
 /* Clear floats after the columns */
 .row:after {
-	content: "";
+	content: '';
 	display: table;
 	clear: both;
 }
@@ -38,16 +38,16 @@ body {
 
 #frmForgot {
 	padding: 20px 60px;
-	background: #B6FFDA;
-	color: #A5A355;
+	background: #b6ffda;
+	color: #a5a355;
 	display: inline-block;
 	border-radius: 4px;
 }
 
 #frmReset {
 	padding: 20px 60px;
-	background: #B6E1FF;
-	color: #A5A355;
+	background: #b6e1ff;
+	color: #a5a355;
 	display: inline-block;
 	border-radius: 4px;
 }
@@ -59,38 +59,38 @@ body {
 .input-field {
 	padding: 8px;
 	width: 500px;
-	border: #A3C3E7 1px solid;
+	border: #a3c3e7 1px solid;
 	border-radius: 4px;
 }
 
 .form-submit-button {
-	background: #13BED0;
+	background: #13bed0;
 	border: 0;
 	padding: 8px 20px;
 	border-radius: 4px;
-	color: #FFF;
+	color: #fff;
 	text-transform: uppercase;
 }
 
 .member-dashboard {
 	padding: 40px;
-	background: #D2EDD5;
+	background: #d2edd5;
 	color: #555;
 	border-radius: 4px;
 	display: inline-block;
 }
 
 .member-dashboard a {
-	color: #09F;
+	color: #09f;
 	text-decoration: none;
 }
 
 #validation-message {
 	text-align: center;
-	color: #FF0000;
+	color: #ff0000;
 }
 
 .success_message {
 	text-align: center;
-	color: #07AB61;
+	color: #07ab61;
 }

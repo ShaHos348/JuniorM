@@ -9,9 +9,9 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-business-info',
-  templateUrl: './business-info.component.html',
-  styleUrls: ['./business-info.component.scss']
+	selector: 'app-business-info',
+	templateUrl: './business-info.component.html',
+	styleUrls: ['./business-info.component.scss'],
 })
 export class BusinessInfoComponent implements OnInit {
 	info: any;
@@ -86,7 +86,7 @@ export class BusinessInfoComponent implements OnInit {
 			mobile: this.inputs[7].value,
 			email: this.inputs[8].value,
 			username: this.inputs[9].value,
-			password: this.inputs[10].value
+			password: this.inputs[10].value,
 		};
 
 		this.userService.updateBusinessInfo(data).subscribe(
@@ -149,41 +149,48 @@ export class BusinessInfoComponent implements OnInit {
 					style: 'header',
 				},
 				{
-					text: "Id: " + this.business.idnum,
+					text: 'Id: ' + this.business.idnum,
 					style: 'info',
 				},
 				{
-					text: "Name: " + this.business.name,
+					text: 'Name: ' + this.business.name,
 					style: 'info',
 				},
 				{
-					text: "Address: " + this.business.address,
+					text: 'Address: ' + this.business.address,
 					style: 'info',
 				},
 				{
-					text: this.business.city + ", " + this.business.state + " " + this.business.zipcode + " " + this.business.country,
+					text:
+						this.business.city +
+						', ' +
+						this.business.state +
+						' ' +
+						this.business.zipcode +
+						' ' +
+						this.business.country,
 					style: 'info',
 				},
 				{
-					text: "Phone: " + this.business.phone,
+					text: 'Phone: ' + this.business.phone,
 					style: 'info',
 				},
 				{
-					text: "Mobile: " + this.business.mobile,
+					text: 'Mobile: ' + this.business.mobile,
 					style: 'info',
 				},
 				{
-					text: "Email: " + this.business.email,
+					text: 'Email: ' + this.business.email,
 					style: 'info',
 				},
 				{
-					text: "Username: " + this.business.username,
+					text: 'Username: ' + this.business.username,
 					style: 'info',
 				},
 				{
-					text: "Password: " + this.business.password,
+					text: 'Password: ' + this.business.password,
 					style: 'info',
-				}
+				},
 			],
 			styles: {
 				header: {

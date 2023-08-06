@@ -50,7 +50,9 @@ export class ModifyClockingComponent implements OnInit {
 		this.employeeService.getClocking(idnum).subscribe(
 			(response: any) => {
 				this.oldClockingInfo = response;
-				this.clockingInfo = this.oldClockingInfo.map((x: any) => Object.assign({}, x));
+				this.clockingInfo = this.oldClockingInfo.map((x: any) =>
+					Object.assign({}, x)
+				);
 				if (this.clockingInfo.length != 0) {
 					for (let index = 0; index < this.clockingInfo.length; index++) {
 						const clockin = this.clockingInfo[index];
@@ -104,17 +106,19 @@ export class ModifyClockingComponent implements OnInit {
 		this.employee.clockin = info.clockin.substring(0, 16);
 		this.employee.clockout = info.clockout.substring(0, 16);
 		this.employee.hours = info.hours;
-		let infoTable = document.getElementById('clocking-table') as HTMLTableElement;
+		let infoTable = document.getElementById(
+			'clocking-table'
+		) as HTMLTableElement;
 		let updateForm = document.getElementById('updateForm') as HTMLFormElement;
 		infoTable.style.display = 'none';
-		updateForm.style.display = "block";
+		updateForm.style.display = 'block';
 	}
 
 	update(data: any) {
 		let input = {
 			sl: this.employee.sl,
 			clockin: data.clockin,
-			clockout: data.clockout
+			clockout: data.clockout,
 		};
 		this.employeeService.updateClocking(input).subscribe(
 			(response: any) => {
@@ -139,10 +143,12 @@ export class ModifyClockingComponent implements OnInit {
 	}
 
 	back() {
-		let infoTable = document.getElementById('clocking-table') as HTMLTableElement;
+		let infoTable = document.getElementById(
+			'clocking-table'
+		) as HTMLTableElement;
 		let updateForm = document.getElementById('updateForm') as HTMLFormElement;
 		infoTable.style.display = 'table';
-		updateForm.style.display = "none";
+		updateForm.style.display = 'none';
 	}
 
 	navigater(route: string) {

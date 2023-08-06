@@ -25,10 +25,7 @@ export class BusinessSignupComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.signupForm = this.formBuilder.group({
-			code: [
-				null,
-				[Validators.required],
-			],
+			code: [null, [Validators.required]],
 			name: [
 				null,
 				[Validators.required, Validators.pattern(GlobalConstants.nameRegex)],
@@ -73,18 +70,18 @@ export class BusinessSignupComponent implements OnInit {
 	handleSubmit() {
 		var formData = this.signupForm.value;
 		var data = {
-			code: formData.code,
-			name: formData.name,
+			code: formData.code.replaceAll(' ', ''),
+			name: formData.name.replaceAll(' ', ''),
 			address: formData.address,
 			city: formData.city,
 			state: formData.state,
-			zipcode: formData.zipcode,
+			zipcode: formData.zipcode.replaceAll(' ', ''),
 			country: formData.country,
-			phone: formData.phone,
-			mobile: formData.mobile,
-			email: formData.email,
-			username: formData.username,
-			password: formData.password,
+			phone: formData.phone.replaceAll(' ', ''),
+			mobile: formData.mobile.replaceAll(' ', ''),
+			email: formData.email.replaceAll(' ', ''),
+			username: formData.username.replaceAll(' ', ''),
+			password: formData.password.replaceAll(' ', ''),
 		};
 		this.userService.signup(data).subscribe(
 			(response: any) => {

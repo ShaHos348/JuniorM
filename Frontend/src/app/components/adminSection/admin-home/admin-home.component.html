@@ -1,66 +1,119 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
+	<body>
+		<div class="main-content" id="content">
+			<h2 id="greeting">Hello Admin,</h2>
+			<h3>Welcome to the Admin Management Home!</h3>
+			<button id="logout-btn" (click)="logout()">Log Out Admin</button>
+			<table id="main-box">
+				<tr>
+					<td class="box">
+						<h2 class="box-head">Business Code Creation</h2>
+						<div class="business-sections" id="codes-edit">
+							<li>
+								<input
+									type="text"
+									#codeCInput
+									placeholder="Enter Code for Creation"
+									id="codeCInput"
+								/><button type="button" (click)="submitCode(codeCInput.value)">
+									CREATE
+								</button>
+							</li>
+							<li>
+								<input
+									type="text"
+									#codeDInput
+									placeholder="Enter Code for Deletion"
+									id="codeDInput"
+								/><button type="button" (click)="deleteCode(codeDInput.value)">
+									DELETE
+								</button>
+							</li>
+							<li>
+								<button type="button" (click)="getBusinessCodes()">
+									VIEW CREATED CODES
+								</button>
+							</li>
+						</div>
+						<div class="business-sections-list" id="codes-list">
+							<li>
+								<button (click)="displayList('codes-edit', 'codes-list')">
+									BACK
+								</button>
+							</li>
+							<li class="listData" style="text-decoration: underline">Codes</li>
+							<li class="listData" *ngFor="let cod of codes">{{ cod.code }}</li>
+						</div>
+					</td>
+					<td class="box">
+						<h2 class="box-head">Destroy Sessions</h2>
+						<div class="business-sections" id="session-edit">
+							<li>
+								<input
+									type="text"
+									#sessionDInput
+									placeholder="Enter SessionId for Deletion"
+									id="sessionDInput"
+								/><button
+									type="button"
+									(click)="endSession(sessionDInput.value)"
+								>
+									DELETE
+								</button>
+							</li>
+							<li>
+								<button type="button" (click)="getSessionIDs()">
+									VIEW SESSIONS
+								</button>
+							</li>
+						</div>
+						<div class="business-sections-list" id="sessions-list">
+							<li>
+								<button (click)="displayList('session-edit', 'sessions-list')">
+									BACK
+								</button>
+							</li>
+							<li class="listData" style="text-decoration: underline">
+								Sessions
+							</li>
+							<tr>
+								<th>Session ID</th>
+								<th>Info</th>
+							</tr>
+							<tr class="listData" *ngFor="let session of sessions">
+								<td>{{ session.session_id }}</td>
+								<td>{{ session.data }}</td>
+							</tr>
+						</div>
+					</td>
+				</tr>
 
-</head>
-
-<body>
-	<div class="main-content" id="content">
-		<h2 id="greeting">Hello {{user}},</h2>
-		<h3>Welcome to the System Management Home!</h3>
-		<button id="logout-btn" (click)='logout()'>Log Out Manager</button>
-		<table id="main-box">
-			<tr>
-				<td class="box">
-					<h2 class="box-head">Business Code Creation</h2>
-					<div class="business-sections" id="codes-edit">
-						<li><input type="text" #codeCInput placeholder="Enter Code for Creation" id="codeCInput"><button type="button" (click)="submitCode(codeCInput.value)">CREATE</button></li>
-						<li><input type="text" #codeDInput placeholder="Enter Code for Deletion" id="codeDInput"><button type="button" (click)="deleteCode(codeDInput.value)">DELETE</button></li>
-						<li><button type="button" (click)="getBusinessCodes()">VIEW CREATED CODES</button></li>
-					</div>
-					<div class="business-sections-list" id="codes-list">
-						<li><button (click)="displayList('codes-edit','codes-list')">BACK</button></li>
-						<li class="listData" style="text-decoration: underline;">Codes</li>
-						<li class="listData" *ngFor="let cod of codes">{{ cod.code }}</li>
-					</div>
-				</td>
-				<td class="box">
-					<h2 class="box-head">Destroy Sessions</h2>
-					<div class="business-sections" id="session-edit">
-						<li><input type="text" #sessionDInput placeholder="Enter SessionId for Deletion" id="sessionDInput"><button type="button" (click)="endSession(sessionDInput.value)">DELETE</button></li>
-						<li><button type="button" (click)="getSessionIDs()">VIEW SESSIONS</button></li>
-					</div>
-					<div class="business-sections-list" id="sessions-list">
-						<li><button (click)="displayList('session-edit','sessions-list')">BACK</button></li>
-						<li class="listData" style="text-decoration: underline;">Sessions</li>
-						<tr>
-							<th>Session ID</th>
-							<th>Info</th>
-						</tr>
-						<tr class="listData" *ngFor="let session of sessions">
-							<td>{{ session.session_id }}</td>
-							<td>{{ session.data }}</td>
-						</tr>
-					</div>
-			</tr>
-			<tr>
-				<td class="box">
-					<h2 class="box-head">Database Clearer</h2>
+				<tr>
+					<td class="box">
+						<h2 class="box-head">Database Clearer</h2>
 						<li>
 							<label for="messagesClear">Clear Employee Messages:</label>
-							<button type="button" (click)="clearDatabase('3MonthMessages')">Older than 3 Months</button>
-							<button type="button" id="messagesClear" (click)="clearDatabase('AllMessages')">ALL</button>
+							<button type="button" (click)="clearDatabase('3MonthMessages')">
+								Older than 3 Months
+							</button>
+							<button
+								type="button"
+								id="messagesClear"
+								(click)="clearDatabase('AllMessages')"
+							>
+								ALL
+							</button>
 						</li>
-				</td>
-				<td>
-					<h2 class="box-head">Order</h2>
-					<li><a (click)="navigater('order/registry')">Item Registry</a></li>
-				</td>
-			</tr>
-		</table>
-	</div>
-
-</body>
-
+					</td>
+					<td>
+						<h2 class="box-head">Order</h2>
+						<li><a (click)="navigater('order/registry')">Item Registry</a></li>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
 </html>

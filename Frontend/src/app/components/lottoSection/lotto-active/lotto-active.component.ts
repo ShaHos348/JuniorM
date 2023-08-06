@@ -71,7 +71,7 @@ export class LottoActiveComponent implements OnInit {
 
 	getLottoInfo() {
 		let name = document.getElementById('name-input') as HTMLInputElement;
-		if ((this.inputs.lottoid == '')) {
+		if (this.inputs.lottoid == '') {
 			this.responseMessage = 'Error: LottoId is NOT GIVEN!';
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
@@ -162,7 +162,7 @@ export class LottoActiveComponent implements OnInit {
 			this.inputs.lottoid == '' ||
 			this.inputs.name == '' ||
 			this.inputs.quantity == '' ||
-			this.inputs.shift == null
+			this.inputs.shift == ""
 		) {
 			this.responseMessage = 'Error: Some Field is NOT GIVEN!';
 			return false;
@@ -172,7 +172,7 @@ export class LottoActiveComponent implements OnInit {
 	}
 
 	checkShiftInput() {
-		if (this.inputs.shift == null) {
+		if (this.inputs.shift == "") {
 			this.responseMessage = 'Error: Shift is NOT GIVEN!';
 			return false;
 		}

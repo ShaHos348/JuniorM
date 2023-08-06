@@ -29,14 +29,19 @@ label {
 	color: orangered;
 }
 
-#box-input, #lottoid-input, #name-input, #quantity-input, #shift {
+#box-input,
+#lottoid-input,
+#name-input,
+#quantity-input,
+#shift {
 	position: relative;
 	width: 200px;
 	right: 0;
 	margin-left: 5px;
 }
 
-#add-btn, #table-btn {
+#add-btn,
+#table-btn {
 	text-align-last: center;
 	color: blue;
 	background-color: lime;

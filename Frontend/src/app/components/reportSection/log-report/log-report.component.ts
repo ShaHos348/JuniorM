@@ -8,9 +8,9 @@ import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-log-report',
-  templateUrl: './log-report.component.html',
-  styleUrls: ['./log-report.component.scss']
+	selector: 'app-log-report',
+	templateUrl: './log-report.component.html',
+	styleUrls: ['./log-report.component.scss'],
 })
 export class LogReportComponent implements OnInit {
 	responseMessage: any;
@@ -163,7 +163,7 @@ export class LogReportComponent implements OnInit {
 		}
 		let data = {
 			shift: this.shift,
-			date: this.shiftDate
+			date: this.shiftDate,
 		};
 		this.lottoService.lottoActive(data).subscribe(
 			(response: any) => {

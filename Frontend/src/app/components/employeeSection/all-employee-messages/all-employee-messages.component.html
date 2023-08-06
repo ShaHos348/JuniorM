@@ -1,67 +1,83 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
-</head>
-
-<body>
-	<div class="main-content" id="content">
-		<div id="top-content">
-			<h2 id="header"><strong>Manage Employee Messages</strong></h2>
-			<li id="search-box">
-				<input type="number" #idInput id='id-input' placeholder="Enter Employee Id">
-				<button id="search-btn" (click)="getMessages(idInput.value)">Search Employee</button>
-				<button id="all-btn" (click)="getMessages('00000000')">All Messages</button>
-			</li>
-			<li>
-				<a (click)="navigater('manager/home');" id="return">Return Home</a>
-			</li>
-		</div>
-		<table class="action-div" id="messages-table">
-			<thead class="messageTableHead">
-				<th class="tableIndex">Index</th>
-				<th class="tableDate">Date</th>
-				<th class="tableId">Id</th>
-				<th class="tableName">Name</th>
-				<th class="tableMessage">Message</th>
-				<th class="tableSender">Sender</th>
-				<th class="tableColDelete">Delete</th>
-			</thead>
-			<tr class="messagesTableRows" id="row{{i}}" *ngFor="let mess of messages; let i = index">
-				<td>{{ i + 1 }}</td>
-				<td>{{ mess.date }}</td>
-				<td>{{ mess.idnum }}</td>
-				<td>{{ mess.name }}</td>
-				<td>{{ mess.message }}</td>
-				<td>{{ mess.sender }}</td>
-				<td><button (click)="prefill(i)">DELETE</button></td>
-			</tr>
-		</table>
-		<form class="action-div" id="deleteForm" ngNativeValidate (ngSubmit)="delete()">
-			<button id="back-btn" type="button" (click)="back()">X</button>
-			<h2>ARE YOU SURE YOU WANT TO DELETE THIS MESSAGE?</h2>
-			<table id="prefilled-table">
+	<body>
+		<div class="main-content" id="content">
+			<div id="top-content">
+				<h2 id="header"><strong>Manage Employee Messages</strong></h2>
+				<li id="search-box">
+					<input
+						type="number"
+						#idInput
+						id="id-input"
+						placeholder="Enter Employee Id"
+					/>
+					<button id="search-btn" (click)="getMessages(idInput.value)">
+						Search Employee
+					</button>
+					<button id="all-btn" (click)="getMessages('00000000')">
+						All Messages
+					</button>
+				</li>
+				<li>
+					<a (click)="navigater('manager/home')" id="return">Return Home</a>
+				</li>
+			</div>
+			<table class="action-div" id="messages-table">
 				<thead class="messageTableHead">
+					<th class="tableIndex">Index</th>
 					<th class="tableDate">Date</th>
 					<th class="tableId">Id</th>
 					<th class="tableName">Name</th>
 					<th class="tableMessage">Message</th>
 					<th class="tableSender">Sender</th>
+					<th class="tableColDelete">Delete</th>
 				</thead>
-				<tr class="messagesTableRows">
-					<td>{{ message.date }}</td>
-					<td>{{ message.idnum }}</td>
-					<td>{{ message.name }}</td>
-					<td>{{ message.message }}</td>
-					<td>{{ message.sender }}</td>
+				<tr
+					class="messagesTableRows"
+					id="row{{ i }}"
+					*ngFor="let mess of messages; let i = index"
+				>
+					<td>{{ i + 1 }}</td>
+					<td>{{ mess.date }}</td>
+					<td>{{ mess.idnum }}</td>
+					<td>{{ mess.name }}</td>
+					<td>{{ mess.message }}</td>
+					<td>{{ mess.sender }}</td>
+					<td><button (click)="prefill(i)">DELETE</button></td>
 				</tr>
 			</table>
-			<li>
-				<button id="delete-btn" type="submit" name='delete-btn'>DELETE MESSAGE</button>
-			</li>
-		</form>
-	</div>
-
-</body>
-
+			<form
+				class="action-div"
+				id="deleteForm"
+				ngNativeValidate
+				(ngSubmit)="delete()"
+			>
+				<button id="back-btn" type="button" (click)="back()">X</button>
+				<h2>ARE YOU SURE YOU WANT TO DELETE THIS MESSAGE?</h2>
+				<table id="prefilled-table">
+					<thead class="messageTableHead">
+						<th class="tableDate">Date</th>
+						<th class="tableId">Id</th>
+						<th class="tableName">Name</th>
+						<th class="tableMessage">Message</th>
+						<th class="tableSender">Sender</th>
+					</thead>
+					<tr class="messagesTableRows">
+						<td>{{ message.date }}</td>
+						<td>{{ message.idnum }}</td>
+						<td>{{ message.name }}</td>
+						<td>{{ message.message }}</td>
+						<td>{{ message.sender }}</td>
+					</tr>
+				</table>
+				<li>
+					<button id="delete-btn" type="submit" name="delete-btn">
+						DELETE MESSAGE
+					</button>
+				</li>
+			</form>
+		</div>
+	</body>
 </html>

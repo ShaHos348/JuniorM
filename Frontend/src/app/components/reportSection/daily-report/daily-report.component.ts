@@ -149,29 +149,24 @@ export class DailyReportComponent implements OnInit {
 			let element = eval('this.report.shcount' + (index + 1));
 			this.shcountAmounts[index] = element;
 		}
-		this.shcountAmounts[this.shiftCountNames.length-3] = this.report.paidout;
-		this.shcountAmounts[this.shiftCountNames.length-2] = this.report.shcounttotal;
-		this.shcountAmounts[this.shiftCountNames.length-1] = this.report.overshoot;
+		this.shcountAmounts[this.shiftCountNames.length - 3] = this.report.paidout;
+		this.shcountAmounts[this.shiftCountNames.length - 2] =
+			this.report.shcounttotal;
+		this.shcountAmounts[this.shiftCountNames.length - 1] =
+			this.report.overshoot;
 	}
 
 	print() {
-		let companyRows = [
-			['Sl', 'Company', 'Amount']
-		];
-		let lottoRows = [
-			['Sl', 'Lotto Active', 'Box']
-		];
-		let shiftReportRows = [
-			['Shift Report', 'Amount']
-		];
-		let shiftCountRows = [
-			['Shift Count', 'Amount']
-		];
-		for (let i = 0; i < this.listOfTen.length; i +=1) { // i suggest a for-loop since you need both arrays at a time
-			companyRows.push([i+1, this.companyNames[i], this.companyAmounts[i]]);
-			lottoRows.push([i+1, this.lottoActiveNames[i], this.lottoActiveBox[i]]);
+		let companyRows = [['Sl', 'Company', 'Amount']];
+		let lottoRows = [['Sl', 'Lotto Active', 'Box']];
+		let shiftReportRows = [['Shift Report', 'Amount']];
+		let shiftCountRows = [['Shift Count', 'Amount']];
+		for (let i = 0; i < this.listOfTen.length; i += 1) {
+			// i suggest a for-loop since you need both arrays at a time
+			companyRows.push([i + 1, this.companyNames[i], this.companyAmounts[i]]);
+			lottoRows.push([i + 1, this.lottoActiveNames[i], this.lottoActiveBox[i]]);
 			shiftReportRows.push([this.shiftReportNames[i], this.shreportAmounts[i]]);
-		};
+		}
 		shiftReportRows.push([this.shiftReportNames[10], this.shreportAmounts[10]]);
 		for (let i = 0; i < this.shiftCountNames.length; i++) {
 			shiftCountRows.push([this.shiftCountNames[i], this.shcountAmounts[i]]);
@@ -179,10 +174,18 @@ export class DailyReportComponent implements OnInit {
 		shiftCountRows.pop();
 		shiftCountRows.pop();
 		shiftCountRows.pop();
-		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-3], this.shcountAmounts[this.shiftCountNames.length-3]]);
-		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-2], this.shcountAmounts[this.shiftCountNames.length-2]]);
-		shiftCountRows.push([this.shiftCountNames[this.shiftCountNames.length-1], this.shcountAmounts[this.shiftCountNames.length-1]]);
-
+		shiftCountRows.push([
+			this.shiftCountNames[this.shiftCountNames.length - 3],
+			this.shcountAmounts[this.shiftCountNames.length - 3],
+		]);
+		shiftCountRows.push([
+			this.shiftCountNames[this.shiftCountNames.length - 2],
+			this.shcountAmounts[this.shiftCountNames.length - 2],
+		]);
+		shiftCountRows.push([
+			this.shiftCountNames[this.shiftCountNames.length - 1],
+			this.shcountAmounts[this.shiftCountNames.length - 1],
+		]);
 
 		let docDefinition = {
 			content: [
@@ -197,7 +200,7 @@ export class DailyReportComponent implements OnInit {
 				{
 					table: {
 						headerRows: 1,
-						widths: ['*','*'],
+						widths: ['*', '*'],
 						body: [
 							[
 								[
@@ -263,7 +266,7 @@ export class DailyReportComponent implements OnInit {
 					alignment: 'center',
 					fontSize: 10,
 					color: 'black',
-				}
+				},
 			},
 		};
 

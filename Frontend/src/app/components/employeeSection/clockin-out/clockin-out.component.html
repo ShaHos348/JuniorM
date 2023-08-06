@@ -1,40 +1,64 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
-</head>
-
-<body>
-	<div class="main-content" id="content">
-		<div id="clocking-content">
-			<h2 id="header"><strong>Employee Clocking</strong></h2>
-			<li>
-				<input class="lookup" #id type="number" placeholder="Enter Employee ID" name="id" autocomplete="off">
-				<input class="lookup" #password type="password" placeholder="Enter Employee Password" name="password" autocomplete="off">
-			</li>
-			<li><button id="lookup-btn" (click)='lookup({idnum: id.value, password: password.value})'>Search Employee</button></li>
-			<li>
-				<p id="response">{{response}}</p>
-			</li>
-			<li><button id="clocker" (click)='id.value = ""; password.value = ""; clocker()'>{{clock}}</button></li>
-			<li>
-				<a (click)="navigater('home');" id="return">Return Home</a>
-			</li>
+	<body>
+		<div class="main-content" id="content">
+			<div id="clocking-content">
+				<h2 id="header"><strong>Employee Clocking</strong></h2>
+				<li>
+					<input
+						class="lookup"
+						#id
+						type="number"
+						placeholder="Enter Employee ID"
+						name="id"
+						autocomplete="off"
+					/>
+					<input
+						class="lookup"
+						#password
+						type="password"
+						placeholder="Enter Employee Password"
+						name="password"
+						autocomplete="off"
+					/>
+				</li>
+				<li>
+					<button
+						id="lookup-btn"
+						(click)="lookup({ idnum: id.value, password: password.value })"
+					>
+						Search Employee
+					</button>
+				</li>
+				<li>
+					<p id="response">{{ response }}</p>
+				</li>
+				<li>
+					<button
+						id="clocker"
+						(click)="id.value = ''; password.value = ''; clocker()"
+					>
+						{{ clock }}
+					</button>
+				</li>
+				<li>
+					<a (click)="navigater('home')" id="return">Return Home</a>
+				</li>
+			</div>
+			<table id="messageTable">
+				<thead id="messageTableHead">
+					<th class="messageTableDates">Date</th>
+					<th class="messageTableSenders">Sender</th>
+					<th class="messageTableMessages">Message</th>
+				</thead>
+				<tr class="messageTableRows" *ngFor="let mess of messages">
+					<td style="font-size: x-small">{{ mess.date }}</td>
+					<td>{{ mess.sender }}</td>
+					<td>{{ mess.message }}</td>
+				</tr>
+			</table>
 		</div>
-		<table id="messageTable">
-			<thead id="messageTableHead">
-				<th class="messageTableDates">Date</th>
-				<th class="messageTableSenders">Sender</th>
-				<th class="messageTableMessages">Message</th>
-			</thead>
-			<tr class="messageTableRows" *ngFor="let mess of messages">
-				<td style="font-size: x-small;">{{ mess.date }}</td>
-				<td>{{ mess.sender }}</td>
-				<td>{{ mess.message }}</td>
-			</tr>
-		</table>
-	</div>
-
-</body>
-
+	</body>
 </html>

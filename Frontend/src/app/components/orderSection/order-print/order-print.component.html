@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html>
+	<head> </head>
 
-<head>
-</head>
+	<body>
+		<div class="main-content" id="content">
+			<div id="order-content">
+				<h1 id="header"><strong>Order List Entry</strong></h1>
+				<li>
+					<input
+						id="order-input"
+						#orderid
+						type="text"
+						placeholder="Enter Order Id"
+						name="orderid"
+					/>
+					<button id="print-btn" (click)="print(orderid.value)">Print</button>
+				</li>
+				<li>
+					<a (click)="navigater('order/entry')" id="return"
+						>Return to Order Entry</a
+					>
+				</li>
+			</div>
 
-<body>
-	<div class="main-content" id="content">
-		<div id="order-content">
-			<h1 id="header"><strong>Order List Entry</strong></h1>
-			<li>
-				<input id="order-input" #orderid type="text" placeholder="Enter Order Id" name="orderid">
-				<button id="print-btn" (click)='print(orderid.value)'>Print</button>
-			</li>
-			<li>
-				<a (click)="navigater('order/entry');" id="return">Return to Order Entry</a>
-			</li>
+			<table id="orderTable">
+				<thead id="orderTableHead">
+					<th class="orderTableOI">Order Id</th>
+					<th class="orderTableDC">Date Completed</th>
+				</thead>
+				<tr class="orderTableRows" *ngFor="let item of orders">
+					<td class="orderTableOI">{{ item.orderid }}</td>
+					<td class="orderTableDC">{{ item.datecompleted }}</td>
+				</tr>
+			</table>
 		</div>
-
-		<table id="orderTable">
-			<thead id="orderTableHead">
-				<th class="orderTableOI">Order Id</th>
-				<th class="orderTableDC">Date Completed</th>
-			</thead>
-			<tr class="orderTableRows" *ngFor="let item of orders">
-				<td class="orderTableOI">{{ item.orderid }}</td>
-				<td class="orderTableDC">{{ item.datecompleted }}</td>
-			</tr>
-		</table>
-	</div>
-
-</body>
-
+	</body>
 </html>

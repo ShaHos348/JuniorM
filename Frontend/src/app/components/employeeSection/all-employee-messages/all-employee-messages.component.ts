@@ -6,9 +6,9 @@ import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-all-employee-messages',
-  templateUrl: './all-employee-messages.component.html',
-  styleUrls: ['./all-employee-messages.component.scss']
+	selector: 'app-all-employee-messages',
+	templateUrl: './all-employee-messages.component.html',
+	styleUrls: ['./all-employee-messages.component.scss'],
 })
 export class AllEmployeeMessagesComponent implements OnInit {
 	messages: any;
@@ -19,7 +19,7 @@ export class AllEmployeeMessagesComponent implements OnInit {
 		idnum: null,
 		name: null,
 		message: null,
-		sender: null
+		sender: null,
 	};
 
 	constructor(
@@ -91,15 +91,17 @@ export class AllEmployeeMessagesComponent implements OnInit {
 		this.message.name = info.name;
 		this.message.message = info.message;
 		this.message.sender = info.sender;
-		let infoTable = document.getElementById('messages-table') as HTMLTableElement;
+		let infoTable = document.getElementById(
+			'messages-table'
+		) as HTMLTableElement;
 		let updateForm = document.getElementById('deleteForm') as HTMLFormElement;
 		infoTable.style.display = 'none';
-		updateForm.style.display = "block";
+		updateForm.style.display = 'block';
 	}
 
 	delete() {
 		let input = {
-			slno: this.message.slno
+			slno: this.message.slno,
 		};
 		this.employeeService.deleteMessages(input).subscribe(
 			(response: any) => {
@@ -122,11 +124,13 @@ export class AllEmployeeMessagesComponent implements OnInit {
 	}
 
 	back() {
-		this.getMessages("00000000");
-		let infoTable = document.getElementById('messages-table') as HTMLTableElement;
+		this.getMessages('00000000');
+		let infoTable = document.getElementById(
+			'messages-table'
+		) as HTMLTableElement;
 		let updateForm = document.getElementById('deleteForm') as HTMLFormElement;
 		infoTable.style.display = 'table';
-		updateForm.style.display = "none";
+		updateForm.style.display = 'none';
 	}
 
 	navigater(route: string) {
