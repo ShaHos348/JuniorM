@@ -69,7 +69,7 @@ export class OrderEntryComponent implements OnInit {
 
 	insert() {
 		let barcodeInput = document.getElementById(
-			'name-input'
+			'barcode-input'
 		) as HTMLInputElement;
 		if (!this.checkInputs()) {
 			this.snackbarService.openSnackbar(this.responseMessage, '');
@@ -180,7 +180,7 @@ export class OrderEntryComponent implements OnInit {
 
 	checkInputs() {
 		if (this.barcode == '' || this.name == '' || this.quantity == '') {
-			this.responseMessage = 'Error: Name/Quantity is NOT GIVEN!';
+			this.responseMessage = 'Error: Barcode/Name/Quantity is NOT GIVEN!';
 			return false;
 		}
 

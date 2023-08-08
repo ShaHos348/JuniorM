@@ -54,17 +54,4 @@ export class ReportService {
 			}
 		);
 	}
-
-	/**
-	 * Call to backend for updating report.
-	 *
-	 * @param data report info to be updated
-	 * @returns confirmation of updating
-	 */
-	updateReport(data: any) {
-		return this.httpClient.post(this.url + '/report/update', data, {
-			withCredentials: true,
-			headers: new HttpHeaders().set('Content-Type', 'application/json'),
-		});
-	}
 }

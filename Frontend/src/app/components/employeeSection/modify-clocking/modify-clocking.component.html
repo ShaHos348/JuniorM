@@ -13,7 +13,8 @@
 						id="id-input"
 						placeholder="Enter Employee Id"
 					/>
-					<button id="search-btn" (click)="getClockingInfo(idInput.value)">
+					<input type="date" #dateInput id="date-input" />
+					<button id="search-btn" (click)="getClockingInfo({idnum: idInput.value, date: dateInput.value})">
 						Search Employee
 					</button>
 				</li>

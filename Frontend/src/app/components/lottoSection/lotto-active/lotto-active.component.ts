@@ -21,6 +21,7 @@ export class LottoActiveComponent implements OnInit {
 		name: '',
 		quantity: '',
 		shift: '',
+		date: '',
 	};
 
 	constructor(
@@ -53,7 +54,7 @@ export class LottoActiveComponent implements OnInit {
 				this.responseMessage = response?.message;
 				this.snackbarService.openSnackbar(this.responseMessage, '');
 				this.getLottoActives();
-				this.emptyInputs();
+				//this.emptyInputs();
 			},
 			(error) => {
 				if (error.error?.message) {
@@ -76,6 +77,7 @@ export class LottoActiveComponent implements OnInit {
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return;
 		}
+		this.inputs.lottoid = String(this.inputs.lottoid).substring(0,4);
 		this.lottoService.getSpecificLotto(this.inputs.lottoid).subscribe(
 			(response: any) => {
 				this.inputs.name = response.name;
@@ -97,6 +99,7 @@ export class LottoActiveComponent implements OnInit {
 	}
 
 	addLotto() {
+		this.inputs.lottoid = String(this.inputs.lottoid).substring(0,4);
 		this.lottoService.registerLotto(this.inputs).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
@@ -123,6 +126,7 @@ export class LottoActiveComponent implements OnInit {
 		}
 		let data = {
 			shift: this.inputs.shift,
+			date: this.inputs.date
 		};
 		let lottoAcTable = document.getElementById('lottoAcTable') as HTMLElement;
 		this.lottoService.lottoActive(data).subscribe(
@@ -154,6 +158,7 @@ export class LottoActiveComponent implements OnInit {
 		this.inputs.name = '';
 		this.inputs.quantity = '';
 		this.inputs.shift = '';
+		this.inputs.date = '';
 	}
 
 	checkInputs() {
@@ -162,7 +167,8 @@ export class LottoActiveComponent implements OnInit {
 			this.inputs.lottoid == '' ||
 			this.inputs.name == '' ||
 			this.inputs.quantity == '' ||
-			this.inputs.shift == ""
+			this.inputs.shift == "" ||
+			this.inputs.date == ""
 		) {
 			this.responseMessage = 'Error: Some Field is NOT GIVEN!';
 			return false;
@@ -172,8 +178,8 @@ export class LottoActiveComponent implements OnInit {
 	}
 
 	checkShiftInput() {
-		if (this.inputs.shift == "") {
-			this.responseMessage = 'Error: Shift is NOT GIVEN!';
+		if (this.inputs.shift == "" || this.inputs.date == "") {
+			this.responseMessage = 'Error: Shift/Date is NOT GIVEN!';
 			return false;
 		}
 

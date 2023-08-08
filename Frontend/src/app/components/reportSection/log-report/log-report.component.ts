@@ -106,8 +106,6 @@ export class LogReportComponent implements OnInit {
 			return;
 		}
 
-		this.companyNames = this.companyNames.filter((element) => element);
-		this.companyAmounts = this.companyAmounts.filter((element) => element);
 		this.lottoActiveNames = this.lottoActiveNames.filter((element) => element);
 		this.lottoActiveBox = this.lottoActiveBox.filter((element) => element);
 
@@ -156,6 +154,13 @@ export class LogReportComponent implements OnInit {
 		);
 	}
 
+	focusNext(col: any, i: any) {
+		let endInput = document.getElementById(col + (i + 1)) as HTMLInputElement;
+		if (i < 9) {
+			endInput.focus();
+		}
+	}
+
 	getLottoActives() {
 		if (!this.checkShiftInput()) {
 			this.snackbarService.openSnackbar(this.responseMessage, '');
@@ -168,10 +173,34 @@ export class LogReportComponent implements OnInit {
 		this.lottoService.lottoActive(data).subscribe(
 			(response: any) => {
 				let lottoActives = response;
-				for (let index = 0; index < 10; index++) {
+				let length = lottoActives.length <= 10 ? lottoActives.length : 10;
+				for (let index = 0; index < length; index++) {
 					const lotto = lottoActives[index];
 					this.lottoActiveNames[index] = lotto.name;
 					this.lottoActiveBox[index] = lotto.box;
+				}
+			},
+			(error) => {
+				if (error.error?.message) {
+					this.responseMessage = error.error?.message;
+				} else {
+					this.responseMessage = GlobalConstants.genericError;
+				}
+				this.snackbarService.openSnackbar(
+					this.responseMessage,
+					GlobalConstants.error
+				);
+			}
+		);
+		this.lottoService.getLottoSale(data).subscribe(
+			(response: any) => {
+				let lottoSale = response;
+				if (lottoSale.length != 0) {
+					this.shreportAmounts[4] = 0;
+					for (let index = 0; index < lottoSale.length; index++) {
+						const sale = lottoSale[index];
+						this.shreportAmounts[4] += sale.total;
+					}
 				}
 			},
 			(error) => {

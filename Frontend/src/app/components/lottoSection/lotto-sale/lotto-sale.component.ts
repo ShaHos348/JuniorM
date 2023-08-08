@@ -16,6 +16,7 @@ export class LottoSaleComponent implements OnInit {
 	boxes: any[] = [];
 	numOfBoxes: number = 80;
 	shift: any;
+	date: any;
 	lottoActives: any;
 	startAmounts: any;
 
@@ -45,6 +46,7 @@ export class LottoSaleComponent implements OnInit {
 		}
 		let data = {
 			shift: this.shift,
+			date: this.date,
 			boxes: this.boxes,
 		};
 		this.lottoService.enterLottoSales(data).subscribe(
@@ -71,8 +73,11 @@ export class LottoSaleComponent implements OnInit {
 			return;
 		}
 		this.makeBoxesArray();
+		let prevDate = (this.shift == "Full") ? true : false;
 		let data = {
 			shift: this.shift,
+			date: this.date,
+			prev: prevDate
 		};
 		this.lottoService.lottoActive(data).subscribe(
 			(response: any) => {
@@ -171,8 +176,8 @@ export class LottoSaleComponent implements OnInit {
 	}
 
 	checkShiftInput() {
-		if (this.shift == null || this.shift == '') {
-			this.responseMessage = 'Error: Shift is NOT GIVEN!';
+		if (this.shift == null || this.shift == '' || this.date == "" || this.date == null) {
+			this.responseMessage = 'Error: Shift/Date is NOT GIVEN!';
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return false;
 		}

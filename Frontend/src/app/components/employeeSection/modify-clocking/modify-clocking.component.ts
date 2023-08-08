@@ -41,13 +41,13 @@ export class ModifyClockingComponent implements OnInit {
 		);
 	}
 
-	getClockingInfo(idnum: any) {
+	getClockingInfo(input: any) {
 		let infoTable = document.getElementById('clocking-table') as HTMLElement;
-		if (idnum.length == 0) {
+		if (input.idnum.length != 8 || input.date == "") {
 			infoTable.style.display = 'none';
 			return;
 		}
-		this.employeeService.getClocking(idnum).subscribe(
+		this.employeeService.getClocking(input).subscribe(
 			(response: any) => {
 				this.oldClockingInfo = response;
 				this.clockingInfo = this.oldClockingInfo.map((x: any) =>

@@ -1,155 +1,148 @@
 <!DOCTYPE html>
 <html>
-	<head> </head>
 
-	<body>
-		<form class="main-content" id="content" (ngSubmit)="handleSubmit()">
-			<h1>Worksheet</h1>
+<head> </head>
 
-			<label for="date">Date: </label>
-			<input type="date" name="date" id="date" [(ngModel)]="shiftDate" />
-			<label for="shift">Shift Time: </label>
-			<select name="shift" id="shift" [(ngModel)]="shift">
-				<option value="Day">Day Shift</option>
-				<option value="Night">Night Shift</option>
-			</select>
+<body>
+	<div class="main-content" id="content">
+		<h1>Worksheet</h1>
 
-			<table id="main-table">
-				<tr>
-					<td class="main-table-section">
-						<table id="payout-table">
-							<thead>
-								<th>Sl</th>
-								<th>Company</th>
-								<th>Amount</th>
-							</thead>
-							<tr *ngFor="let a of listOfTen; let i = index">
-								<td>{{ i + 1 }}</td>
-								<td class="payout-company">
-									<input
-										id="company-name-input{{ i }}"
-										type="text"
-										[(ngModel)]="companyNames[i]"
-										name="company-name-input{{ i }}"
-										placeholder="Enter Company Name"
-										autocomplete="off"
-									/>
-								</td>
-								<td class="payout-amount">
-									<input
-										id="company-amount-input{{ i }}"
-										type="number"
-										[(ngModel)]="companyAmounts[i]"
-										name="company-amount-input{{ i }}"
-										placeholder="Enter Company Amount"
-									/>
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td class="main-table-section">
-						<table id="report-table">
-							<thead>
-								<th>Shift Report</th>
-								<th>Amount</th>
-							</thead>
-							<tr *ngFor="let name of shiftReportNames; let i = index">
-								<td class="shift-report-name">{{ name }}</td>
-								<td class="shift-report-amount">
-									<input
-										id="shreport-amount-input{{ i }}"
-										type="number"
-										[(ngModel)]="shreportAmounts[i]"
-										name="shreport-amount-input{{ i }}"
-										placeholder="Enter Amount"
-									/>
-								</td>
-							</tr>
-							<tr>
-								<td class="shift-report-name">Total:</td>
-								<td class="shift-report-amount">{{ calculate('report') }}</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td class="main-table-section">
-						<table id="lotto-active-table">
-							<thead>
-								<th>Sl</th>
-								<th>Lotto Active</th>
-								<th>Box</th>
-							</thead>
-							<tr *ngFor="let a of listOfTen; let i = index">
-								<td>{{ i + 1 }}</td>
-								<td class="lotto-active-name">
-									<input
-										id="lotto-active-names{{ i }}"
-										type="text"
-										[(ngModel)]="lottoActiveNames[i]"
-										name="lotto-active-names{{ i }}"
-										placeholder="Enter Lotto Name"
-										autocomplete="off"
-									/>
-								</td>
-								<td class="lotto-active-box">
-									<input
-										id="lotto-active-box{{ i }}"
-										type="number"
-										[(ngModel)]="lottoActiveBox[i]"
-										name="lotto-active-box{{ i }}"
-										placeholder="Enter Lotto Box"
-									/>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									<button type="button" (click)="getLottoActives()">
-										Get Lotto Actives
-									</button>
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td class="main-table-section">
-						<table id="count-table">
-							<thead>
-								<th>Shift Count</th>
-								<th>Amount</th>
-							</thead>
-							<tr *ngFor="let name of shiftCountNames; let i = index">
-								<td class="amount-type-name">{{ name }}</td>
-								<td class="amount-type-amount">
-									<input
-										id="shcount-amount-input{{ i }}"
-										type="number"
-										[(ngModel)]="shcountAmounts[i]"
-										name="shcount-amount-input{{ i }}"
-										placeholder="Enter Amount"
-									/>
-								</td>
-							</tr>
-							<tr>
-								<td class="shift-count-name">Payout:</td>
-								<td class="shift-count-amount">{{ calculate('payout') }}</td>
-							</tr>
-							<tr>
-								<td class="shift-count-name">Total:</td>
-								<td class="shift-count-amount">{{ calculate('count') }}</td>
-							</tr>
-							<tr>
-								<td class="shift-count-name">Overshoot:</td>
-								<td class="shift-count-amount">{{ calculate('overshoot') }}</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-			<button type="submit" id="submit">SUBMIT</button>
-			<li>
-				<a (click)="navigater('home')" id="return">Return Home</a>
-			</li>
-		</form>
-	</body>
+		<label for="date">Date: </label>
+		<input type="date" name="date" id="date" [(ngModel)]="shiftDate" />
+		<label for="shift">Shift Time: </label>
+		<select name="shift" id="shift" [(ngModel)]="shift">
+			<option value="Full">Full Shift</option>
+			<option value="Day">Day Shift</option>
+			<option value="Night">Night Shift</option>
+		</select>
+
+		<table id="main-table">
+			<tr>
+				<td class="main-table-section">
+					<table id="payout-table">
+						<thead>
+							<th>Sl</th>
+							<th>Company</th>
+							<th>Amount</th>
+						</thead>
+						<tr *ngFor="let a of 'x'.repeat(7).split(''); let i = index">
+							<td>{{ i + 1 }}</td>
+							<td class="payout-company">
+								<input id="company-name-input{{ i }}" type="text" [(ngModel)]="companyNames[i]"
+									name="company-name-input{{ i }}" placeholder="Enter Company Name" autocomplete="off" (keyup.enter)="focusNext('company-name-input', i)" />
+							</td>
+							<td class="payout-amount">
+								<input id="company-amount-input{{ i }}" type="number" [(ngModel)]="companyAmounts[i]"
+									name="company-amount-input{{ i }}" placeholder="Enter Company Amount" (keyup.enter)="focusNext('company-amount-input', i)" />
+							</td>
+						</tr>
+						<tr>
+							<td>8</td>
+							<td class="payout-company">
+								<input id="company-name-input{{ 7 }}" type="text" [(ngModel)]="companyNames[7]"
+									name="company-name-input{{ 7 }}" placeholder="Enter Other" autocomplete="off" (keyup.enter)="focusNext('company-name-input', 7)" />
+							</td>
+							<td class="payout-amount">
+								<input id="company-amount-input{{ 7 }}" type="number" [(ngModel)]="companyAmounts[7]"
+									name="company-amount-input{{ 7 }}" placeholder="Enter Other Amount" (keyup.enter)="focusNext('company-amount-input', 7)" />
+							</td>
+						</tr>
+						<tr *ngFor="let a of 'x'.repeat(2).split(''); let i = index">
+							<td>{{ i + 1 + 8 }}</td>
+							<td class="payout-company">
+								<input id="company-name-input{{ i + 8 }}" type="text" [(ngModel)]="companyNames[i + 8]"
+									name="company-name-input{{ i + 8 }}" placeholder="Enter Person {{i+1}}" autocomplete="off" (keyup.enter)="focusNext('company-name-input', i + 8)" />
+							</td>
+							<td class="payout-amount">
+								<input id="company-amount-input{{ i + 8 }}" type="number" [(ngModel)]="companyAmounts[i + 8]"
+									name="company-amount-input{{ i + 8 }}" placeholder="Enter Amount {{i+1}}" (keyup.enter)="focusNext('company-amount-input', i + 8)" />
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="main-table-section">
+					<table id="report-table">
+						<thead>
+							<th>Shift Report</th>
+							<th>Amount</th>
+						</thead>
+						<tr *ngFor="let name of shiftReportNames; let i = index">
+							<td class="shift-report-name">{{ name }}</td>
+							<td class="shift-report-amount">
+								<input id="shreport-amount-input{{ i }}" type="number" [(ngModel)]="shreportAmounts[i]"
+									name="shreport-amount-input{{ i }}" placeholder="Enter Amount" (keyup.enter)="focusNext('shreport-amount-input', i)" />
+							</td>
+						</tr>
+						<tr>
+							<td class="shift-report-name">Total:</td>
+							<td class="shift-report-amount">{{ calculate('report') }}</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="main-table-section">
+					<table id="lotto-active-table">
+						<thead>
+							<th>Sl</th>
+							<th>Lotto Active</th>
+							<th>Box</th>
+						</thead>
+						<tr *ngFor="let a of listOfTen; let i = index">
+							<td>{{ i + 1 }}</td>
+							<td class="lotto-active-name">
+								<input id="lotto-active-names{{ i }}" type="text" [(ngModel)]="lottoActiveNames[i]"
+									name="lotto-active-names{{ i }}" placeholder="Enter Lotto Name" autocomplete="off" (keyup.enter)="focusNext('lotto-active-names', i)" />
+							</td>
+							<td class="lotto-active-box">
+								<input id="lotto-active-box{{ i }}" type="number" [(ngModel)]="lottoActiveBox[i]"
+									name="lotto-active-box{{ i }}" placeholder="Enter Lotto Box" (keyup.enter)="focusNext('lotto-active-box', i)" />
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button type="button" (click)="getLottoActives()">
+									Get Lotto Actives
+								</button>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="main-table-section">
+					<table id="count-table">
+						<thead>
+							<th>Shift Count</th>
+							<th>Amount</th>
+						</thead>
+						<tr *ngFor="let name of shiftCountNames; let i = index">
+							<td class="amount-type-name">{{ name }}</td>
+							<td class="amount-type-amount">
+								<input id="shcount-amount-input{{ i }}" type="number" [(ngModel)]="shcountAmounts[i]"
+									name="shcount-amount-input{{ i }}" placeholder="Enter Amount" (keyup.enter)="focusNext('shcount-amount-input', i)" />
+							</td>
+						</tr>
+						<tr>
+							<td class="shift-count-name">Payout:</td>
+							<td class="shift-count-amount">{{ calculate('payout') }}</td>
+						</tr>
+						<tr>
+							<td class="shift-count-name">Total:</td>
+							<td class="shift-count-amount">{{ calculate('count') }}</td>
+						</tr>
+						<tr>
+							<td class="shift-count-name">Overshoot:</td>
+							<td class="shift-count-amount">{{ calculate('overshoot') }}</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<button type="submit" id="submit" (click)="handleSubmit()">SUBMIT</button>
+		<li>
+			<a (click)="navigater('home')" id="return">Return Home</a>
+		</li>
+	</div>
+</body>
+
 </html>

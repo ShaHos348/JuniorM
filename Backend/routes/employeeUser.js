@@ -144,48 +144,52 @@ router.post("/employeeUpdateInfo", auth.authenticateManager, (req, res) => {
 /**
  * HTTP Request for checking if employee needs to clock in or clockout.
  */
-router.get("/employeeClockingLookup/:idnum&:password", auth.authenticateBusiness, (req, res) => {
-  let idnum = req.params.idnum;
-  let password = req.params.password;
-  // Checks if employee exists.
-  query = "SELECT idnum FROM employee WHERE idnum = ? AND password = ?";
-  connection.query(query, [idnum, password], (err, results) => {
-    if (!err) {
-      if (results.length > 0) {
-        let idnum = results[0].idnum;
-        // Finds if employee is clocked in.
-        query =
-          "SELECT idnum, clockin, clockout FROM clocking WHERE idnum = " +
-          idnum +
-          " AND clockout IS NULL";
-        connection.query(query, (err, results) => {
-          if (!err) {
-            // Checks if employee needs to clock in or clockout.
-            if (results == 0) {
-              return res.status(200).json({
-                message: "Clock In",
-                clocked: false,
-              });
+router.get(
+  "/employeeClockingLookup/:idnum&:password",
+  auth.authenticateBusiness,
+  (req, res) => {
+    let idnum = req.params.idnum;
+    let password = req.params.password;
+    // Checks if employee exists.
+    query = "SELECT idnum FROM employee WHERE idnum = ? AND password = ?";
+    connection.query(query, [idnum, password], (err, results) => {
+      if (!err) {
+        if (results.length > 0) {
+          let idnum = results[0].idnum;
+          // Finds if employee is clocked in.
+          query =
+            "SELECT idnum, clockin, clockout FROM clocking WHERE idnum = " +
+            idnum +
+            " AND clockout IS NULL";
+          connection.query(query, (err, results) => {
+            if (!err) {
+              // Checks if employee needs to clock in or clockout.
+              if (results == 0) {
+                return res.status(200).json({
+                  message: "Clock In",
+                  clocked: false,
+                });
+              } else {
+                return res.status(200).json({
+                  message: "Clock Out",
+                  clocked: true,
+                });
+              }
             } else {
-              return res.status(200).json({
-                message: "Clock Out",
-                clocked: true,
-              });
+              return res.status(500).json(err);
             }
-          } else {
-            return res.status(500).json(err);
-          }
-        });
+          });
+        } else {
+          return res.status(400).json({
+            message: "Employee not found!",
+          });
+        }
       } else {
-        return res.status(400).json({
-          message: "Employee not found!",
-        });
+        return res.status(500).json(err);
       }
-    } else {
-      return res.status(500).json(err);
-    }
-  });
-});
+    });
+  }
+);
 
 /**
  * HTTP Request for clocking in/out employee.
@@ -218,35 +222,43 @@ router.post("/employeeClocking", auth.authenticateBusiness, (req, res) => {
 /**
  * HTTP Request for getting employee clockin data.
  */
-router.get("/getEmployeeClocking/:idnum", auth.authenticateManager, (req, res) => {
-  let id = req.params.idnum;
-  let businessid = req.session.user.business.idnum;
-  // Finds employee in business.
-  query = "SELECT idnum from employee where businessid = ? AND idnum = ?";
-  connection.query(query, [businessid, id], (err, result) => {
-    if (!err) {
-      if (result.length > 0) {
-        // Selects all the times employee clocked in.
-        // TODO: Need to adjust get data from selected date range
-        query =
-          "SELECT *, CONVERT_TZ(clockin,'+00:00',@@SESSION.time_zone) as clockin, CONVERT_TZ(clockout,'+00:00',@@SESSION.time_zone) as clockout FROM clocking WHERE idnum = ? AND clockout IS NOT NULL";
-        connection.query(query, [id], (err, results) => {
-          if (!err) {
-            return res.status(200).json(results);
-          } else {
-            return res.status(500).json(err);
-          }
-        });
+router.get(
+  "/getEmployeeClocking/:idnum&:startDate",
+  auth.authenticateManager,
+  (req, res) => {
+    let id = req.params.idnum;
+    let startDate = req.params.startDate;
+    let businessid = req.session.user.business.idnum;
+    // Finds employee in business.
+    query = "SELECT idnum from employee where businessid = ? AND idnum = ?";
+    connection.query(query, [businessid, id], (err, result) => {
+      if (!err) {
+        if (result.length > 0) {
+          // Selects all the times employee clocked in.
+          query =
+            "SELECT *, CONVERT_TZ(clockin,'+00:00',@@SESSION.time_zone) as clockin, CONVERT_TZ(clockout,'+00:00',@@SESSION.time_zone) as clockout FROM clocking WHERE idnum = ? AND clockout IS NOT NULL AND (clockin BETWEEN ? AND ? + interval 7 day)";
+          connection.query(
+            query,
+            [id, startDate, startDate],
+            (err, results) => {
+              if (!err) {
+                return res.status(200).json(results);
+              } else {
+                return res.status(500).json(err);
+              }
+            }
+          );
+        } else {
+          return res.status(400).json({
+            message: "Employee not found!",
+          });
+        }
       } else {
-        return res.status(400).json({
-          message: "Employee not found!",
-        });
+        return res.status(500).json(err);
       }
-    } else {
-      return res.status(500).json(err);
-    }
-  });
-});
+    });
+  }
+);
 
 /**
  * HTTP request to update employee clockin.
@@ -359,54 +371,62 @@ router.post("/employeeSendMessage", auth.authenticateBusiness, (req, res) => {
 /**
  * HTTP Request for getting messages for employee.
  */
-router.get("/employeeGetMessages/:idnum", auth.authenticateBusiness, (req, res) => {
-  let idnum = req.params.idnum;
+router.get(
+  "/employeeGetMessages/:idnum",
+  auth.authenticateBusiness,
+  (req, res) => {
+    let idnum = req.params.idnum;
 
-  // Finds all messages not yet viewed by employee.
-  query =
-    "SELECT sender, message, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage where seen = 0 AND idnum = ?";
-  connection.query(query, [idnum], (err, results) => {
-    if (!err) {
-      // Updates all messages to seen once employee viewed during clocking.
-      query =
-        "UPDATE emessage SET seen = 1 where seen = 0 AND idnum = " + idnum;
-      connection.query(query, (err, resp) => {
-        if (!err) {
-          return res.status(200).json(results);
-        } else {
-          return res.status(500).json(err);
-        }
-      });
-    } else {
-      return res.status(500).json(err);
-    }
-  });
-});
+    // Finds all messages not yet viewed by employee.
+    query =
+      "SELECT sender, message, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage where seen = 0 AND idnum = ?";
+    connection.query(query, [idnum], (err, results) => {
+      if (!err) {
+        // Updates all messages to seen once employee viewed during clocking.
+        query =
+          "UPDATE emessage SET seen = 1 where seen = 0 AND idnum = " + idnum;
+        connection.query(query, (err, resp) => {
+          if (!err) {
+            return res.status(200).json(results);
+          } else {
+            return res.status(500).json(err);
+          }
+        });
+      } else {
+        return res.status(500).json(err);
+      }
+    });
+  }
+);
 
 /**
  * HTTP Request for getting previously sent employee messages.
  */
-router.get("/employeeGetPrevMessages/:idnum", auth.authenticateManager, (req, res) => {
-  let idnum = req.params.idnum;
-  let businessid = req.session.user.business.idnum;
-  // Checks to see if manager wants to see all messages or for a specific employee.
-  if (idnum == "00000000") {
-    query =
-      "SELECT *, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage WHERE idnum IN (SELECT idnum from employee where businessid = ?)";
-    id = businessid;
-  } else {
-    query =
-      "SELECT *, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage WHERE idnum = ?";
-    id = idnum;
-  }
-  connection.query(query, [id], (err, results) => {
-    if (!err) {
-      return res.status(200).json(results);
+router.get(
+  "/employeeGetPrevMessages/:idnum",
+  auth.authenticateManager,
+  (req, res) => {
+    let idnum = req.params.idnum;
+    let businessid = req.session.user.business.idnum;
+    // Checks to see if manager wants to see all messages or for a specific employee.
+    if (idnum == "00000000") {
+      query =
+        "SELECT *, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage WHERE idnum IN (SELECT idnum from employee where businessid = ?)";
+      id = businessid;
     } else {
-      return res.status(500).json(err);
+      query =
+        "SELECT *, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date from emessage WHERE idnum = ?";
+      id = idnum;
     }
-  });
-});
+    connection.query(query, [id], (err, results) => {
+      if (!err) {
+        return res.status(200).json(results);
+      } else {
+        return res.status(500).json(err);
+      }
+    });
+  }
+);
 
 /**
  * HTTP Request to delete specific employee message.
@@ -441,30 +461,34 @@ router.get("/getEmployees", auth.authenticateManager, (req, res) => {
 /**
  * HTTP Request for deleting specific employee in business.
  */
-router.delete("/deleteEmployee/:idnum", auth.authenticateManager, (req, res) => {
-  let idnum = req.params.idnum;
-  let businessid = req.session.user.business.idnum;
-  // Finds employee in business.
-  query = "SELECT idnum FROM employee where idnum = ? AND businessid = ?";
-  connection.query(query, [idnum, businessid], (err, result) => {
-    if (!err) {
-      if (result.length == 1) {
-        // Deletes employee from business.
-        query = "DELETE FROM employee WHERE idnum = ?";
-        connection.query(query, [idnum], (err, results) => {
-          if (!err) {
-            return res.status(200).json({ message: "Succesfully Deleted!" });
-          } else {
-            return res.status(500).json(err);
-          }
-        });
+router.delete(
+  "/deleteEmployee/:idnum",
+  auth.authenticateManager,
+  (req, res) => {
+    let idnum = req.params.idnum;
+    let businessid = req.session.user.business.idnum;
+    // Finds employee in business.
+    query = "SELECT idnum FROM employee where idnum = ? AND businessid = ?";
+    connection.query(query, [idnum, businessid], (err, result) => {
+      if (!err) {
+        if (result.length == 1) {
+          // Deletes employee from business.
+          query = "DELETE FROM employee WHERE idnum = ?";
+          connection.query(query, [idnum], (err, results) => {
+            if (!err) {
+              return res.status(200).json({ message: "Succesfully Deleted!" });
+            } else {
+              return res.status(500).json(err);
+            }
+          });
+        } else {
+          return res.status(500).json({ message: "Employee Not Found!" });
+        }
       } else {
-        return res.status(500).json({ message: "Employee Not Found!" });
+        return res.status(500).json(err);
       }
-    } else {
-      return res.status(500).json(err);
-    }
-  });
-});
+    });
+  }
+);
 
 module.exports = router;

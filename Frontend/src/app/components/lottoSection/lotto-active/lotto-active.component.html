@@ -7,6 +7,10 @@
 			<form id="entry-content" (ngSubmit)="insert()">
 				<h1 id="header"><strong>Lotto Active Entry</strong></h1>
 				<li class="input-row">
+					<label for="date">Date:</label>
+					<input type="date" name="date" class="inputs" id="date" [(ngModel)]="inputs.date">
+				</li>
+				<li class="input-row">
 					<label for="shift">Shift Time:</label>
 					<select name="shift" id="shift" [(ngModel)]="inputs.shift">
 						<option value="Day">Day Shift</option>

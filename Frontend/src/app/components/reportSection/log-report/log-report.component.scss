@@ -34,6 +34,10 @@ h1 {
 	border: 1px solid burlywood;
 }
 
+#company-name-input7, #company-name-input8, #company-name-input9, #company-amount-input7, #company-amount-input8, #company-amount-input9, #company-name-input7::placeholder, #company-name-input8::placeholder, #company-name-input9::placeholder, #company-amount-input7::placeholder, #company-amount-input8::placeholder, #company-amount-input9::placeholder {
+	color: blue;
+}
+
 th {
 	position: relative;
 	top: 0;

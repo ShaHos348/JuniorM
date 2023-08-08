@@ -213,8 +213,6 @@ export class EditDailyReportComponent implements OnInit {
 			return;
 		}
 
-		this.companyNames = this.companyNames.filter((element) => element);
-		this.companyAmounts = this.companyAmounts.filter((element) => element);
 		this.lottoActiveNames = this.lottoActiveNames.filter((element) => element);
 		this.lottoActiveBox = this.lottoActiveBox.filter((element) => element);
 
@@ -233,7 +231,7 @@ export class EditDailyReportComponent implements OnInit {
 			overshoot: this.overshoot,
 		};
 
-		this.reportService.updateReport(data).subscribe(
+		this.reportService.logReport(data).subscribe(
 			(response: any) => {
 				this.responseMessage = response?.message;
 				this.snackbarService.openSnackbar(this.responseMessage, '');

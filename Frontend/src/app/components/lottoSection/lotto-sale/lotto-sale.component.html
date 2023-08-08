@@ -16,12 +16,15 @@
 				</li>
 				<li class="input-row">
 					<label for="shift">Shift Time:</label>
+					<input type="date" name="date" id="date" [(ngModel)]="date">
 					<select name="shift" id="shift" [(ngModel)]="shift">
+						<option value="Full">Full Shift</option>
 						<option value="Day">Day Shift</option>
 						<option value="Night">Night Shift</option>
 					</select>
 					<button type="button" (click)="retrieveData()">RETRIEVE DATA</button>
 				</li>
+				<!-- Set start to input and also parse lotto barcode to find index-->
 				<table id="box-table">
 					<tr id="single-row">
 						<td class="column">

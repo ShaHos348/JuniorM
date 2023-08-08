@@ -114,7 +114,7 @@ export class LottoService {
 	 */
 	getLottoSale(data: any) {
 		return this.httpClient.get(
-			this.url + '/lotto/getLottoSale/' + data.shift + '&' + data.date,
+			this.url + '/lotto/getLottoSale/' + data.shift + '&' + data.date + '&' + data.prev,
 			{
 				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),

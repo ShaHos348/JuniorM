@@ -11,6 +11,7 @@
 				<input type="date" name="date" id="date" [(ngModel)]="shiftDate" />
 				<label for="shift">Shift Time: </label>
 				<select name="shift" id="shift" [(ngModel)]="shift">
+					<option value="Full">Full Shift</option>
 					<option value="Day">Day Shift</option>
 					<option value="Night">Night Shift</option>
 				</select>
@@ -55,7 +56,7 @@
 								</td>
 								<td class="payout-company">
 									<input
-										type="text"
+										type="number"
 										id="company-amount-input{{ i }}"
 										[(ngModel)]="companyAmounts[i]"
 										value="{{ companyAmounts[i] }}"
@@ -74,7 +75,7 @@
 								<td class="shift-report-name">{{ name }}</td>
 								<td class="payout-company">
 									<input
-										type="text"
+										type="number"
 										id="shreport-amount-input{{ i }}"
 										[(ngModel)]="shreportAmounts[i]"
 										value="{{ shreportAmounts[i] }}"
@@ -109,7 +110,7 @@
 								</td>
 								<td class="lotto-active-box">
 									<input
-										type="text"
+										type="number"
 										id="lotto-active-box{{ i }}"
 										[(ngModel)]="lottoActiveBox[i]"
 										value="{{ lottoActiveBox[i] }}"
@@ -128,7 +129,7 @@
 								<td class="amount-type-name">{{ name }}</td>
 								<td class="amount-type-amount">
 									<input
-										type="text"
+										type="number"
 										id="shift-amount-input{{ i }}"
 										[(ngModel)]="shcountAmounts[i]"
 										value="{{ shcountAmounts[i] }}"

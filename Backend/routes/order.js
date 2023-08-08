@@ -153,9 +153,8 @@ router.get("/getOrders", auth.authenticateBusiness, (req, res) => {
   businessidnum = req.session.user.business.idnum;
 
   // Selects all orderid currently done or being completed for business.
-  // TODO: Return only the last 10 orderids.
   query =
-    "SELECT DISTINCT orderid,datecompleted FROM orderlist where businessid = ?";
+    "SELECT DISTINCT orderid,datecompleted FROM orderlist where businessid = ? ORDER BY orderid DESC LIMIT 10";
   connection.query(query, [businessidnum], (err, result) => {
     if (!err) {
       return res.status(200).json(result);

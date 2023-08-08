@@ -11,12 +11,30 @@ router.post("/entry", auth.authenticateBusiness, (req, res) => {
   let data = req.body;
   businessid = req.session.user.business.idnum;
 
+  let date = new Date();
+  data.date =
+    data.date +
+    " " +
+    date.getHours() +
+    ":" +
+    date.getMinutes() +
+    ":" +
+    date.getSeconds();
+
   // Put activated lotto information in database.
   query =
-    "INSERT INTO lottoactive(businessid, lottoid, quantity, name, box, shift, date) VALUES (?,?,?,?,?,?,now())";
+    "INSERT INTO lottoactive(businessid, lottoid, quantity, name, box, shift, date) VALUES (?,?,?,?,?,?,?)";
   connection.query(
     query,
-    [businessid, data.lottoid, data.quantity, data.name, data.box, data.shift],
+    [
+      businessid,
+      data.lottoid,
+      data.quantity,
+      data.name,
+      data.box,
+      data.shift,
+      data.date,
+    ],
     (err, result) => {
       if (!err) {
         return res.status(200).json({ message: "Lotto Activated" });
@@ -30,33 +48,46 @@ router.post("/entry", auth.authenticateBusiness, (req, res) => {
 /**
  * HTTP Request to get active lottos for shift and date.
  */
-router.get("/getlottoactive/:shift&:date", auth.authenticateBusiness, (req, res) => {
-  let shift = req.params.shift;
-  let currentDate = req.params.date;
-  businessid = req.session.user.business.idnum;
+router.get(
+  "/getlottoactive/:shift&:date",
+  auth.authenticateBusiness,
+  (req, res) => {
+    let shift = req.params.shift;
+    let currentDate = req.params.date;
+    businessid = req.session.user.business.idnum;
 
-  // Checks if date was given or user want active lotto from today
-  if (currentDate == "undefined") {
-    let date = new Date();
-    currentDate =
-      String(date.getFullYear()) +
-      "-" +
-      String(date.getMonth() + 1).padStart(2, "0") +
-      "-" +
-      String(date.getDate()).padStart(2, "0");
-  }
-
-  // Find all active lottos for given shift and date for business.
-  query =
-    "SELECT name, box, quantity, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date, lottoid FROM lottoactive WHERE businessid = ? AND shift = ? AND date(date) = ?";
-  connection.query(query, [businessid, shift, currentDate], (err, results) => {
-    if (!err) {
-      return res.status(200).json(results);
-    } else {
-      return res.status(500).json(err);
+    // Checks if date was given or user want active lotto from today
+    if (currentDate == "undefined") {
+      let date = new Date();
+      currentDate =
+        String(date.getFullYear()) +
+        "-" +
+        String(date.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(date.getDate()).padStart(2, "0");
     }
-  });
-});
+
+    currentDate = currentDate.substring(0, 10);
+    if (shift == "Full") {
+      shift = "Day";
+    }
+
+    // Find all active lottos for given shift and date for business.
+    query =
+      "SELECT name, box, quantity, CONVERT_TZ(date,'+00:00',@@SESSION.time_zone) as date, lottoid FROM lottoactive WHERE businessid = ? AND shift = ? AND date(date) = ?";
+    connection.query(
+      query,
+      [businessid, shift, currentDate],
+      (err, results) => {
+        if (!err) {
+          return res.status(200).json(results);
+        } else {
+          return res.status(500).json(err);
+        }
+      }
+    );
+  }
+);
 
 /**
  * HTTP Request to register a lotto id.
@@ -116,24 +147,28 @@ router.get("/getLottos", auth.authenticateAdmin, (req, res) => {
 /**
  * HTTP Request to get specific lotto from lotto registry.
  */
-router.get("/getSpecificLotto/:lottoid", auth.authenticateBusiness, (req, res) => {
-  let lottoid = req.params.lottoid;
+router.get(
+  "/getSpecificLotto/:lottoid",
+  auth.authenticateBusiness,
+  (req, res) => {
+    let lottoid = req.params.lottoid;
 
-  query = "SELECT name, quantity FROM lottoregistry WHERE lottoid = ?";
-  connection.query(query, [lottoid], (err, result) => {
-    if (!err) {
-      if (result.length != 0) {
-        return res.status(200).json(result[0]);
+    query = "SELECT name, quantity FROM lottoregistry WHERE lottoid = ?";
+    connection.query(query, [lottoid], (err, result) => {
+      if (!err) {
+        if (result.length != 0) {
+          return res.status(200).json(result[0]);
+        } else {
+          return res
+            .status(400)
+            .json({ message: "Lotto not in registry. Enter name!" });
+        }
       } else {
-        return res
-          .status(400)
-          .json({ message: "Lotto not in registry. Enter name!" });
+        return res.status(500).json(err);
       }
-    } else {
-      return res.status(500).json(err);
-    }
-  });
-});
+    });
+  }
+);
 
 /**
  * HTTP Request to delete lotto from lotto registry.
@@ -171,6 +206,7 @@ router.delete("/deleteLotto/:lottoid", auth.authenticateAdmin, (req, res) => {
  */
 router.post("/lottoSaleEntry", auth.authenticateBusiness, (req, res) => {
   let shift = req.body.shift;
+  let date = req.body.date;
   let boxes = req.body.boxes;
   businessid = req.session.user.business.idnum;
   let insertion = ""; // Keeps track of all sales to be inserted.
@@ -194,7 +230,9 @@ router.post("/lottoSaleEntry", auth.authenticateBusiness, (req, res) => {
       insertion +=
         "(" +
         businessid +
-        ",now(),'" +
+        ",'" +
+        date +
+        "','" +
         shift +
         "'," +
         element.box +
@@ -236,42 +274,41 @@ router.post("/lottoSaleEntry", auth.authenticateBusiness, (req, res) => {
 /**
  * HTTP Request to get lottosale for given shift and date.
  */
-router.get("/getLottoSale/:shift&:date", auth.authenticateBusiness, (req, res) => {
-  let shift = req.params.shift;
-  let currentDate = req.params.date;
-  businessid = req.session.user.business.idnum;
+router.get(
+  "/getLottoSale/:shift&:date&:prev",
+  auth.authenticateBusiness,
+  (req, res) => {
+    let shift = req.params.shift;
+    let currentDate = req.params.date;
+    let prev = req.params.prev;
+    businessid = req.session.user.business.idnum;
 
-  // Determines from which shift and date to get business lotto sales from.
-  if (currentDate == "undefined") {
-    let date = new Date();
-    currentDate =
-      String(date.getFullYear()) +
-      "-" +
-      String(date.getMonth() + 1).padStart(2, "0") +
-      "-" +
-      String(date.getDate()).padStart(2, "0");
+    // Determines from which shift and date to get business lotto sales from.
     if (shift == "Day") {
       query =
         "SELECT box, end FROM lottosale WHERE businessid = ? AND shift = 'Night' AND date = ? - interval 1 day";
     } else if (shift == "Night") {
       query =
         "SELECT box, end FROM lottosale WHERE businessid = ? AND shift = 'Day' AND date = ?";
-    }
-  } else {
-    query =
-      "SELECT *, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date FROM lottosale WHERE businessid = ? AND shift = '" +
-      shift +
-      "' AND date = ?";
-  }
-
-  // Gets lotto sales for business.
-  connection.query(query, [businessid, currentDate], (err, results) => {
-    if (!err) {
-      return res.status(200).json(results);
     } else {
-      return res.status(500).json(err);
+      if (prev == 'true') {
+        query =
+        "SELECT *, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date FROM lottosale WHERE businessid = ? AND shift = 'Full' AND date = ? - interval 1 day";
+      } else {
+        query =
+        "SELECT *, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date FROM lottosale WHERE businessid = ? AND shift = 'Full' AND date = ?";
+      }
     }
-  });
-});
+
+    // Gets lotto sales for business.
+    connection.query(query, [businessid, currentDate], (err, results) => {
+      if (!err) {
+        return res.status(200).json(results);
+      } else {
+        return res.status(500).json(err);
+      }
+    });
+  }
+);
 
 module.exports = router;

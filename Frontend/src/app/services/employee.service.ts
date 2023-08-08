@@ -41,6 +41,7 @@ export class EmployeeService {
 				'&' +
 				data.password,
 			{
+				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
 		);
@@ -57,6 +58,7 @@ export class EmployeeService {
 			this.url + '/employeeUser/employeeClocking',
 			data,
 			{
+				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
 		);
@@ -70,7 +72,7 @@ export class EmployeeService {
 	 */
 	getClocking(data: any) {
 		return this.httpClient.get(
-			this.url + '/employeeUser/getEmployeeClocking/' + data,
+			this.url + '/employeeUser/getEmployeeClocking/' + data.idnum + "&" + data.date,
 			{
 				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -89,6 +91,7 @@ export class EmployeeService {
 			this.url + '/employeeUser/updateClocking',
 			data,
 			{
+				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
 		);
@@ -105,6 +108,7 @@ export class EmployeeService {
 			this.url + '/employeeUser/employeeSendMessage',
 			data,
 			{
+				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
 		);
@@ -120,6 +124,7 @@ export class EmployeeService {
 		return this.httpClient.get(
 			this.url + '/employeeUser/employeeGetMessages/' + data.idnum,
 			{
+				withCredentials: true,
 				headers: new HttpHeaders().set('Content-Type', 'application/json'),
 			}
 		);
@@ -149,7 +154,11 @@ export class EmployeeService {
 	 */
 	deleteMessages(data: any) {
 		return this.httpClient.delete(
-			this.url + '/employeeUser/deleteMessages/' + data.slno
+			this.url + '/employeeUser/deleteMessages/' + data.slno,
+			{
+				withCredentials: true,
+				headers: new HttpHeaders().set('Content-Type', 'application/json'),
+			}
 		);
 	}
 
