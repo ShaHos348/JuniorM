@@ -19,6 +19,7 @@ import { EditDailyReportComponent } from './components/reportSection/edit-daily-
 import { ItemRegistryComponent } from './components/adminSection/item-registry/item-registry.component';
 import { OrderEntryComponent } from './components/orderSection/order-entry/order-entry.component';
 import { OrderPrintComponent } from './components/orderSection/order-print/order-print.component';
+import { LottoRegistryComponent } from './components/adminSection/lotto-registry/lotto-registry.component';
 import { LottoActiveComponent } from './components/lottoSection/lotto-active/lotto-active.component';
 import { LottoSaleComponent } from './components/lottoSection/lotto-sale/lotto-sale.component';
 import { LottoPrintComponent } from './components/lottoSection/lotto-print/lotto-print.component';
@@ -113,6 +114,10 @@ const routes: Routes = [
 	{
     path: 'lotto/sale',
     component: LottoSaleComponent
+  },
+	{
+    path: 'lotto/registry',
+    component: LottoRegistryComponent
   },
 	{
     path: 'lotto/print',

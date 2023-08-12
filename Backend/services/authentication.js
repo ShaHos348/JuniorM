@@ -24,7 +24,7 @@ function authenticateBusiness(req, res, next) {
  * @returns
  */
 function authenticateManager(req, res, next) {
-  if (!req.session.manager) {
+  if (!req.session.user.manager) {
     return res.status(401).json({ message: "Not Authenticated!" });
   }
   next();
@@ -39,7 +39,7 @@ function authenticateManager(req, res, next) {
  * @returns
  */
 function authenticateAdmin(req, res, next) {
-  if (!req.session.admin) {
+  if (!req.session.user.admin) {
     return res.status(401).json({ message: "Not Authenticated!" });
   }
   next();

@@ -19,7 +19,10 @@ router.post("/login", (req, res) => {
   connection.query(query, [username, password, code], (err, results) => {
     if (!err) {
       if (results.length == 1) {
-        req.session.admin = true;
+        const user = {
+          admin: true,
+        };
+        req.session.user = user;
         return res.status(200).json({ message: "Login successful" });
       } else {
         return res.status(400).json({ message: "Incorrect Input!" });

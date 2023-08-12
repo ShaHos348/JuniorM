@@ -12,35 +12,42 @@ router.post("/managerLogin", auth.authenticateBusiness, (req, res) => {
   let businessid = req.session.user.business.idnum;
   /* Login info is same as business login. 
   Requiring idnum makes sure manager of business in session is logging in.*/
-  query = "SELECT * FROM business where username=? AND password=? AND idnum = ?";
-  connection.query(query, [user.username, user.password, businessid], (err, results) => {
-    if (!err) {
-      if (results.length == 1) {
-        req.session.manager = true;
-        return res.status(200).json({ message: "Login successful" });
+  query =
+    "SELECT * FROM business where username=? AND password=? AND idnum = ?";
+  connection.query(
+    query,
+    [user.username, user.password, businessid],
+    (err, results) => {
+      if (!err) {
+        if (results.length == 1) {
+          req.session.user.manager = true;
+          return res.status(200).json({ message: "Login successful" });
+        } else {
+          return res
+            .status(400)
+            .json({ message: "Username and Password do not match!" });
+        }
       } else {
-        return res
-          .status(400)
-          .json({ message: "Username and Password do not match!" });
+        return res.status(500).json(err);
       }
-    } else {
-      return res.status(500).json(err);
     }
-  });
+  );
 });
 
 /**
  * HTTP Request for checking if manager is logged in.
  */
 router.get("/checkLogin", auth.authenticateManager, (req, res) => {
-  return res.status(200).json({ message: "Manager of " + req.session.user.business.username});
+  return res
+    .status(200)
+    .json({ message: "Manager of " + req.session.user.business.username });
 });
 
 /**
  * HTTP Request to logout manager.
  */
 router.get("/logout", auth.authenticateManager, (req, res) => {
-  req.session.manager = false;
+  req.session.user.manager = false;
   return res.status(200).json({ message: "Logged Out!" });
 });
 

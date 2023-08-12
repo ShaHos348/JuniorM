@@ -286,17 +286,17 @@ router.get(
     // Determines from which shift and date to get business lotto sales from.
     if (shift == "Day") {
       query =
-        "SELECT box, end FROM lottosale WHERE businessid = ? AND shift = 'Night' AND date = ? - interval 1 day";
+        "SELECT * FROM lottosale WHERE businessid = ? AND shift = 'Night' AND date = ? - interval 1 day";
     } else if (shift == "Night") {
       query =
-        "SELECT box, end FROM lottosale WHERE businessid = ? AND shift = 'Day' AND date = ?";
+        "SELECT * FROM lottosale WHERE businessid = ? AND shift = 'Day' AND date = ?";
     } else {
-      if (prev == 'true') {
+      if (prev == "true") {
         query =
-        "SELECT *, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date FROM lottosale WHERE businessid = ? AND shift = 'Full' AND date = ? - interval 1 day";
+          "SELECT *, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date FROM lottosale WHERE businessid = ? AND shift = 'Full' AND date = ? - interval 1 day";
       } else {
         query =
-        "SELECT *, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date FROM lottosale WHERE businessid = ? AND shift = 'Full' AND date = ?";
+          "SELECT *, Date(CONVERT_TZ(date,'+00:00',@@SESSION.time_zone)) as date FROM lottosale WHERE businessid = ? AND shift = 'Full' AND date = ?";
       }
     }
 

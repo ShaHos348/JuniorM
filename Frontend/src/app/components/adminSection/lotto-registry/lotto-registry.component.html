@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head> </head>
+
+	<body>
+		<div class="main-content" id="content">
+			<div id="registry-div">
+				<h2 id="header"><strong>Lotto Registry</strong></h2>
+				<li>
+					<form id="entry-form" (ngSubmit)="register()">
+						<button
+							class="option-btns"
+							type="button"
+							style="background-color: red"
+							(click)="deleteItem()"
+						>
+							Delete Lotto
+						</button>
+						<input
+							type="text"
+							id="barcode-input"
+							name="barcode-input"
+							placeholder="Enter lotto barcode"
+							[(ngModel)]="barcode"
+						/>
+						<input type="text" id="name-input" name="name-input" placeholder="Enter lotto name" [(ngModel)]="name" />
+						<input type="text" id="quantity-input" name="quantity-input" placeholder="Enter lotto quantity" [(ngModel)]="quantity" />
+						<button
+							class="option-btns"
+							type="submit"
+							style="background-color: orange"
+						>
+							Register Lotto
+						</button>
+					</form>
+				</li>
+				<li>
+					<a (click)="navigater('admin/home')" id="return">Return Home</a>
+				</li>
+			</div>
+			<table id="items-table">
+				<thead id="infoTableHead">
+					<th class="itemTableSl">Sl</th>
+					<th class="itemTableBarcode">Barcode</th>
+					<th class="itemTableName">Name</th>
+					<th class="itemTableQuantity">Quantity</th>
+				</thead>
+				<tr class="itemTableRows" *ngFor="let item of items; let i = index">
+					<td>{{ i + 1 }}</td>
+					<td>{{ item.lottoid }}</td>
+					<td>{{ item.name }}</td>
+					<td>{{ item.quantity }}</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

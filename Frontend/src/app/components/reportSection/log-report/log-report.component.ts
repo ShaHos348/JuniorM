@@ -65,6 +65,10 @@ export class LogReportComponent implements OnInit {
 		this.userService.checkLogin().subscribe(
 			(response: any) => {
 				this.router.navigate(['report/log']);
+				let input = document.getElementById(
+					'shreport-amount-input4'
+				) as HTMLInputElement;
+				input.disabled = true;
 			},
 			(error) => {
 				this.router.navigate(['']);

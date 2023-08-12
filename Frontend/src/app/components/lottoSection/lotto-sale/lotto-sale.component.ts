@@ -73,16 +73,16 @@ export class LottoSaleComponent implements OnInit {
 			return;
 		}
 		this.makeBoxesArray();
-		let prevDate = (this.shift == "Full") ? true : false;
+		let prevDate = this.shift == 'Full' ? true : false;
 		let data = {
 			shift: this.shift,
 			date: this.date,
-			prev: prevDate
+			prev: prevDate,
 		};
-		this.lottoService.lottoActive(data).subscribe(
+		this.lottoService.getLottoSale(data).subscribe(
 			(response: any) => {
-				this.lottoActives = response;
-				this.setLottoActives();
+				this.startAmounts = response;
+				this.setStartEndAmounts();
 			},
 			(error) => {
 				if (error.error?.message) {
@@ -96,10 +96,10 @@ export class LottoSaleComponent implements OnInit {
 				);
 			}
 		);
-		this.lottoService.getLottoSale(data).subscribe(
+		this.lottoService.lottoActive(data).subscribe(
 			(response: any) => {
-				this.startAmounts = response;
-				this.setStartEndAmounts();
+				this.lottoActives = response;
+				this.setLottoActives();
 			},
 			(error) => {
 				if (error.error?.message) {
@@ -129,12 +129,12 @@ export class LottoSaleComponent implements OnInit {
 	setStartEndAmounts() {
 		this.boxes.forEach((element) => {
 			element.start = 0;
-			element.end = 0;
+			element.value = 0;
 		});
 		for (let index = 0; index < this.startAmounts.length; index++) {
 			const lotto = this.startAmounts[index];
 			this.boxes[Number(lotto.box) - 1].start = Number(lotto.end);
-			this.boxes[Number(lotto.box) - 1].end = Number(lotto.end);
+			this.boxes[Number(lotto.box) - 1].value = Number(lotto.value);
 		}
 	}
 
@@ -153,7 +153,7 @@ export class LottoSaleComponent implements OnInit {
 				start: 0,
 				end: null,
 				active: null,
-				value: null,
+				value: 0,
 				sale: 0,
 				total: 0,
 			};
@@ -176,7 +176,12 @@ export class LottoSaleComponent implements OnInit {
 	}
 
 	checkShiftInput() {
-		if (this.shift == null || this.shift == '' || this.date == "" || this.date == null) {
+		if (
+			this.shift == null ||
+			this.shift == '' ||
+			this.date == '' ||
+			this.date == null
+		) {
 			this.responseMessage = 'Error: Shift/Date is NOT GIVEN!';
 			this.snackbarService.openSnackbar(this.responseMessage, '');
 			return false;

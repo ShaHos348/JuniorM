@@ -32,6 +32,7 @@ import { BusinessInfoComponent } from './components/business-components/business
 import { ItemRegistryComponent } from './components/adminSection/item-registry/item-registry.component';
 import { LottoSaleComponent } from './components/lottoSection/lotto-sale/lotto-sale.component';
 import { LottoPrintComponent } from './components/lottoSection/lotto-print/lotto-print.component';
+import { LottoRegistryComponent } from './components/adminSection/lotto-registry/lotto-registry.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +60,7 @@ import { LottoPrintComponent } from './components/lottoSection/lotto-print/lotto
     ItemRegistryComponent,
     LottoSaleComponent,
     LottoPrintComponent,
+    LottoRegistryComponent,
    ],
   imports: [
     BrowserModule,
